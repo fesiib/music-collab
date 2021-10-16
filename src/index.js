@@ -1,13 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+
+import configureStore from './config/store';
+import Routes from './Routes';
+
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//import {db, storage, auth, analytics, firebaseApp, firebase} from './services/firebase';
+
+const {store, persistor} = configureStore();
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <Routes/>
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 
