@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 
 import App from "./App";
+import ProjectPage from './pages/ProjectPage';
 
 class Routes extends React.Component {
     render() {
@@ -13,6 +14,7 @@ class Routes extends React.Component {
             <Router>
                 <Switch>
                     <Route exact path="/" component={App}/>
+                    <Route exact path="/project/:projectId" component={ProjectPage} />
                 </Switch>
             </Router>
         )
