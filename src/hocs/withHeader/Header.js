@@ -7,7 +7,8 @@ const Header = () => {
   return (
     <div className="w-full h-28 flex flex-row items-center bg-white px-8 box-border ">
       <div className="flex flex-1 items-center justify-start">
-        <img src={Logo} alt="logo" />
+        {/* <img src={Logo} alt="logo" /> */}
+        <div className="w-10 h-10 shadow-inner box-border rounded-full bg-red-600 mr-4" />
         <h1 className="flex-1"> SoundBeat </h1>
       </div>
       <MusicPlayer />
