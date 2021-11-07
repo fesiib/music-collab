@@ -1,6 +1,7 @@
 import React from 'react'
 
-import withHeader from '../hocs/withHeader'
+import withHeader from '../../hocs/withHeader'
+import VersionModal from './VersionModal'
 
 const ProjectPage = ({
   name,
@@ -9,6 +10,7 @@ const ProjectPage = ({
   collaborators,
   versions
 }) => {
+  const [visible, setVisible] = React.useState(false)
   return (
     <div className="w-full flex flex-col items-center p-6" data-cy="container">
       <div
@@ -22,8 +24,14 @@ const ProjectPage = ({
           <h3>Collabotors: {collaborators}</h3>
           <h3>Versions: {versions} </h3>
         </div>
-        <div>version tree goes here</div>
+        <button
+          onClick={() => setVisible((prevState) => !prevState)}
+          className="bg-blue-400 text-white"
+        >
+          Open Modal
+        </button>
       </div>
+      {visible && <VersionModal onClose={() => setVisible(false)} />}
     </div>
   )
 }

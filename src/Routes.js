@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import App from './App'
-import ProjectPage from './pages/ProjectPage'
+import ProjectPage from './pages/projectPage/ProjectPage'
 
 class Routes extends React.Component {
   render() {
