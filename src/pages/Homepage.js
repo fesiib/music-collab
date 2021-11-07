@@ -45,6 +45,10 @@ function Homepage(props) {
                 <SearchBar
                     placeholder = "Search for Music, Authors, and Tags"
                 />
+                <div className="flex flex-justify m-5">
+                    <GenericButton title={"Most Popular"} className="text-l mx-auto w-1/5 p-2" />
+                    <GenericButton title={"Weekly Top"} className="text-l mx-auto w-1/5 p-2" />
+                </div>                    
                 <MusicList/>
                 <GenericButton title={"Create New Project"} className="text-xl mx-auto w-2/5 p-2" />
             </TabPanel>
