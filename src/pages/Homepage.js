@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 import {Tabs, TabList, Tab, TabPanel} from 'react-tabs';
+import GenericButton from '../components/GenericButton';
 
 import MusicList from '../components/MusicList';
 import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white border-t-2 border-l-2 border-r-2 border-black";
-const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-600 cursor-pointer";
+const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600";
 
 function Homepage(props) {
     const [tabIndex, setTabIndex] = useState(1);
@@ -45,6 +46,7 @@ function Homepage(props) {
                     placeholder = "Search for Music, Authors, and Tags"
                 />
                 <MusicList/>
+                <GenericButton title={"Create New Project"} className="text-xl mx-auto w-2/5 p-2" />
             </TabPanel>
             <TabPanel>
                 Contributions

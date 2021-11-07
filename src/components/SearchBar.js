@@ -19,7 +19,7 @@ const customStyles = {
           ...styles,
           backgroundColor: 'white',
           ':hover': {
-                backgroundColor: '#4f46e5',
+                backgroundColor: "rgba(99, 102, 241, 1)",
                 color: 'white',
             },
         };
@@ -41,10 +41,10 @@ const customStyles = {
     multiValueRemove: (styles) => {
         return {
             ...styles,
-            color: 'grey',
+            color: 'white',
+            backgroundColor: "rgba(99, 102, 241, 1)",
             ':hover': {
-                backgroundColor: '#4f46e5',
-                color: 'white',
+                backgroundColor: "rgba(79, 70, 229, 1)",
             },
         };
     },
@@ -57,12 +57,14 @@ function SearchBar(props) {
     }
 
     return (
-        <CreatableSelect
-            isMulti
-            options={GENRE_OPTIONS}
-            placeholder={props.placeholder}
-            styles={customStyles}
-        />
+        <div className='p-10'>
+            <CreatableSelect
+                isMulti
+                options={GENRE_OPTIONS}
+                placeholder={props.placeholder}
+                styles={customStyles}
+            />
+        </div>
     );
 }
 
