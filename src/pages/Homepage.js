@@ -7,13 +7,13 @@ import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white border-t-2 border-l-2 border-r-2 border-black";
-const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-600";
+const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-600 cursor-pointer";
 
 function Homepage(props) {
     const [tabIndex, setTabIndex] = useState(1);
 
     const assignTabClassName = (curTabIndex) => {
-        if (tabIndex == curTabIndex) {
+        if (tabIndex === curTabIndex) {
             return SELECTED_TAB_CLASSNAME;
         } 
         return DESELECTED_TAB_CLASSNAME;
@@ -26,7 +26,7 @@ function Homepage(props) {
             selectedTabPanelClassName="rounded-md mx-auto p-10 bg-white border-t-2 border-black"
             className='w-2/3 mx-auto'
         >
-            <TabList className="border-black cursor-pointer mt-5 px-2 flex justify-around text-center">
+            <TabList className="border-black mt-5 px-2 flex justify-around text-center">
                 <Tab className={assignTabClassName(0)}>
                     My Projects
                 </Tab>
