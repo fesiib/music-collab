@@ -2,6 +2,7 @@ import React from 'react'
 
 import playIcon from '../../icons/playIcon.svg'
 import userMale from '../../icons/userMale.svg'
+import UpvoteDownvote from './UpvoteDownvote'
 
 const VersionPage = ({ description, contributor }) => {
   return (
@@ -10,7 +11,9 @@ const VersionPage = ({ description, contributor }) => {
         <InfoContainer>
           <MainInfo description={description} contributor={contributor} />
         </InfoContainer>
-        <CommentsContainer>Sobaka</CommentsContainer>
+        <CommentsContainer>
+          <UpvoteDownvote initialUpvotes={15} size="small" />
+        </CommentsContainer>
       </div>
     </div>
   )
