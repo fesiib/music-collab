@@ -1,4 +1,5 @@
 import React from 'react'
+import VersionPage from './VersionPage'
 
 const DimmedBackground = ({ children }) => {
   return (
@@ -19,7 +20,7 @@ const CenteredContent = ({ children }) => {
 const Container = ({ children }) => {
   return (
     <div
-      className="h-5/6 flex flex-row align-center justify-center rounded-lg shadow-md bg-white"
+      className="h-5/6 flex flex-col align-center rounded-lg shadow-md bg-white"
       style={{ height: '720px', width: '1020px' }}
     >
       {children}
@@ -32,9 +33,16 @@ const VersionModal = ({ onClose }) => {
     <DimmedBackground>
       <CenteredContent>
         <Container>
-          <button onClick={onClose} className="bg-blue-400 text-black h-7">
+          <button
+            onClick={onClose}
+            className="bg-blue-400 text-black h-7 w-20 self-end"
+          >
             Close
           </button>
+          <VersionPage
+            description={'This is my contribution'}
+            contributor={{ name: 'Alan Zhui', lastUpdate: '2 weeks ago' }}
+          />
         </Container>
       </CenteredContent>
     </DimmedBackground>
