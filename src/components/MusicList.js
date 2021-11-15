@@ -18,7 +18,7 @@ const ALLOWED_HEADERS = {
 
 const DEF_PROPS = {
     headers: ['trackTitle', 'author', 'genre', 'cntVersions', 'cntCollab', 'duration'],
-    voting: false,
+    votes: false,
     panel: true,
     cntRows: 20,
     pageCount: 9,
@@ -94,9 +94,9 @@ function Table(props) {
                                 ))
                             }
                             {
-                                (parentProps.voting ? (
+                                (parentProps.votes ? (
                                     <th className="p-2 text-left invisible">
-                                        Voting
+                                        Votes
                                     </th>
                                 ):(<></>))
                             }
@@ -128,7 +128,7 @@ function Table(props) {
                                     );
                                 })}
                                 {
-                                    (parentProps.voting ? (
+                                    (parentProps.votes ? (
                                         <td className="p-2">
                                             <GenericButton title={"Vote"} className='w-12'/>
                                         </td>

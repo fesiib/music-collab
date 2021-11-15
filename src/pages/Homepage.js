@@ -10,6 +10,7 @@ import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePanel, openPanel } from '../reducers/homepagePanel';
+import { setTabIndex } from '../reducers/tabInfo';
 
 const albumBackgroundURL = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
@@ -19,9 +20,8 @@ const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 curs
 function Homepage(props) {
     const dispatch = useDispatch();
 
-    const [tabIndex, setTabIndex] = useState(1);
-
     const { panelState } = useSelector(state => state.homepagePanel);
+    const { tabIndex } = useSelector(state => state.tabInfo);
 
     const _closePanel = () => {
         dispatch(closePanel());
@@ -29,6 +29,10 @@ function Homepage(props) {
 
     const _openPanel = () => {
         dispatch(openPanel());
+    }
+    
+    const _setTabIndex = (tabIndex) => {
+        dispatch(setTabIndex({tabIndex}))
     }
 
     const assignTabClassName = (curTabIndex) => {
@@ -42,7 +46,7 @@ function Homepage(props) {
         <div>
             <Tabs
                 selectedIndex={tabIndex}
-                onSelect={index => setTabIndex(index)}
+                onSelect={index => _setTabIndex(index)}
                 selectedTabPanelClassName="rounded-md mx-auto p-10 bg-white border-t-2 border-black"
                 className='w-2/3 mx-auto'
             >
@@ -58,8 +62,13 @@ function Homepage(props) {
                     </Tab>
                 </TabList>
                 <TabPanel>
-                    My Projects
-                    <GenericButton title={"Create New Project"} className="text-xl mx-auto w-2/5 p-2" />
+                    <h1 className="p-10 text-center">
+                        My Projects
+                    </h1>
+                    <MusicList headers={
+                        ['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']
+                    } votes={true} className={"h-96"}/>
+                    <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
                 </TabPanel>
                 <TabPanel>
                     <SearchBar
@@ -106,7 +115,10 @@ function Homepage(props) {
                     <div>
                         author
                     </div>
-                    <MusicList headers={['author', 'duration']} voting={true} className={"h-96"}/>
+                    <MusicList headers={['author', 'duration']} votes={true} className={"h-96"}/>
+                    <div>
+                        Contributors
+                    </div>
                 </div>
             </SlidingPanel>
         </div>
