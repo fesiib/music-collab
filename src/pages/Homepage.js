@@ -50,7 +50,7 @@ function Homepage(props) {
                 selectedTabPanelClassName="rounded-md mx-auto p-10 bg-white border-t-2 border-black"
                 className='w-2/3 mx-auto'
             >
-                <TabList className="border-black mt-5 px-2 flex justify-around text-center">
+                <TabList className="border-black mt-5 px-2 flex justify-evenly text-center">
                     <Tab className={assignTabClassName(0)}>
                         My Projects
                     </Tab>
@@ -68,7 +68,9 @@ function Homepage(props) {
                     <MusicList headers={
                         ['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']
                     } votes={true} className={"h-96"}/>
-                    <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
+                    <div className="flex justify-center m-5">    
+                        <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
+                    </div>
                 </TabPanel>
                 <TabPanel>
                     <SearchBar
@@ -81,7 +83,9 @@ function Homepage(props) {
                     <MusicList/>
                 </TabPanel>
                 <TabPanel>
-                    Contributions
+                    <h1 className="p-10 text-center">
+                        Contributions
+                    </h1>
                     Comments
                 </TabPanel>
             </Tabs>
