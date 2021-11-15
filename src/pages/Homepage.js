@@ -11,6 +11,8 @@ import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePanel, openPanel } from '../reducers/homepagePanel';
 
+const albumBackgroundURL = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
+
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white border-t-2 border-l-2 border-r-2 border-black";
 const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600";
 
@@ -57,6 +59,7 @@ function Homepage(props) {
                 </TabList>
                 <TabPanel>
                     My Projects
+                    <GenericButton title={"Create New Project"} className="text-xl mx-auto w-2/5 p-2" />
                 </TabPanel>
                 <TabPanel>
                     <SearchBar
@@ -67,7 +70,6 @@ function Homepage(props) {
                         <GenericButton title={"Weekly Top"} className="text-l mx-auto w-1/5 p-2" />
                     </div>                    
                     <MusicList/>
-                    <GenericButton title={"Create New Project"} className="text-xl mx-auto w-2/5 p-2" />
                 </TabPanel>
                 <TabPanel>
                     Contributions
@@ -82,9 +84,22 @@ function Homepage(props) {
                 panelClassName='bg-white'
             >
                 <div className='bg-white'>
+                    <div style={{
+                        backgroundImage:`url(${albumBackgroundURL})`,
+                        backgroundRepeat: 'no-repeat',
+                        width: '100%',
+                        height: '400px',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}>
+                        <div className="flex">
+                            <GenericButton title={"Upvote"} />
+                            <GenericButton title={"Downvote"} />    
+                            <GenericButton title={"Contribute"} />
+                            <GenericButton title={"Go To Project"} />
+                        </div>      
+                    </div>
                     <GenericButton title={"Close"} onClick={_closePanel} />
-                    <GenericButton title={"Contribute"} />
-                    <GenericButton title={"Go To Project"} />
                     <div>
                         Music Title
                     </div>
