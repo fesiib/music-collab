@@ -61,6 +61,10 @@ function Homepage(props) {
                         Contributions
                     </Tab>
                 </TabList>
+                
+                {
+                    //My Projects Page
+                }
                 <TabPanel>
                     <h1 className="p-10 text-center">
                         My Projects
@@ -72,6 +76,10 @@ function Homepage(props) {
                         <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
                     </div>
                 </TabPanel>
+                
+                {
+                    //Browse Page
+                }
                 <TabPanel>
                     <SearchBar
                         placeholder = "Search for Music, Authors, and Tags"
@@ -82,11 +90,20 @@ function Homepage(props) {
                     </div>                    
                     <MusicList/>
                 </TabPanel>
+                
+                {
+                    //Contributions Page
+                }
                 <TabPanel>
                     <h1 className="p-10 text-center">
                         Contributions
                     </h1>
-                    Comments
+                    <MusicList headers={
+                        ['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']
+                    } votes={true} className={"h-96"}/>
+                    <h2 className="p-3 text-center">
+                        My Comments
+                    </h2>
                 </TabPanel>
             </Tabs>
             <SlidingPanel
@@ -112,14 +129,13 @@ function Homepage(props) {
                             <GenericButton title={"Go To Project"} />
                         </div>      
                     </div>
-                    <GenericButton title={"Close"} onClick={_closePanel} />
-                    <div>
+                    <h2 className="pt-5 pl-5 text-left">
                         Music Title
-                    </div>
-                    <div>
-                        author
-                    </div>
-                    <MusicList headers={['author', 'duration']} votes={true} className={"h-96"}/>
+                    </h2>
+                    <h3 className="pl-5 pb-5 text-left">
+                        Author
+                    </h3>
+                    <MusicList headers={['author', 'duration']} votes={true} className={"h-96 "}/>
                     <div>
                         Contributors
                     </div>
