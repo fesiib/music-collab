@@ -7,10 +7,29 @@ import musicData from '../data/musicData';
 import { openPanel } from '../reducers/homepagePanel';
 import GenericButton from './GenericButton';
 
+const ALLOWED_HEADERS = {
+    'trackTitle': 'Track',
+    'author': 'Author',
+    'genre': 'Genre',
+    'cntVersions': '#Versions',
+    'cntCollab': '#Collaborators',
+    'duration': 'Duration',
+};
+
+const DEF_PROPS = {
+    headers: ['trackTitle', 'author', 'genre', 'cntVersions', 'cntCollab', 'duration'],
+    voting: false,
+    panel: true,
+    cntRows: 20,
+    pageCount: 9,
+    className: "",
+}
+
+
 function Table(props) {
     const dispatch = useDispatch();
 
-    const { panelState } = useSelector(state => state.homepagePanel);
+    const parentProps = props.parentProps;
 
     const _openPanel = () => {
         dispatch(openPanel());
@@ -38,122 +57,116 @@ function Table(props) {
             data: props.data,
             initialState: {pageIndex: 0},
             manualPagination: true,
-            pageCount: props.pageCount,
+            pageCount: parentProps.pageCount,
         },
         useBlockLayout,
         usePagination,
     );
 
     const rowClick = (row) => {
-        _openPanel();
+        if (parentProps.panel)
+            _openPanel();
         console.log(row);
     }
 
     return (
-        <>
-        <table {...getTableProps({
-            className:'mx-auto table-fixed divide-y-2'
-        })}>
-            <thead>
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps({
-                        className: "text-gray-400"
-                    })}>
-                        {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps(
-                                {
-                                    className: "p-2 text-left"
-                                }
-                            )}>
-                                {column.render('Header')}
-                                {/* Add a sort direction indicator */}
-                                {/* <span>
-                                    {column.isSorted
-                                    ? column.isSortedDesc
-                                        ? ' 🔽'
-                                        : ' 🔼'
-                                    : ''}
-                                </span> */}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps({
-                className:'mx-auto table-fixed divide-y-2'
+        <div className={"w-full overflow-x-scroll " + parentProps.className} >
+            <table {...getTableProps({
+                className:'mx-auto table-auto divide-y-2'
             })}>
-                {rows.map(
-                    (row, i) => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps({
-                            className: "max-h-14",
-                            onClick: () => rowClick(row),
+                <thead className="sticky top-0 bg-gray-100">
+                    {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps({
+                            className: "text-gray-600"
                         })}>
-                            {row.cells.map(cell => {
-                                if (cell.column.Header === 'Track') {
+                            <th className="p-2 text-left invisible">
+                                Button
+                            </th>
+                            {
+                                headerGroup.headers.map(column => (
+                                    <th {...column.getHeaderProps(
+                                        {
+                                            className: "p-2 text-left"
+                                        }
+                                    )}>
+                                        {column.render('Header')}
+                                    </th>
+                                ))
+                            }
+                            {
+                                (parentProps.voting ? (
+                                    <th className="p-2 text-left invisible">
+                                        Voting
+                                    </th>
+                                ):(<></>))
+                            }
+                        </tr>
+                    ))}
+                </thead>
+                <tbody {...getTableBodyProps({
+                    className:'mt-2 mx-auto table-auto divide-y-2'
+                })}>
+                    {rows.map(
+                        (row, i) => {
+                        prepareRow(row);
+                        return (
+                            <tr {...row.getRowProps({
+                                className: "max-h-14",
+                                onClick: () => rowClick(row),
+                            })}>
+                                <td className="p-2">
+                                    <GenericButton title={"Play"} className='w-12'/>
+                                </td>
+                        
+                                {row.cells.map(cell => {
                                     return (
                                         <td {...cell.getCellProps({
-                                            className: "p-2 text-left overflow-ellipsis overflow-hidden"
+                                        className: "p-2 text-left overflow-ellipsis overflow-hidden"
                                         })}>
-                                            <GenericButton title={"Play"}/>
                                             {cell.render('Cell')}
                                         </td>
                                     );
+                                })}
+                                {
+                                    (parentProps.voting ? (
+                                        <td className="p-2">
+                                            <GenericButton title={"Vote"} className='w-12'/>
+                                        </td>
+                                    ):(<></>))
                                 }
-                                return (
-                                    <td {...cell.getCellProps({
-                                    className: "p-2 text-left overflow-ellipsis overflow-hidden"
-                                    })}>
-                                        {cell.render('Cell')}
-                                    </td>
-                                );
-                            })}
-                        </tr>
+                            </tr>
+                        )}
                     )}
-                )}
-            </tbody>
-        </table>
-        <br />
-        </>
+                </tbody>
+            </table>
+        </div>
     )
 }
 
 function MusicList(props) {
+    props = {
+        ...DEF_PROPS,
+        ...props,
+    };
     const columns = React.useMemo(
-        () => [
-            {
-                Header: 'Track',
-                accessor: 'trackTitle',
-            },
-            {
-                Header: 'Author',
-                accessor: 'author',
-            },
-            {
-                Header: 'Genre',
-                accessor: 'genre',
-            },
-            {
-                Header: '#Versions',
-                accessor: 'cntVersions',
-            },
-            {
-                Header: '#Collaborators',
-                accessor: 'cntCollab',
-            },
-            {
-                Header: 'Duration',
-                accessor: 'duration',
-            },
-        ],
+        () => {
+            let headers = [];
+            for (let header of props.headers) {
+                if (ALLOWED_HEADERS.hasOwnProperty(header)) {
+                    headers.push({
+                        Header: ALLOWED_HEADERS[header],
+                        accessor: header,
+                    })
+                }
+            }
+            return headers;
+        },
         []
     )
 
-    const data = React.useMemo(() => musicData(30), [])
-
+    let data = React.useMemo(() => musicData(30), [])
     return (
-        <Table columns={columns} data={data} cntRows={20} pageCount={8}/>
+        <Table columns={columns} data={data} parentProps={props}/>
     )
 }
 

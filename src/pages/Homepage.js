@@ -106,6 +106,7 @@ function Homepage(props) {
                     <div>
                         author
                     </div>
+                    <MusicList headers={['author', 'duration']} voting={true} className={"h-96"}/>
                 </div>
             </SlidingPanel>
         </div>
