@@ -30,7 +30,7 @@ const ALLOWED_HEADERS = {
     },
     'duration': {
         header: 'Duration',
-        width: 120,
+        width: 90,
     },
     'playButton': {
         header: '',
@@ -195,7 +195,7 @@ function MusicList(props) {
                     headers.push({
                         Header: ALLOWED_HEADERS[accessor].header,
                         accessor: accessor,
-                        //width: ALLOWED_HEADERS[accessor].width,
+                        width: ALLOWED_HEADERS[accessor].width,
                     })
                 }
             }
