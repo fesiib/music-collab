@@ -10,6 +10,7 @@ class Routes extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/" component={App} />
+          <Route exact path="/homepage" component={Homepage} />
           <Route
             exact
             path="/project/:projectId"
