@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { increaseCounter } from './reducers/counter'
 
 import './index.css'
+import UploadAudio from './components/UploadAudio'
 
 function App() {
   const count = useSelector((state) => {
-    console.log(state)
+    console.log(state);
     return state?.counter?.cnt
   })
   const dispatch = useDispatch()

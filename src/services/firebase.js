@@ -4,8 +4,6 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
-console.log("here " + process.env.REACT_APP_projectId);
-
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_firebaseKey,
     authDomain: process.env.REACT_APP_authDomain,
@@ -13,7 +11,7 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_storageBucket,
     messagingSenderId: process.env.REACT_APP_messagingSenderId,
     appId: process.env.REACT_APP_appId,
-    measurementId: process.env.REACT_APP_measurementId,
+    //measurementId: process.env.REACT_APP_measurementId,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
@@ -26,6 +24,7 @@ const storage = firebaseApp.storage();
 
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider()
+
 export const signInWithGoogle = () => {
   auth.signInWithPopup(googleProvider).then((res) => {
     // user object

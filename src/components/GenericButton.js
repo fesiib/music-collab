@@ -3,6 +3,7 @@ import React from 'react';
 const DEF_PROPS = {
     title: "Default",
     className: "",
+    onClick: null,
 }
 
 function GenericButton(props) {
@@ -11,9 +12,12 @@ function GenericButton(props) {
         ...props,
     }
     return (
-        <div className = {'rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 ' + props.className}>
+        <button 
+            className = {'rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 ' + props.className}
+            onClick = {props.onClick}
+        >
             {props.title}
-        </div>
+        </button>
     );
 }
 
