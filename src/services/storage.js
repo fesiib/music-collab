@@ -1,10 +1,5 @@
 import { storage } from './firebase'; 
-import { v4 as randomStringGenerator } from 'uuid';
-
-function randomString() {
-    const s = randomStringGenerator().replaceAll('-', '');
-    return s;
-}
+import randomString from './randomString';
 
 const ROOT_PATH = ''
 

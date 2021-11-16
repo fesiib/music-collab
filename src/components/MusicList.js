@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useTable, usePagination, useBlockLayout, useFlexLayout} from 'react-table';
 
 import musicData from '../data/musicData';
-import { openPanel } from '../reducers/homepagePanel';
+import { openPanel } from '../reducers/homepage/homepagePanel';
 import GenericButton from './GenericButton';
 
 const ALLOWED_HEADERS = {

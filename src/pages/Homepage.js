@@ -9,8 +9,8 @@ import MusicList from '../components/MusicList';
 import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePanel, openPanel } from '../reducers/homepagePanel';
-import { setTabIndex } from '../reducers/tabInfo';
+import { closePanel, openPanel } from '../reducers/homepage/homepagePanel';
+import { setTabIndex } from '../reducers/homepage/tabInfo';
 
 const albumBackgroundURL = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 

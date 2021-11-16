@@ -2,8 +2,9 @@ import {combineReducers} from 'redux';
 //import user from "./user";
 
 import counter from "./counter";
-import homepagePanel from './homepagePanel';
-import tabInfo from './tabInfo';
+import homepagePanel from './homepage/homepagePanel';
+import tabInfo from './homepage/tabInfo';
+import database from './database';
 
 const RESET_APP = "RESET_APP";
 
@@ -11,6 +12,7 @@ const appReducer = combineReducers({
     counter: counter,
     homepagePanel: homepagePanel,
     tabInfo: tabInfo,
+    database: database
 });
 
 export const resetApp = () => ({
