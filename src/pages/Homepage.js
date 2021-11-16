@@ -98,9 +98,13 @@ function Homepage(props) {
                     <h1 className="p-10 text-center">
                         Contributions
                     </h1>
-                    <MusicList headers={
+                    <MusicList 
+                        headers={
                         ['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']
-                    } votes={true} className={"h-96"}/>
+                        }
+                        filter={{}}
+                        votes={true} className={"h-96"}
+                    />
                     <h2 className="p-3 text-center">
                         My Comments
                     </h2>

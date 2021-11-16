@@ -48,6 +48,7 @@ const DEF_PROPS = {
     cntRows: 20,
     pageCount: 9,
     className: "",
+    filter: {},
 }
 
 
@@ -141,7 +142,6 @@ function Table(props) {
                                 onClick: () => rowClick(row),
                             })}>
                                 {row.cells.map(cell => {
-                                    console.log(cell.column);
                                     if (cell.column.id === 'playButton') {
                                         return (
                                             <td {...cell.getCellProps({
@@ -178,6 +178,20 @@ function Table(props) {
     )
 }
 
+function filterData(filter, data) {
+    /*
+        filter = {
+            project_authordId: ['']
+            version_authorId: ['']
+            genres: [''],
+            title_description: [''],
+            priority: 'pop', 'recency',
+            instrument: [''],
+        }
+    */
+    return data;
+}
+
 function MusicList(props) {
     props = {
         ...DEF_PROPS,
@@ -211,7 +225,12 @@ function MusicList(props) {
         []
     )
 
-    let data = React.useMemo(() => musicData(30), [])
+    const { projects, } = useSelector(state => state.database);
+
+    //const data = filterData(props.filter, projects);
+
+    const data = React.useMemo(() => musicData(30), []);
+
     return (
         <Table columns={columns} data={data} parentProps={props}/>
     )

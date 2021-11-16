@@ -24,8 +24,10 @@ function App() {
       <button onClick={() => dispatch(resetApp())} className="bg-black">
         RESET
       </button>
+
+      <UploadAudio/>
     </div>
   )
 }
 
-export default App
+export default App;
