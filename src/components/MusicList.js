@@ -9,6 +9,7 @@ import en from 'javascript-time-ago/locale/en.json';
 
 import { openPanel } from '../reducers/homepage/homepagePanel';
 import GenericButton from './GenericButton';
+import iconUD from '../icons/updown.png';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -23,7 +24,7 @@ const ALLOWED_HEADERS = {
     },
     'author': {
         header: 'Author',
-        width: 130,
+        width: 140,
     },
     'cntVersions': {
         header: '#Versions',
@@ -38,8 +39,8 @@ const ALLOWED_HEADERS = {
         width: 90,
     },
     'updated': {
-        header: 'Updated',
-        width: 90,
+        header: 'Last Activity',
+        width: 120,
     },
     'playButton': {
         header: '',
@@ -47,7 +48,7 @@ const ALLOWED_HEADERS = {
     },
     'votes': {
         header: '',
-        width: 60,    
+        width: 100,    
     },
 };
 
@@ -174,9 +175,10 @@ function Table(props) {
                                             <td {...cell.getCellProps({
                                                 className: "p-2"
                                             })}>
-                                                {//<GenericButton title={"Vote"} className='w-12'/>
-                                                }
-                                                {cell.render('Cell')}
+                                                <div className="flex flex-row w-10">
+                                                    {cell.render('Cell')}
+                                                    <img src={iconUD}></img>
+                                                </div>
                                             </td>
                                         );
                                     }
@@ -188,6 +190,16 @@ function Table(props) {
                                                 <ReactTimeAgo date={cell.value} timeStyle="twitter-minute" locale="en-US"/>
                                             </td>
                                         );
+                                    }
+                                    if (cell.column.id === 'duration') {
+                                        const mins = (Math.floor(cell.value / 60)).toString().padStart(2, "0");
+                                        const secs = (cell.value % 60).toString().padStart(2, "0");;
+                                        return ( <td {...cell.getCellProps({
+                                            className: "p-2 text-left overflow-ellipsis overflow-hidden"
+                                            })}>
+                                                {mins}:{secs}
+                                            </td>
+                                        )
                                     }
                                     return (
                                         <td {...cell.getCellProps({

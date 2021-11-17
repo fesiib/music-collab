@@ -22,8 +22,8 @@ export const setSortType = (payload) => ({
 const initialState = {
     panelState: false,
     sortType: TRANSFORM_POPULAR,
-    versionId: "",
-    projectId: "",
+    versionId: "sunnyDay1",
+    projectId: "sunnyDay",
     collaborators: new Set(),
 };
 

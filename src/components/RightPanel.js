@@ -11,6 +11,7 @@ import { closePanel } from "../reducers/homepage/homepagePanel";
 import SlidingPanel from 'react-sliding-side-panel';
 import GenericButton from "./GenericButton";
 import MusicList, { TRANSFORM_POPULAR_SINGLE, TRANSFORM_RECENT, TRANSFORM_RECENT_SINGLE } from "./MusicList";
+import CustomTag from "./CustomTag";
 
 TimeAgo.addDefaultLocale(en);
 
@@ -83,6 +84,7 @@ function RightPanel(props) {
     const collaborators = Array.from(getCollaborators(project));
 
     const trackTitle = project.metaInfo.trackTitle;
+    const tags = Array.from(new Set(project.metaInfo.tags));
     const lastModified = project.metaInfo.lastModified;
     const creationTime = project.metaInfo.creationTime;
     const ownerName = profiles[project.metaInfo.ownerId].metaInfo.name;
@@ -97,7 +99,7 @@ function RightPanel(props) {
         >
             <div className='bg-white'>
                 <div style={{
-                    backgroundImage:`url(${background === "" ? DEFAULT_BACKGROUND : background})`,
+                    backgroundImage:`url(${background})`,
                     backgroundRepeat: 'no-repeat',
                     width: '100%',
                     height: '400px',
@@ -115,8 +117,14 @@ function RightPanel(props) {
                     <p className="text-4xl"> {trackTitle} </p>
                     <p className="text-2xl text-gray-600"> {ownerName} </p>
                 </div>
-                <div>
-                    TAGS....
+                <div className="pl-5 flex flex-row flex-wrap">
+                    {tags.map((tag) => {
+                        return (
+                            <div key={tag}>
+                                <CustomTag title={tag}/>
+                            </div>
+                        )
+                    })}
                 </div>
                 <div className="p-5 flex flex-row justify-between">
                     <div className="text-xs text-gray-500"> 
@@ -131,7 +139,7 @@ function RightPanel(props) {
                     </div>
                 </div>
                 <MusicList 
-                    headers={['author', 'duration', 'updated']}
+                    headers={['author', 'duration']}
                     votes={true}
                     className={"max-h-96"}
                     transform={transform}
