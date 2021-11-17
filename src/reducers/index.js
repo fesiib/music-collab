@@ -6,6 +6,8 @@ import homepagePanel from './homepage/homepagePanel';
 import tabInfo from './homepage/tabInfo';
 import database from './database';
 import player from './player';
+import playAllTracks from './musicTracks'
+import timeAllTracks from "./musicTracksTime"
 
 const RESET_APP = "RESET_APP";
 
@@ -15,6 +17,8 @@ const appReducer = combineReducers({
     tabInfo: tabInfo,
     database: database,
     player: player,
+    playAllTracks: playAllTracks, 
+    timeAllTracks, timeAllTracks,
 });
 
 export const resetApp = () => ({
