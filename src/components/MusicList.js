@@ -25,10 +25,6 @@ const ALLOWED_HEADERS = {
         header: 'Author',
         width: 130,
     },
-    'genre': {
-        header: 'Genre',
-        width: 100,
-    },
     'cntVersions': {
         header: '#Versions',
         width: 100,
@@ -215,7 +211,6 @@ function filterData(filter, data) {
         filter = {
             project_authordId: ['']
             version_authorId: ['']
-            genres: [''],
             title_description: [''],
             priority: 'pop', 'recency',
             instrument: [''],
@@ -299,7 +294,6 @@ function getRecentVersionId(project) {
 function transformSingleVersion(profiles, project, version, collaborators, projectId, versionId) {
     let single = {
         trackTitle: project.metaInfo.trackTitle,
-        genre: project.metaInfo.genre,
         author: profiles[version.metaInfo.authorId].metaInfo.name,
         owner: profiles[project.metaInfo.ownerId].metaInfo.name,
         cntVersions: Object.keys(project.versions).length,
@@ -363,7 +357,6 @@ function transformProjects_author(projects, profiles, authorId) {
 }
 
 function transformProjects_popular(projects, profiles) {
-    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
     let data = [];
     for (let projectId in projects) {
         const project = projects[projectId];
@@ -383,7 +376,6 @@ function transformProjects_popular(projects, profiles) {
 }
 
 function transformProjects_recency(projects, profiles) {
-    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
     let data = [];
     for (let projectId in projects) {
         const project = projects[projectId];
@@ -403,7 +395,6 @@ function transformProjects_recency(projects, profiles) {
 }
 
 function transformProjects_popular_single(projects, profiles, projectId, versionId) {
-    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
     let data = [];
     
     if (!projects.hasOwnProperty(projectId)) {
@@ -421,7 +412,6 @@ function transformProjects_popular_single(projects, profiles, projectId, version
 }
 
 function transformProjects_recency_single(projects, profiles, projectId, versionId) {
-    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
     let data = [];
     
     if (!projects.hasOwnProperty(projectId)) {

@@ -83,7 +83,7 @@ const DUMMY_PROJECT_1 = {
     metaInfo: {
         ownerId: 'helena',
         trackTitle: "Sunny day",
-        genre: "Pop",
+        tags: ["Pop", "Chill"],
         description: "It is a pop music",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
@@ -186,7 +186,7 @@ const DUMMY_PROJECT_2 = {
     metaInfo: {
         ownerId: 'me',
         trackTitle: "Love",
-        genre: "Rock",
+        tags: ["Rock", "Hard", "Guitar"],
         description: "Hard Rock",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
@@ -461,7 +461,7 @@ const database = (state = initialState, action) => {
     /* payload format
         ownerId,
         trackTitle,
-        genre,
+        tags,
         description,
     */
     case ADD_PROJECT: {

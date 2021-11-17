@@ -68,7 +68,7 @@ function Homepage(props) {
                         My Projects
                     </h1>
                     <MusicList 
-                        headers={['trackTitle', 'genre', 'owner', 'cntVersions', 'cntCollab', 'duration']}
+                        headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
                         className={"max-h-96"}
                         transform={TRANSFORM_OWNER}
@@ -81,7 +81,7 @@ function Homepage(props) {
                         My Contributions
                     </h1>
                     <MusicList 
-                        headers={['trackTitle', 'genre', 'owner', 'cntVersions', 'cntCollab', 'duration']}
+                        headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
                         className={"max-h-96"}
                         transform={TRANSFORM_AUTHOR}
@@ -113,7 +113,7 @@ function Homepage(props) {
                         />
                     </div>                    
                     <MusicList
-                        headers={['trackTitle', 'genre', 'owner', 'cntVersions', 'cntCollab', 'duration']}
+                        headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
                         transform={sortType}
                     />
