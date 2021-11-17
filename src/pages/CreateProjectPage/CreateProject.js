@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import withHeader from '../../hocs/withHeader'
 import InputField from '../../components/InputField'
@@ -21,6 +21,8 @@ const CreateProject = () => {
   const [tags, setTags] = useState([])
   const [trackNames, setTrackNames] = useState([])
   const [instrument, setInstrument] = useState('guitar')
+
+  const { userId } = useSelector(state => state.database); 
 
   const fileInputRef = useRef()
 
@@ -58,7 +60,7 @@ const CreateProject = () => {
   const handleCreateProject = () => {
     dispatch(
       addProject({
-        ownerId: 'helena',
+        ownerId: userId,
         tracks: trackNames,
         trackTitle: name,
         description,
@@ -69,7 +71,7 @@ const CreateProject = () => {
   }
 
   console.log({
-    ownerId: 'helena',
+    ownerId: userId,
     tracks: trackNames,
     trackTitle: name,
     description,

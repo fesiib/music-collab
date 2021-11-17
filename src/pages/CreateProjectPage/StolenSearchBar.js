@@ -1,7 +1,7 @@
 import React from 'react'
 
 import CreatableSelect from 'react-select/creatable'
-import GENRE_OPTIONS from '../../data/genreOptions'
+import DEFAULT_TAGS from '../../data/defTags'
 
 const DEF_PROPS = {
   placeholder: 'Search'
@@ -59,7 +59,7 @@ function StolenSearchBar(props) {
     <div className="w-full">
       <CreatableSelect
         isMulti
-        options={GENRE_OPTIONS}
+        options={DEFAULT_TAGS}
         placeholder={props.placeholder}
         styles={customStyles}
         value={props.value}

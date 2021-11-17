@@ -24,7 +24,6 @@ const initialState = {
     sortType: TRANSFORM_POPULAR,
     versionId: "sunnyDay1",
     projectId: "sunnyDay",
-    collaborators: new Set(),
 };
 
 

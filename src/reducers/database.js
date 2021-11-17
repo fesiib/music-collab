@@ -83,7 +83,10 @@ const DUMMY_PROJECT_1 = {
     metaInfo: {
         ownerId: 'helena',
         trackTitle: "Sunny day",
-        tags: ["Pop", "Chill"],
+        tags: [
+            {label: "Pop", value: "pop"},
+            {label: "Chill", value: "chill"},
+        ],
         description: "It is a pop music",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
@@ -186,7 +189,11 @@ const DUMMY_PROJECT_2 = {
     metaInfo: {
         ownerId: 'me',
         trackTitle: "Love",
-        tags: ["Rock", "Hard", "Guitar"],
+        tags: [
+            {label: "Guitar", value: "guitar"},
+            {label: "Rock", value: "rock"},
+            {label: "Hard", value: "hard"},
+        ],
         description: "Hard Rock",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 

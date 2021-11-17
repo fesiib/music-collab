@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSortType } from '../reducers/homepage/homepagePanel';
 import { setTabIndex } from '../reducers/homepage/tabInfo';
 import RightPanel from '../components/RightPanel';
+import { useHistory } from 'react-router';
 
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white border-t-2 border-l-2 border-r-2 border-black";
 const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600";
@@ -20,6 +21,8 @@ const AUDIO_EXMPALE_2 = "https://firebasestorage.googleapis.com/v0/b/music-colla
 
 
 function Homepage(props) {
+    const history = useHistory();
+
     const dispatch = useDispatch();
 
     const { sortType } = useSelector(state => state.homepagePanel);
@@ -74,7 +77,11 @@ function Homepage(props) {
                         transform={TRANSFORM_OWNER}
                     />
                     <div className="flex justify-center m-5">    
-                        <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
+                        <GenericButton
+                            title={"Create New Project"} 
+                            className="text-xl w-2/5 p-2" 
+                            onClick = {() => history.push('/create_project')}
+                        />
                     </div>
 
                     <h1 className="p-10 text-center">
@@ -99,7 +106,7 @@ function Homepage(props) {
                 }
                 <TabPanel>
                     <SearchBar
-                        placeholder = "Search for Music, Authors, and Tags"
+                        placeholder = "Search for Tags"
                     />
                     <div className="flex flex-justify m-5">
                         <GenericButton

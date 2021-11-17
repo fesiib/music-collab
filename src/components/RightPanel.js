@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import ReactTimeAgo from 'react-time-ago';
@@ -12,8 +12,6 @@ import SlidingPanel from 'react-sliding-side-panel';
 import GenericButton from "./GenericButton";
 import MusicList, { TRANSFORM_POPULAR_SINGLE, TRANSFORM_RECENT, TRANSFORM_RECENT_SINGLE } from "./MusicList";
 import CustomTag from "./CustomTag";
-
-TimeAgo.addDefaultLocale(en);
 
 const DEFAULT_BACKGROUND = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
@@ -79,15 +77,23 @@ function RightPanel(props) {
 
     const project = projects[projectId];
 
-    const background = project.metaInfo.backgroundImage;
+    let background = DEFAULT_BACKGROUND;
+    if (typeof project.metaInfo.backgroundImage === 'string' && project.metaInfo.backgroundImage > 0) {
+        background = project.metaInfo.backgroundImage;
+    }
 
     const collaborators = Array.from(getCollaborators(project));
 
     const trackTitle = project.metaInfo.trackTitle;
-    const tags = Array.from(new Set(project.metaInfo.tags));
+    const tags = project.metaInfo.tags;
     const lastModified = project.metaInfo.lastModified;
     const creationTime = project.metaInfo.creationTime;
     const ownerName = profiles[project.metaInfo.ownerId].metaInfo.name;
+
+
+    useEffect(() => {
+        TimeAgo.addDefaultLocale(en);
+    }, [en]);
 
     return (
         <SlidingPanel
@@ -120,8 +126,8 @@ function RightPanel(props) {
                 <div className="pl-5 flex flex-row flex-wrap">
                     {tags.map((tag) => {
                         return (
-                            <div key={tag}>
-                                <CustomTag title={tag}/>
+                            <div key={tag.value}>
+                                <CustomTag label={tag.label}/>
                             </div>
                         )
                     })}
