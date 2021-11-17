@@ -7,7 +7,6 @@ import { useParams } from "react-router-dom";
 
 import MusicTracks from '../components/MusicTracks'
 import VersionContributor from '../components/VersionContributor'
-import GenericButton from '../components/GenericButton'
 import CommentSection from "../components/CommentSection"
 
 const VersionPage = () => {
@@ -19,6 +18,7 @@ const VersionPage = () => {
         <VersionContributor/>
 
         <MusicTracks/>
+
         
         <CommentSection/>
 
