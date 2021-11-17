@@ -6,6 +6,7 @@ import homepagePanel from './homepage/homepagePanel';
 import tabInfo from './homepage/tabInfo';
 import database from './database';
 import player from './player';
+import storage from 'redux-persist/lib/storage';
 
 const RESET_APP = "RESET_APP";
 
@@ -22,10 +23,13 @@ export const resetApp = () => ({
 });
 
 const rootReducer = (state, action) => {
-    if (action.type === RESET_APP) {
-        return appReducer(undefined, action);
+    switch(action.type) {
+        case RESET_APP:
+            storage.removeItem('persist:root');
+            return appReducer(undefined, action);
+        default:
+            return appReducer(state, action);
     }
-    return appReducer(state, action);
 }
 
 export default rootReducer;

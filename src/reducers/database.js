@@ -25,9 +25,15 @@ const DUMMY_PROFILE_0 = {
     metaInfo: {
         name: "Me",
         communityRating: 2,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
-    projectIds: [],
-    versionIds: [],
+    projectIds: ['love'],
+    versionIds: [
+        {
+            projectId: 'love',
+            versionId: 'love1',    
+        },
+    ],
     commentIds: [],
 }
 
@@ -35,22 +41,37 @@ const DUMMY_PROFILE_1 = {
     metaInfo: {
         name: "Helena",
         communityRating: 0,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
     projectIds: ['sunnyDay'],
-    versionIds: [{ 
-        projectId: 'sunnyDay',
-        versionId: 'sunnyDay1',
+    versionIds: [
+        { 
+            projectId: 'sunnyDay',
+            versionId: 'sunnyDay1',
+        },
+        {
+            projectId: 'love',
+            versionId: 'love2',    
+        }
+    ],
+    commentIds: [{ 
+        projectId: 'love',
+        versionId: 'love1',
+        commentId: 'comment2',
     }],
-    commentIds: [],
 }
 
 const DUMMY_PROFILE_2 = {
     metaInfo: {
         name: "Bob",
         communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
     projectIds: [],
-    versionIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay2',
+    }],
     commentIds: [{ 
         projectId: 'sunnyDay',
         versionId: 'sunnyDay1',
@@ -64,9 +85,10 @@ const DUMMY_PROJECT_1 = {
         trackTitle: "Sunny day",
         genre: "Pop",
         description: "It is a pop music",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
         creationTime: new Date(0),
-        lastModified: new Date(0),
+        lastModified: new Date(2021, 11, 17),
     },
 
     //sorted by popularity
@@ -80,7 +102,7 @@ const DUMMY_PROJECT_1 = {
 
                 votes: 0,
                 creationTime: new Date(0),
-                lastModified: new Date(0),
+                lastModified: new Date(1),
             },
             tracks: [
                 {
@@ -98,6 +120,102 @@ const DUMMY_PROJECT_1 = {
                     audioSegment: {start: 0, finish: 0},
                     creationTime: new Date(1),
                 }
+            }
+        },
+        sunnyDay2: {
+            metaInfo: {
+                authorId: 'bob',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 17),
+                lastModified: new Date(2021, 11, 17),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+        }
+    },
+}
+
+const DUMMY_PROJECT_2 = {
+    metaInfo: {
+        ownerId: 'me',
+        trackTitle: "Love",
+        genre: "Rock",
+        description: "Hard Rock",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
+
+        creationTime: new Date(2021, 11, 10),
+        lastModified: new Date(2021, 11, 10),
+    },
+
+    //sorted by popularity
+    versions: {
+        love1: {
+            metaInfo: {
+                authorId: 'me',
+                contributionMessage: "Draft version (very first)",
+                parentVersionId: null,
+                duration: 10,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 10),
+                lastModified: new Date(2021, 11, 11),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                }
+            ],
+            
+            comments: {
+                comment2: {
+                    authorId: 'helena',
+                    commentMessage: "This is amazing!",
+                    parentCommentId: null,
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(2021, 11, 11),
+                }
+            }
+        },
+        love2: {
+            metaInfo: {
+                authorId: 'helena',
+                contributionMessage: "LOL!",
+                parentVersionId: 'love1',
+                duration: 120,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 15),
+                lastModified: new Date(2021, 11, 15),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'drums',
+                }
+            ],
+            
+            comments: {
             }
         }
     },
@@ -260,6 +378,7 @@ function recalcRating(projects, profiles, profileId) {
 const initialState = {
     projects: {
         sunnyDay: DUMMY_PROJECT_1,
+        love: DUMMY_PROJECT_2,
     },
     profiles: {
         me: DUMMY_PROFILE_0,
@@ -355,6 +474,7 @@ const database = (state = initialState, action) => {
 
             let newProjects = {...state.projects};
             newProjects[projectId].versions[versionId] = version;
+            newProjects[projectId].metaInfo.lastModified = new Date(version.metaInfo.creationTime.getTime());
             
             let newProfiles = {...state.profiles};
             newProfiles[authorId].versionIds.push({
@@ -377,6 +497,7 @@ const database = (state = initialState, action) => {
             const projectId = action.payload.projectId;
             const versionId = action.payload.versionId;
             const { newProjects, newProfiles } = cleanUpVersion({...state.projects}, {...state.profiles}, projectId, versionId);
+            newProjects[projectId].metaInfo.lastModified = new Date();
             return {
                 ...state,
                 projects: newProjects,
@@ -414,6 +535,7 @@ const database = (state = initialState, action) => {
 
             let newProjects = {...state.projects};
             newProjects[projectId].versions[versionId].comments[commentId] = comment;
+            newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
             
             let newProfiles = {...state.profiles};
             newProfiles[authorId].versionIds.push({
@@ -439,6 +561,8 @@ const database = (state = initialState, action) => {
             const versionId = action.payload.versionId;
             const commentId = action.payload.commentId;
             const { newProjects, newProfiles } = cleanUpComment({...state.projects}, {...state.profiles}, projectId, versionId, commentId);
+
+            newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date();
             return {
                 ...state,
                 projects: newProjects,
@@ -495,7 +619,7 @@ const database = (state = initialState, action) => {
             };
         }
         default:
-                return state;
+            return state;
     }
 }
 

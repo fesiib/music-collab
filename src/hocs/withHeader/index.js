@@ -5,11 +5,15 @@ const withHeader = (Page) => {
   return (props) => {
     return (
       <div className="w-full flex flex-col">
-        <Header />
-        <Page {...props} />
+        <div className="w-full fixed">
+          <Header />
+        </div>
+        <div className="mt-32">
+          <Page {...props} />
+        </div>
       </div>
     )
   }
 }
 
-export default withHeader
+export default withHeader;

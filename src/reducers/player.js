@@ -32,9 +32,7 @@ const player = (state = initialState, action) => {
             }
         }
         default:
-                return {
-                    ...state
-                };
+            return state;
     }
 }
 
