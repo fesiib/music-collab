@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import PianoIcon from '../media/piano.svg';
+import { useDispatch, useSelector } from 'react-redux';
 
 import WaveSurfer from 'wavesurfer.js';   
 
@@ -79,20 +80,30 @@ const OneTrack = (props) => {
 }
 
 
-const MusicTracks = () => {
+const MusicTracks = ({versionId, projectId}) => {
+  const dispatch = useDispatch();
+  const {projects, profiles} = useSelector(state => state.database);
+  // {
+  //   url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+  //   type: 'piano',
+  // }
+  const tracks = projects[projectId]["versions"][versionId]["tracks"];
+  
 
     return (
         <div className = "flex flex-col rounded-2xl mx-auto bg-gray-600 p-3 gap-3 my-5">
 
-            <OneTrack  
-                audioUrl = {"http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"}
-            />
-            <OneTrack  
-                audioUrl = {"http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"}
-            />
-            <OneTrack  
-                audioUrl = {"http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"}
-            />
+            {
+              tracks.map ( track=> {
+                return (<OneTrack  
+                  audioUrl = {track.url}
+                  type = {track.type}
+                />)
+              } )
+
+            }
+
+            
             
         </div>    
   )
