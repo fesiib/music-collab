@@ -1,7 +1,9 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CreatableSelect from 'react-select/creatable';
-import GENRE_OPTIONS from '../data/genreOptions';
+import DEFAULT_TAGS from '../data/defTags';
+import { setTags } from '../reducers/homepage/tabInfo';
 
 const DEF_PROPS = {
     placeholder: "Search",
@@ -51,18 +53,29 @@ const customStyles = {
   }
 
 function SearchBar(props) {
+    const dispatch = useDispatch();
+
     props = {
         ...DEF_PROPS,
         ...props,
+    }
+
+    const { searchTags } = useSelector(state => state.tabInfo);
+
+    const searchBarChangeHandler = (tags) => {
+        console.log(tags);
+        dispatch(setTags({tags}));
     }
 
     return (
         <div className='p-10'>
             <CreatableSelect
                 isMulti
-                options={GENRE_OPTIONS}
+                options={DEFAULT_TAGS}
+                value={searchTags}
                 placeholder={props.placeholder}
                 styles={customStyles}
+                onChange={searchBarChangeHandler}
             />
         </div>
     );

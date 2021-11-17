@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {Tabs, TabList, Tab, TabPanel} from 'react-tabs';
-import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 
 import GenericButton from '../components/GenericButton';
-import MusicList, { TRANSFORM_AUTHOR, TRANSFORM_OWNER } from '../components/MusicList';
+import MusicList, { TRANSFORM_AUTHOR, TRANSFORM_OWNER, TRANSFORM_POPULAR, TRANSFORM_RECENT } from '../components/MusicList';
 import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePanel, openPanel } from '../reducers/homepage/homepagePanel';
+import { setSortType } from '../reducers/homepage/homepagePanel';
 import { setTabIndex } from '../reducers/homepage/tabInfo';
-
-const albumBackgroundURL = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
+import RightPanel from '../components/RightPanel';
+import { useHistory } from 'react-router';
 
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white border-t-2 border-l-2 border-r-2 border-black";
 const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600";
 
+const AUDIO_EXAMPLE_1 = "https://firebasestorage.googleapis.com/v0/b/music-collab-9ec47.appspot.com/o/projects%2F83448da950164b1886dafaa7fd14540abest_song.mp3?alt=media&token=3e0e5978-ff1e-4020-98d9-48de4a9df39e";
+const AUDIO_EXMPALE_2 = "https://firebasestorage.googleapis.com/v0/b/music-collab-9ec47.appspot.com/o/projects%2Fdf04c163723f4d76bbb74585dc61e559song.mp3?alt=media&token=07942ecb-a06b-44f7-af79-390d675ebc15";
+
+
 function Homepage(props) {
+    const history = useHistory();
+
     const dispatch = useDispatch();
 
-    const { panelState } = useSelector(state => state.homepagePanel);
+    const { sortType } = useSelector(state => state.homepagePanel);
     const { tabIndex } = useSelector(state => state.tabInfo);
 
-    const _closePanel = () => {
-        dispatch(closePanel());
-    }
-
-    const _openPanel = () => {
-        dispatch(openPanel());
+    const _setSortType = (sortType) => {
+        dispatch(setSortType({sortType}));
     }
     
     const _setTabIndex = (tabIndex) => {
@@ -52,32 +53,52 @@ function Homepage(props) {
             >
                 <TabList className="border-black mt-5 px-2 flex justify-evenly text-center">
                     <Tab className={assignTabClassName(0)}>
-                        My Projects
+                        My Studio
                     </Tab>
                     <Tab className={assignTabClassName(1)}>
                         Browse
                     </Tab>
-                    <Tab className={assignTabClassName(2)}>
+                    {/* <Tab className={assignTabClassName(2)}>
                         Contributions
-                    </Tab>
+                    </Tab> */}
                 </TabList>
                 
                 {
                     //My Projects Page
                 }
-                <TabPanel>
+                <TabPanel >
                     <h1 className="p-10 text-center">
                         My Projects
                     </h1>
                     <MusicList 
-                        headers={['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']}
+                        headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
-                        className={"h-96"}
+                        className={"max-h-96"}
                         transform={TRANSFORM_OWNER}
                     />
                     <div className="flex justify-center m-5">    
-                        <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
+                        <GenericButton
+                            title={"Create New Project"} 
+                            className="text-xl w-2/5 p-2" 
+                            onClick = {() => history.push('/create_project')}
+                        />
                     </div>
+
+                    <h1 className="p-10 text-center">
+                        My Contributions
+                    </h1>
+                    <MusicList 
+                        headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
+                        votes={true}
+                        className={"max-h-96"}
+                        transform={TRANSFORM_AUTHOR}
+                    />
+                    {/* <div className="flex justify-center m-5">    
+                        <GenericButton title={"Browse"} className="text-xl w-1/5 p-2" onClick={() => _setTabIndex(1)}/>
+                    </div> */}
+                    <h1 className="p-10 text-center">
+                        My Comments
+                    </h1>
                 </TabPanel>
                 
                 {
@@ -85,68 +106,28 @@ function Homepage(props) {
                 }
                 <TabPanel>
                     <SearchBar
-                        placeholder = "Search for Music, Authors, and Tags"
+                        placeholder = "Search for Tags"
                     />
                     <div className="flex flex-justify m-5">
-                        <GenericButton title={"Most Popular"} className="text-l mx-auto w-1/5 p-2" />
-                        <GenericButton title={"Weekly Top"} className="text-l mx-auto w-1/5 p-2" />
+                        <GenericButton
+                            title={"Most Popular"}
+                            className="text-l mx-auto w-1/5 p-2"
+                            onClick={() => _setSortType(TRANSFORM_POPULAR)}/>
+                        <GenericButton
+                            title={"Most Recent"}
+                            className="text-l mx-auto w-1/5 p-2" 
+                            onClick={() => _setSortType(TRANSFORM_RECENT)}
+                        />
                     </div>                    
-                    <MusicList/>
-                </TabPanel>
-                
-                {
-                    //Contributions Page
-                }
-                <TabPanel>
-                    <h1 className="p-10 text-center">
-                        Contributions
-                    </h1>
-                    <MusicList 
-                        headers={['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']}
+                    <MusicList
+                        headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
-                        className={"h-96"}
-                        transform={TRANSFORM_AUTHOR}
+                        transform={sortType}
                     />
-                    <h2 className="p-3 text-center">
-                        My Comments
-                    </h2>
                 </TabPanel>
             </Tabs>
-            <SlidingPanel
-                type={'right'}
-                isOpen={panelState}
-                size={30}
-                backdropClicked={_closePanel}
-                panelClassName='bg-white'
-            >
-                <div className='bg-white'>
-                    <div style={{
-                        backgroundImage:`url(${albumBackgroundURL})`,
-                        backgroundRepeat: 'no-repeat',
-                        width: '100%',
-                        height: '400px',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}>
-                        <div className="flex">
-                            <GenericButton title={"Upvote"} />
-                            <GenericButton title={"Downvote"} />    
-                            <GenericButton title={"Contribute"} />
-                            <GenericButton title={"Go To Project"} />
-                        </div>      
-                    </div>
-                    <h2 className="pt-5 pl-5 text-left">
-                        Music Title
-                    </h2>
-                    <h3 className="pl-5 pb-5 text-left">
-                        Author
-                    </h3>
-                    <MusicList headers={['author', 'duration']} votes={true} className={"h-96 "}/>
-                    <div>
-                        Contributors
-                    </div>
-                </div>
-            </SlidingPanel>
+            
+            <RightPanel/>
         </div>
     );
 }
