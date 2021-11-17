@@ -97,6 +97,38 @@ const DUMMY_PROJECT_1 = {
                     votes: 0,
                     audioSegment: {start: 0, finish: 0},
                     creationTime: new Date(1),
+                },
+                comment2: {
+                    authorId: 'bob',
+                    commentMessage: "This is Yes!",
+                    parentCommentId: null,
+                    votes: 4,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment3: {
+                    authorId: 'bob',
+                    commentMessage: "Wooow amazing!",
+                    parentCommentId: null,
+                    votes: 1,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment4: {
+                    authorId: 'bob',
+                    commentMessage: "Wooow amazing!",
+                    parentCommentId: "comment1",
+                    votes: 1,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment5: {
+                    authorId: 'bob',
+                    commentMessage: "Wooow amazing!",
+                    parentCommentId: "comment1",
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
                 }
             }
         }

@@ -3,29 +3,32 @@ import React, {useState} from 'react'
 import ProfilePic from '../media/profile-svgrepo-com.svg';
 import GenericButton from '../components/GenericButton'
 
-const WriteComment = ({addComment, reply, parent}) => {
-    const c = {
-        id: Math.floor(Math.random() * 1240),
-        author: "Alan Shui",
-        contend: "write your comment here...",
-        
-    }
-    const author = c.author;
+const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
     const [comment, setComment] = useState("");
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        console.log ("comment - from WriteComment");
+        console.log (comment);
+
         const newComment = {
             id: Math.floor(Math.random() * 1240),
-            author: author,
-            contend: comment,
+            commentMessage: comment,
+            comment: comment, 
             timeStamp: Date.now(),
             votes: 0,
-            parent: parent,
-            replies: []
+            parentCommentId: parentCommentId,
+            audioSegment: {start: 0, finish: 0}
+
+            //  authorId: 'bob',
+            //  commentMessage: "This is amazing!",
+            //  parentCommentId: null,
+            //  votes: 0,
+            //  audioSegment: {start: 0, finish: 0},
+            //  creationTime: new Date(1),
         }
-        addComment (newComment);
-        setComment ('');
+        addCommentComp (newComment);
         event.target.reset();
         // alert(`Submitting Name ${comment}`)
 
@@ -50,7 +53,7 @@ const WriteComment = ({addComment, reply, parent}) => {
                 </div>
                 <div className = "flex-none  flex flex-col	 w-11/12" >
                     <div className = "flex-grow  flex flex-row px-3  gap-x-3 " >
-                        <p className = "text-primary text  text-sm	" > {author} </p>
+                        <p className = "text-primary text  text-sm	" > {authorId} </p>
                     </div>
 
                     <div className = "flex-grow px-3 w-full  pb-1">

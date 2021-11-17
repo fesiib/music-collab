@@ -7,7 +7,7 @@ import WriteComment from './WriteComment'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addComment } from '../reducers/database';
-
+import changeCommentTree from './utils/changeCommentTree'
 /*
 comments: [
     {
@@ -23,7 +23,6 @@ comments: [
                     
                 }] ,
                 votes: 0,
-                audioSegment: (1, 2)
             },
         ] ,
         votes: 0,
@@ -32,17 +31,9 @@ comments: [
 ]
 */
 
-
-
-
-
-
-const Comment = ({comment}) => {
+const Comment = ({comment, addCommentComp}) => {
     const replies = comment.replies
     const [showComment, setShowComment] = useState(false);
-    const addComment = (c) => {
-        console.log(c)
-    }
     return (
         <>
         <GenericComment reply = {0} showReply = {()=>setShowComment(!showComment)} write={false} comment={comment} />
@@ -57,7 +48,7 @@ const Comment = ({comment}) => {
                         )
                 })    
             }
-            {showComment &&  <WriteComment parent= {comment.id} reply={1} addComment = {addComment} />}
+            {showComment &&  <WriteComment parentCommentId= {comment.commentId} reply={1} addCommentComp = {addCommentComp} />}
 
         </>
     )
@@ -67,20 +58,35 @@ const Comment = ({comment}) => {
 
 const CommentSection = ({versionId, projectId}) => {
     const dispatch = useDispatch();
-    const { database } = useSelector(state => state.database);
-    console.log ("database - is here")
-    console.log (database)
+    const {projects, profiles} = useSelector(state => state.database);
+    const comments_object = projects[projectId]["versions"][versionId]["comments"];
+    console.log (comments_object);
 
-    const { panelState } = useSelector(state => state.homepagePanel);
-    const { tabIndex } = useSelector(state => state.tabInfo);
-
-    console.log ("tabIndex - is here")
-    console.log (tabIndex)
-
-
+    
+    const myUserId = "me";   //// TODO: Currently logged in user 
+    const comments = changeCommentTree (comments_object);
     const _addComment = (payload) => {
-        dispatch(addComment({payload}))
     }
+
+    const addCommentComp = (c) => {
+        console.log("console.log(c);");
+        console.log(c);
+        const payload = {
+            ...c, 
+            projectId: projectId,
+            versionId: versionId,
+            authorId: myUserId,
+        }
+
+        console.log("payload");
+        console.log(payload);
+        dispatch(addComment(payload));
+
+
+        // const {projects, profiles} = useSelector(state => state.database);
+        console.log (projects);
+    }
+
     /* payload format
         projectId,
         versionId,
@@ -94,16 +100,7 @@ const CommentSection = ({versionId, projectId}) => {
 
     const [showComment, setShowComment] = useState(false);
 
-    const [comments, setComments] = useState(commentsGen (4));
-    console.log ( comments );
-
-    const addComment = (c) => {
-        let newCom = comments;
-        newCom.push(c);
-        setComments (  newCom);
-
-        console.log(c)
-    }
+    
 
 
     return (
@@ -133,10 +130,10 @@ const CommentSection = ({versionId, projectId}) => {
         <div className = "flex flex-col my-5 gap-y-2 h-full">
             Comments 
 
-            {showComment &&  <WriteComment parent = {false} reply={0} addComment = {addComment} />}
+            {showComment &&  <WriteComment  parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
 
             {
-                comments.map ( c => {  return <Comment reply = {0} comment = {c} />} )    
+                comments.map ( c => {  return <Comment addCommentComp = {addCommentComp}   reply = {0} comment = {c} />} )    
             }
             
 
@@ -145,4 +142,4 @@ const CommentSection = ({versionId, projectId}) => {
   )
 }
 
-export default CommentSection
+export default CommentSection;

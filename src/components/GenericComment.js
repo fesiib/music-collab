@@ -4,10 +4,14 @@ import GenericButton from './GenericButton'
 import time_ago from './utils/timeAgo'
 import ProfilePic from '../media/profile-svgrepo-com.svg';
 
+// import DownVote from '../icons/downvote-version.js'
+import UpDownVote from '../icons/up-down-vote.js'
+
 const GenericComment = ({comment, reply, showReply}) => {
     const id = comment.id
-    const author = comment.author
-    const contend = comment.contend
+    const author = comment.authorId
+
+    const contend = comment.commentMessage
     const timeStamp = comment.timeStamp
     const votes = comment.votes
     const time_dif = time_ago (timeStamp)
@@ -19,7 +23,7 @@ const GenericComment = ({comment, reply, showReply}) => {
         
         {reply >= 1 &&
             <div className = "flex-none w-35 text-white">
-            ........
+            ......
             </div>
         }
         
@@ -55,14 +59,11 @@ const GenericComment = ({comment, reply, showReply}) => {
                     {votes}
                 </div>
                 <div className= " flex-none w-8 ">
-                    <svg class="h-7 w-7 fill-current " viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14z"/>
-                    </svg>
+                    <UpDownVote  up_down = "up"/>
+                    
                 </div>
                 <div className= " flex-none w-8">
-                    <svg class="h-7 w-7 fill-current " viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform='rotate(180)'>
-                        <path d="M4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14z"/>
-                    </svg>
+                    <UpDownVote up_down = "down"/>
                 </div>
                 <div className= " flex-grow"> </div>
                 
