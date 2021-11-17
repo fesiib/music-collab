@@ -40,7 +40,7 @@ const OneTrack = (props) => {
 
         } else { // Song changed
           waveSurfer.load(props.audioUrl);
-          setPlayingAudio(false);
+          
         }
       }, [props.audioUrl]);
 

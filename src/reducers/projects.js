@@ -44,7 +44,18 @@ const project = {
                     author: "",
                     comment: "",
                     timeStamp: 0,
-                    parentComment: -1,
+                    replies: [
+                        {
+                            author: "",
+                            comment: "",
+                            timeStamp: 0,
+                            replies: [{
+                                
+                            }] ,
+                            votes: 0,
+                            audioSegment: (1, 2)
+                        },
+                    ] ,
                     votes: 0,
                     audioSegment: (1, 2)
                 }
