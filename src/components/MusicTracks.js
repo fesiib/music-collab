@@ -3,6 +3,16 @@ import PianoIcon from '../media/piano.svg';
 
 import WaveSurfer from 'wavesurfer.js';   
 
+/*
+tracks: [
+  {
+    audioUrl: ...
+    insturment: ...
+
+  }
+]
+*/
+
 
 
 const OneTrack = (props) => {
@@ -40,19 +50,28 @@ const OneTrack = (props) => {
 
         } else { // Song changed
           waveSurfer.load(props.audioUrl);
-          setPlayingAudio(false);
+          
         }
       }, [props.audioUrl]);
 
+    const presPlay = () =>{
+      if (playingAudio){
+        pauseAudio();
+        setPlayingAudio (!playingAudio);
+      } else {
+        playAudio();
+        setPlayingAudio (!playingAudio);
+      }
+    }
     return (    
     <div className = "flex flex-raw bg-white h-6"> 
-        <div className = "flex-none w-5  my-0.5 mx-1" >
+        <div  onClick = { presPlay}  className = "flex-none w-5  my-0.5 mx-1" >
             <img src= {PianoIcon} />
         </div>
         
-            <div className = "flex-grow  " >
+            <div className = "flex-grow "  >
                  
-                <div  className ="  " ref={waveformRef} ref={waveformRef} id="waveform" />
+                <div  className ="  " ref={waveformRef} id="waveform" />
 
             </div>
     </div>          
@@ -61,8 +80,10 @@ const OneTrack = (props) => {
 
 
 const MusicTracks = () => {
+
     return (
         <div className = "flex flex-col rounded-2xl mx-auto bg-gray-600 p-3 gap-3 my-5">
+
             <OneTrack  
                 audioUrl = {"http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3"}
             />
