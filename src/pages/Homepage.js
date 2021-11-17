@@ -26,7 +26,7 @@ function Homepage(props) {
     const dispatch = useDispatch();
 
     const { sortType } = useSelector(state => state.homepagePanel);
-    const { tabIndex } = useSelector(state => state.tabInfo);
+    const { tabIndex, searchTags } = useSelector(state => state.tabInfo);
 
     const _setSortType = (sortType) => {
         dispatch(setSortType({sortType}));
@@ -122,6 +122,7 @@ function Homepage(props) {
                     <MusicList
                         headers={['trackTitle', 'owner', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
+                        search={true}
                         transform={sortType}
                     />
                 </TabPanel>

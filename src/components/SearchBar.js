@@ -63,7 +63,6 @@ function SearchBar(props) {
     const { searchTags } = useSelector(state => state.tabInfo);
 
     const searchBarChangeHandler = (tags) => {
-        console.log(tags);
         dispatch(setTags({tags}));
     }
 
