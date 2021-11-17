@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {useTable, usePagination, useBlockLayout, useFlexLayout} from 'react-table';
 
-import musicData from '../data/musicData';
 import { openPanel } from '../reducers/homepage/homepagePanel';
 import GenericButton from './GenericButton';
 
@@ -165,7 +164,8 @@ function Table(props) {
                                             <td {...cell.getCellProps({
                                                 className: "p-2"
                                             })}>
-                                                <GenericButton title={"Vote"} className='w-12'/>
+                                                {//<GenericButton title={"Vote"} className='w-12'/>
+                                                }
                                                 {cell.render('Cell')}
                                             </td>
                                         );
@@ -272,7 +272,7 @@ function transformProjects_author(projects, profiles, authorId) {
         const collaborators = getCollaborators(project);
         data.push(transformSingleVersion(profiles, project, version, collaborators));
     }
-    return [];
+    return data;
 }
 
 function transformProjects_popular(projects, profiles) {

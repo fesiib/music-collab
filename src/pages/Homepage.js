@@ -72,7 +72,7 @@ function Homepage(props) {
                     <MusicList 
                         headers={['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
-                        className={"h-96"}
+                        className={"max-h-96"}
                         transform={TRANSFORM_OWNER}
                     />
                     <div className="flex justify-center m-5">    
@@ -104,7 +104,7 @@ function Homepage(props) {
                     <MusicList 
                         headers={['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']}
                         votes={true}
-                        className={"h-96"}
+                        className={"max-h-96"}
                         transform={TRANSFORM_AUTHOR}
                     />
                     <h2 className="p-3 text-center">
@@ -141,7 +141,7 @@ function Homepage(props) {
                     <h3 className="pl-5 pb-5 text-left">
                         Author
                     </h3>
-                    <MusicList headers={['author', 'duration']} votes={true} className={"h-96 "}/>
+                    <MusicList headers={['author', 'duration']} votes={true} className={"max-h-96"}/>
                     <div>
                         Contributors
                     </div>
