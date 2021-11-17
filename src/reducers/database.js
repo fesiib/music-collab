@@ -22,300 +22,448 @@ const VERSION_RATING = 2
 const COMMENT_RATING = 1
 
 const DUMMY_PROFILE_0 = {
-  metaInfo: {
-    name: 'Me',
-    communityRating: 2
-  },
-  projectIds: [],
-  versionIds: [],
-  commentIds: []
+    metaInfo: {
+        name: "Me",
+        communityRating: 2,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: ['love'],
+    versionIds: [
+        {
+            projectId: 'love',
+            versionId: 'love1',    
+        },
+    ],
+    commentIds: [],
 }
 
 const DUMMY_PROFILE_1 = {
-  metaInfo: {
-    name: 'Helena',
-    communityRating: 0
-  },
-  projectIds: ['sunnyDay'],
-  versionIds: [
-    {
-      projectId: 'sunnyDay',
-      versionId: 'sunnyDay1'
-    }
-  ],
-  commentIds: []
+    metaInfo: {
+        name: "Helena",
+        communityRating: 0,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: ['sunnyDay'],
+    versionIds: [
+        { 
+            projectId: 'sunnyDay',
+            versionId: 'sunnyDay1',
+        },
+        {
+            projectId: 'love',
+            versionId: 'love2',    
+        }
+    ],
+    commentIds: [{ 
+        projectId: 'love',
+        versionId: 'love1',
+        commentId: 'comment2',
+    }],
 }
 
 const DUMMY_PROFILE_2 = {
-  metaInfo: {
-    name: 'Bob',
-    communityRating: 1
-  },
-  projectIds: [],
-  versionIds: [],
-  commentIds: [
-    {
-      projectId: 'sunnyDay',
-      versionId: 'sunnyDay1',
-      commentId: 'comment1'
-    }
-  ]
-}
+    metaInfo: {
+        name: "Bob",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay2',
+    }],
+    commentIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment1',
+    }]
+};
 
 const DUMMY_PROJECT_1 = {
-  metaInfo: {
-    ownerId: 'helena',
-    trackTitle: 'Sunny day',
-    genre: 'Pop',
-    description: 'It is a pop music',
+    metaInfo: {
+        ownerId: 'helena',
+        trackTitle: "Sunny day",
+        genre: "Pop",
+        description: "It is a pop music",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
-    creationTime: new Date(0),
-    lastModified: new Date(0)
-  },
-
-  //sorted by popularity
-  versions: {
-    sunnyDay1: {
-      metaInfo: {
-        authorId: 'helena',
-        contributionMessage: 'Draft version (very first)',
-        parentVersionId: null,
-        duration: 100,
-
-        votes: 0,
         creationTime: new Date(0),
-        lastModified: new Date(0)
-      },
-      tracks: [
-        {
-          url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-          type: 'piano'
-        }
-      ],
+        lastModified: new Date(2021, 11, 17),
+    },
 
-      comments: {
-        comment1: {
-          authorId: 'bob',
-          commentMessage: 'This is amazing!',
-          parentCommentId: null,
-          votes: 0,
-          audioSegment: { start: 0, finish: 0 },
-          creationTime: new Date(1)
+    //sorted by popularity
+    versions: {
+        sunnyDay1: {
+            metaInfo: {
+                authorId: 'helena',
+                contributionMessage: "Draft version (very first)",
+                parentVersionId: null,
+                duration: 100,
+
+                votes: 0,
+                creationTime: new Date(0),
+                lastModified: new Date(1),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                }
+            ],
+            
+            comments: {
+                comment1: {
+                    authorId: 'bob',
+                    commentMessage: "This is amazing!",
+                    parentCommentId: null,
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment2: {
+                    authorId: 'bob',
+                    commentMessage: "This is Yes!",
+                    parentCommentId: null,
+                    votes: 4,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment3: {
+                    authorId: 'bob',
+                    commentMessage: "Wooow amazing!",
+                    parentCommentId: null,
+                    votes: 1,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment4: {
+                    authorId: 'bob',
+                    commentMessage: "Wooow amazing!",
+                    parentCommentId: "comment1",
+                    votes: 1,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                },
+                comment5: {
+                    authorId: 'bob',
+                    commentMessage: "Wooow amazing!",
+                    parentCommentId: "comment1",
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(1),
+                }
+            }
+        },
+        sunnyDay2: {
+            metaInfo: {
+                authorId: 'bob',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 17),
+                lastModified: new Date(2021, 11, 17),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+        }
+    },
+}
+
+const DUMMY_PROJECT_2 = {
+    metaInfo: {
+        ownerId: 'me',
+        trackTitle: "Love",
+        genre: "Rock",
+        description: "Hard Rock",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
+
+        creationTime: new Date(2021, 11, 10),
+        lastModified: new Date(2021, 11, 10),
+    },
+
+    //sorted by popularity
+    versions: {
+        love1: {
+            metaInfo: {
+                authorId: 'me',
+                contributionMessage: "Draft version (very first)",
+                parentVersionId: null,
+                duration: 10,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 10),
+                lastModified: new Date(2021, 11, 11),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                }
+            ],
+            
+            comments: {
+                comment2: {
+                    authorId: 'helena',
+                    commentMessage: "This is amazing!",
+                    parentCommentId: null,
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(2021, 11, 11),
+                }
+            }
+        },
+        love2: {
+            metaInfo: {
+                authorId: 'helena',
+                contributionMessage: "LOL!",
+                parentVersionId: 'love1',
+                duration: 120,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 15),
+                lastModified: new Date(2021, 11, 15),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'drums',
+                }
+            ],
+            
+            comments: {
+            }
         }
       }
     }
-  }
-}
 
 export const setUser = (payload) => ({
-  type: SET_USER,
-  payload
+    type: SET_USER,
+    payload
 })
 
 export const addProfile = (payload) => ({
-  type: ADD_PROFILE,
-  payload
+    type: ADD_PROFILE,
+    payload
 })
 
 export const removeprofile = (payload) => ({
-  type: REMOVE_PROFILE,
-  payload
+    type: REMOVE_PROFILE,
+    payload
 })
 
 export const addProject = (payload) => ({
-  type: ADD_PROJECT,
-  payload
+    type: ADD_PROJECT,
+    payload
 })
 
 export const removeProject = (payload) => ({
-  type: REMOVE_PROJECT,
-  payload
+    type: REMOVE_PROJECT,
+    payload
 })
 
 export const addVersion = (payload) => ({
-  type: ADD_VERSION,
-  payload
+    type: ADD_VERSION,
+    payload
 })
 
 export const removeVersion = (payload) => ({
-  type: REMOVE_VERSION,
-  payload
+    type: REMOVE_VERSION,
+    payload
 })
 
 export const addComment = (payload) => ({
-  type: ADD_COMMENT,
-  payload
+    type: ADD_COMMENT,
+    payload
 })
 
 export const removeComment = (payload) => ({
-  type: REMOVE_COMMENT,
-  payload
+    type: REMOVE_COMMENT,
+    payload
 })
 
 export const changeVoteVersion = (payload) => ({
-  type: CHANGE_VOTE_VERSION,
-  payload
+    type: CHANGE_VOTE_VERSION,
+    payload
 })
 
 export const changeVoteComment = (payload) => ({
-  type: CHANGE_VOTE_COMMENT,
-  payload
+    type: CHANGE_VOTE_COMMENT,
+    payload
 })
 
 function cleanUpProject(projects, profiles, projectId) {
-  let newProjects = projects
-  let newProfiles = profiles
-  for (let versionId in projects[projectId].versions) {
-    const result = cleanUpVersion(
-      newProjects,
-      newProfiles,
-      projectId,
-      versionId
-    )
-    newProjects = result.newProjects
-    newProfiles = result.newProfiles
-  }
-  const ownerId = newProjects[projectId].metaInfo.ownerId
-
-  delete newProjects[projectId]
-  for (let i = 0; i < newProfiles[ownerId].projectIds.length; i++) {
-    const pId = newProfiles[ownerId].projectIds[i]
-    if (pId === projectId) {
-      newProfiles[ownerId].projectIds = [
-        ...newProfiles[ownerId].projectIds.slice(0, i),
-        ...newProfiles[ownerId].projectIds.slice(i + 1)
-      ]
-      break
+    let newProjects = projects
+    let newProfiles = profiles
+    for (let versionId in projects[projectId].versions) {
+        const result = cleanUpVersion(
+            newProjects,
+            newProfiles,
+            projectId,
+            versionId
+        )
+        newProjects = result.newProjects
+        newProfiles = result.newProfiles
     }
-  }
+    const ownerId = newProjects[projectId].metaInfo.ownerId
 
-  newProfiles = recalcRating(newProjects, newProfiles, ownerId)
-  return { newProjects, newProfiles }
+    delete newProjects[projectId]
+    for (let i = 0; i < newProfiles[ownerId].projectIds.length; i++) {
+        const pId = newProfiles[ownerId].projectIds[i]
+        if (pId === projectId) {
+            newProfiles[ownerId].projectIds = [
+                ...newProfiles[ownerId].projectIds.slice(0, i),
+                ...newProfiles[ownerId].projectIds.slice(i + 1)
+            ]
+            break
+        }
+    }
+
+    newProfiles = recalcRating(newProjects, newProfiles, ownerId)
+    return { newProjects, newProfiles }
 }
 
 function cleanUpVersion(projects, profiles, projectId, versionId) {
-  let newProjects = projects
-  let newProfiles = profiles
-  for (let commentId in projects[projectId].versions[versionId].comments) {
-    const result = cleanUpComment(
-      newProjects,
-      newProfiles,
-      projectId,
-      versionId,
-      commentId
-    )
-    newProjects = result.newProjects
-    newProfiles = result.newProfiles
-  }
-  const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId
-
-  delete newProjects[projectId].versions[versionId]
-  for (let i = 0; i < newProfiles[authorId].versionIds.length; i++) {
-    const vObj = newProfiles[authorId].versionIds[i]
-    if (vObj.projectId === projectId && vObj.versionId === versionId) {
-      newProfiles[authorId].versionIds = [
-        ...newProfiles[authorId].versionIds.slice(0, i),
-        ...newProfiles[authorId].versionIds.slice(i + 1)
-      ]
-      break
+    let newProjects = projects
+    let newProfiles = profiles
+    for (let commentId in projects[projectId].versions[versionId].comments) {
+        const result = cleanUpComment(
+            newProjects,
+            newProfiles,
+            projectId,
+            versionId,
+            commentId
+        )
+        newProjects = result.newProjects
+        newProfiles = result.newProfiles
     }
-  }
+    const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId
 
-  newProfiles = recalcRating(newProjects, newProfiles, authorId)
-  return { newProjects, newProfiles }
+    delete newProjects[projectId].versions[versionId]
+    for (let i = 0; i < newProfiles[authorId].versionIds.length; i++) {
+        const vObj = newProfiles[authorId].versionIds[i]
+        if (vObj.projectId === projectId && vObj.versionId === versionId) {
+            newProfiles[authorId].versionIds = [
+                ...newProfiles[authorId].versionIds.slice(0, i),
+                ...newProfiles[authorId].versionIds.slice(i + 1)
+            ]
+            break
+        }
+    }
+
+    newProfiles = recalcRating(newProjects, newProfiles, authorId)
+    return { newProjects, newProfiles }
 }
 
 function cleanUpComment(projects, profiles, projectId, versionId, commentId) {
-  let newProjects = projects
-  let newProfiles = profiles
-  const authorId =
-    newProjects[projectId].versions[versionId].comments[commentId].authorId
+    let newProjects = projects
+    let newProfiles = profiles
+    const authorId =
+        newProjects[projectId].versions[versionId].comments[commentId].authorId
 
-  delete newProjects[projectId].versions[versionId].comments[commentId]
-  for (let i = 0; i < newProfiles[authorId].commentIds.length; i++) {
-    const cObj = newProfiles[authorId].commentIds[i]
-    if (
-      cObj.projectId === projectId &&
-      cObj.versionId === versionId &&
-      cObj.commentId === commentId
-    ) {
-      newProfiles[authorId].commentIds = [
-        ...newProfiles[authorId].commentIds.slice(0, i),
-        ...newProfiles[authorId].commentIds.slice(i + 1)
-      ]
-      break
+    delete newProjects[projectId].versions[versionId].comments[commentId]
+    for (let i = 0; i < newProfiles[authorId].commentIds.length; i++) {
+        const cObj = newProfiles[authorId].commentIds[i]
+        if (
+            cObj.projectId === projectId &&
+            cObj.versionId === versionId &&
+            cObj.commentId === commentId
+        ) {
+            newProfiles[authorId].commentIds = [
+                ...newProfiles[authorId].commentIds.slice(0, i),
+                ...newProfiles[authorId].commentIds.slice(i + 1)
+            ]
+            break
+        }
     }
-  }
 
-  newProfiles = recalcRating(newProjects, newProfiles, authorId)
-  return { newProjects, newProfiles }
+    newProfiles = recalcRating(newProjects, newProfiles, authorId)
+    return { newProjects, newProfiles }
 }
 
 function recalcRating(projects, profiles, profileId) {
-  let rating = 0
-  let maxVersion = 0
-  for (let projectId of profiles[profileId].projectIds) {
-    for (let versionId in projects[projectId].versions) {
-      let cur = projects[projectId].versions[versionId].metaInfo.votes
-      if (maxVersion < cur) {
-        maxVersion = cur
-      }
+    let rating = 0
+    let maxVersion = 0
+    for (let projectId of profiles[profileId].projectIds) {
+        for (let versionId in projects[projectId].versions) {
+            let cur = projects[projectId].versions[versionId].metaInfo.votes
+            if (maxVersion < cur) {
+                maxVersion = cur
+            }
+        }
     }
-  }
-  rating += maxVersion * PROJECT_RATING
-  for (let obj of profiles[profileId].versionIds) {
-    const projectId = obj.projectId
-    const versionId = obj.versionId
-    let cur = projects[projectId].versions[versionId].metaInfo.votes
-    if (cur < 0) {
-      cur = 0
+    rating += maxVersion * PROJECT_RATING
+    for (let obj of profiles[profileId].versionIds) {
+        const projectId = obj.projectId
+        const versionId = obj.versionId
+        let cur = projects[projectId].versions[versionId].metaInfo.votes
+        if (cur < 0) {
+            cur = 0
+        }
+        rating += cur * VERSION_RATING
     }
-    rating += cur * VERSION_RATING
-  }
-  for (let obj of profiles[profileId].commentIds) {
-    const projectId = obj.projectId
-    const versionId = obj.versionId
-    const commentId = obj.commentId
-    let cur = projects[projectId].versions[versionId].comments[commentId].votes
-    if (cur < 0) {
-      cur = 0
+    for (let obj of profiles[profileId].commentIds) {
+        const projectId = obj.projectId
+        const versionId = obj.versionId
+        const commentId = obj.commentId
+        let cur = projects[projectId].versions[versionId].comments[commentId].votes
+        if (cur < 0) {
+            cur = 0
+        }
+        rating += cur * COMMENT_RATING
     }
-    rating += cur * COMMENT_RATING
-  }
-  profiles[profileId].metaInfo.communityRating = rating
-  return profiles
+    profiles[profileId].metaInfo.communityRating = rating
+    return profiles
 }
 
 const initialState = {
-  projects: {
-    sunnyDay: DUMMY_PROJECT_1
-  },
-  profiles: {
-    me: DUMMY_PROFILE_0,
-    helena: DUMMY_PROFILE_1,
-    bob: DUMMY_PROFILE_2
-  },
-  userId: 'me'
-}
+    projects: {
+        sunnyDay: DUMMY_PROJECT_1,
+        love: DUMMY_PROJECT_2,
+    },
+    profiles: {
+        me: DUMMY_PROFILE_0,
+        helena: DUMMY_PROFILE_1,
+        bob: DUMMY_PROFILE_2,
+    },
+    userId: 'me',
+};
+
 
 const database = (state = initialState, action) => {
   switch (action.type) {
     /*
-            userId,
-        */
+        userId,
+    */
     case SET_USER: {
-      return {
-        ...state,
-        userId: action.payload.userId
-      }
+        return {
+            ...state,
+            userId: action.payload.userId
+        }
     }
 
     /* payload format
-            ownerId,
-            trackTitle,
-            genre,
-            description,
-        */
+        ownerId,
+        trackTitle,
+        genre,
+        description,
+    */
     case ADD_PROJECT: {
       const projectId = 'project' + randomString()
       const ownerId = action.payload.ownerId
@@ -365,8 +513,8 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-        */
+        projectId,
+    */
     case REMOVE_PROJECT: {
       const projectId = action.payload.projectId
       const { newProjects, newProfiles } = cleanUpProject(
@@ -382,17 +530,17 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-            authorId,
-            contributionMessage,
-            parentVersionId,
-            duration,
-            tracks {url: '', type: ??},
-        */
+      projectId,
+      authorId,
+      contributionMessage,
+      parentVersionId,
+      duration,
+      tracks {url: '', type: ??},
+    */
     case ADD_VERSION: {
-      const projectId = action.payload.projectId
-      const versionId = 'version' + randomString()
-      const authorId = action.payload.authorId
+      const projectId = action.payload.projectId;
+      const versionId = 'version' + randomString();
+      const authorId = action.payload.authorId;
       const version = {
         metaInfo: {
           authorId: action.payload.authorId,
@@ -406,16 +554,17 @@ const database = (state = initialState, action) => {
         },
         tracks: action.payload.tracks,
         comments: {}
-      }
+      };
 
-      let newProjects = { ...state.projects }
-      newProjects[projectId].versions[versionId] = version
+      let newProjects = { ...state.projects };
+      newProjects[projectId].versions[versionId] = version;
+      newProjects[projectId].metaInfo.lastModified = new Date(version.metaInfo.creationTime.getTime());
 
-      let newProfiles = { ...state.profiles }
+      let newProfiles = { ...state.profiles };
       newProfiles[authorId].versionIds.push({
         projectId,
         versionId
-      })
+      });
 
       return {
         ...state,
@@ -425,9 +574,9 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-            versionId,
-        */
+        projectId,
+        versionId,
+    */
     case REMOVE_VERSION: {
       const projectId = action.payload.projectId
       const versionId = action.payload.versionId
@@ -437,6 +586,7 @@ const database = (state = initialState, action) => {
         projectId,
         versionId
       )
+      newProjects[projectId].metaInfo.lastModified = new Date();
       return {
         ...state,
         projects: newProjects,
@@ -445,24 +595,24 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-            versionId,
-            authorId,
-            commentMessage,
-            parentCommentId,
-            audioSegment {start: 0, finish: 0}
-            duration,
-            tracks {url: '', type: ??},
-        */
+        projectId,
+        versionId,
+        authorId,
+        commentMessage,
+        parentCommentId,
+        audioSegment {start: 0, finish: 0}
+        duration,
+        tracks {url: '', type: ??},
+    */
     case ADD_COMMENT: {
       if (action.payload.hasOwnProperty('audioSegment')) {
         action.payload.audioSegment = { start: 0, finish: 0 }
       }
 
-      const projectId = action.payload.projectId
-      const versionId = action.payload.versionId
-      const commentId = 'comment' + randomString()
-      const authorId = action.payload.authorId
+      const projectId = action.payload.projectId;
+      const versionId = action.payload.versionId;
+      const commentId = 'comment' + randomString();
+      const authorId = action.payload.authorId;
       const comment = {
         authorId: action.payload.authorId,
         commentMessage: action.payload.comment,
@@ -470,17 +620,18 @@ const database = (state = initialState, action) => {
         votes: 0,
         audioSegment: action.payload.audioSegment,
         creationTime: new Date()
-      }
+      };
 
-      let newProjects = { ...state.projects }
-      newProjects[projectId].versions[versionId].comments[commentId] = comment
+      let newProjects = { ...state.projects };
+      newProjects[projectId].versions[versionId].comments[commentId] = comment;
+      newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
 
-      let newProfiles = { ...state.profiles }
+      let newProfiles = { ...state.profiles };
       newProfiles[authorId].versionIds.push({
         projectId,
         versionId,
         commentId
-      })
+      });
 
       return {
         ...state,
@@ -490,10 +641,10 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-            versionId,
-            commentId,
-        */
+        projectId,
+        versionId,
+        commentId,
+    */
     case REMOVE_COMMENT: {
       const projectId = action.payload.projectId
       const versionId = action.payload.versionId
@@ -505,6 +656,7 @@ const database = (state = initialState, action) => {
         versionId,
         commentId
       )
+      newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date();
       return {
         ...state,
         projects: newProjects,
@@ -513,10 +665,10 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-            versionId,
-            votes,
-        */
+        projectId,
+        versionId,
+        votes,
+    */
     case CHANGE_VOTE_VERSION: {
       const projectId = action.payload.projectId
       const versionId = action.payload.versionId
@@ -544,11 +696,11 @@ const database = (state = initialState, action) => {
     }
 
     /* payload format
-            projectId,
-            versionId,
-            commentId,
-            votes,
-        */
+        projectId,
+        versionId,
+        commentId,
+        votes,
+    */
     case CHANGE_VOTE_COMMENT: {
       const projectId = action.payload.projectId
       const versionId = action.payload.versionId
