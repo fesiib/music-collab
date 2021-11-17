@@ -1,25 +1,25 @@
-import randomString from "../services/randomString";
+import randomString from '../services/randomString'
 
-const SET_USER = "SET_USER";
+const SET_USER = 'SET_USER'
 
-const ADD_PROFILE = "ADD_PROFILE";
-const REMOVE_PROFILE = "REMOVE_PROFILE";
+const ADD_PROFILE = 'ADD_PROFILE'
+const REMOVE_PROFILE = 'REMOVE_PROFILE'
 
-const ADD_PROJECT = "ADD_PROJECT";
-const REMOVE_PROJECT = "REMOVE_PROJECT";
+const ADD_PROJECT = 'ADD_PROJECT'
+const REMOVE_PROJECT = 'REMOVE_PROJECT'
 
-const ADD_VERSION = "ADD_VERSION";
-const REMOVE_VERSION = "REMOVE_VERSION";
+const ADD_VERSION = 'ADD_VERSION'
+const REMOVE_VERSION = 'REMOVE_VERSION'
 
-const ADD_COMMENT = "ADD_COMMENT";
-const REMOVE_COMMENT = "REMOVE_COMMENT";
+const ADD_COMMENT = 'ADD_COMMENT'
+const REMOVE_COMMENT = 'REMOVE_COMMENT'
 
-const CHANGE_VOTE_VERSION = "CHANGE_VOTE_VERSION";
-const CHANGE_VOTE_COMMENT = "CHANGE_VOTE_COMMENT";
+const CHANGE_VOTE_VERSION = 'CHANGE_VOTE_VERSION'
+const CHANGE_VOTE_COMMENT = 'CHANGE_VOTE_COMMENT'
 
-const PROJECT_RATING = 3;
-const VERSION_RATING = 2;
-const COMMENT_RATING = 1;
+const PROJECT_RATING = 3
+const VERSION_RATING = 2
+const COMMENT_RATING = 1
 
 const DUMMY_PROFILE_0 = {
     metaInfo: {
@@ -250,161 +250,186 @@ const DUMMY_PROJECT_2 = {
             comments: {
             }
         }
-    },
-}
+      }
+    }
 
 export const setUser = (payload) => ({
     type: SET_USER,
-    payload,
-});
+    payload
+})
 
 export const addProfile = (payload) => ({
     type: ADD_PROFILE,
-    payload,
-});
+    payload
+})
 
 export const removeprofile = (payload) => ({
     type: REMOVE_PROFILE,
-    payload,
-});
+    payload
+})
 
 export const addProject = (payload) => ({
     type: ADD_PROJECT,
-    payload,
-});
+    payload
+})
 
 export const removeProject = (payload) => ({
     type: REMOVE_PROJECT,
-    payload,
-});
+    payload
+})
 
 export const addVersion = (payload) => ({
     type: ADD_VERSION,
-    payload,
-});
+    payload
+})
 
 export const removeVersion = (payload) => ({
     type: REMOVE_VERSION,
-    payload,
-});
+    payload
+})
 
 export const addComment = (payload) => ({
     type: ADD_COMMENT,
-    payload,
-});
+    payload
+})
 
 export const removeComment = (payload) => ({
     type: REMOVE_COMMENT,
-    payload,
-});
+    payload
+})
 
 export const changeVoteVersion = (payload) => ({
     type: CHANGE_VOTE_VERSION,
-    payload,
-});
+    payload
+})
 
 export const changeVoteComment = (payload) => ({
     type: CHANGE_VOTE_COMMENT,
-    payload,
-});
+    payload
+})
 
 function cleanUpProject(projects, profiles, projectId) {
-    let newProjects = projects;
-    let newProfiles = profiles;
+    let newProjects = projects
+    let newProfiles = profiles
     for (let versionId in projects[projectId].versions) {
-        const result = cleanUpVersion(newProjects, newProfiles, projectId, versionId);
-        newProjects = result.newProjects;
-        newProfiles = result.newProfiles;
+        const result = cleanUpVersion(
+            newProjects,
+            newProfiles,
+            projectId,
+            versionId
+        )
+        newProjects = result.newProjects
+        newProfiles = result.newProfiles
     }
-    const ownerId = newProjects[projectId].metaInfo.ownerId;
+    const ownerId = newProjects[projectId].metaInfo.ownerId
 
-    delete newProjects[projectId];
+    delete newProjects[projectId]
     for (let i = 0; i < newProfiles[ownerId].projectIds.length; i++) {
-        const pId = newProfiles[ownerId].projectIds[i];
+        const pId = newProfiles[ownerId].projectIds[i]
         if (pId === projectId) {
-            newProfiles[ownerId].projectIds = [...newProfiles[ownerId].projectIds.slice(0, i), ...newProfiles[ownerId].projectIds.slice(i+1)];
-            break;
+            newProfiles[ownerId].projectIds = [
+                ...newProfiles[ownerId].projectIds.slice(0, i),
+                ...newProfiles[ownerId].projectIds.slice(i + 1)
+            ]
+            break
         }
     }
 
-    newProfiles = recalcRating(newProjects, newProfiles, ownerId);
-    return {newProjects, newProfiles};
+    newProfiles = recalcRating(newProjects, newProfiles, ownerId)
+    return { newProjects, newProfiles }
 }
 
 function cleanUpVersion(projects, profiles, projectId, versionId) {
-    let newProjects = projects;
-    let newProfiles = profiles;
+    let newProjects = projects
+    let newProfiles = profiles
     for (let commentId in projects[projectId].versions[versionId].comments) {
-        const result = cleanUpComment(newProjects, newProfiles, projectId, versionId, commentId);
-        newProjects = result.newProjects;
-        newProfiles = result.newProfiles;
+        const result = cleanUpComment(
+            newProjects,
+            newProfiles,
+            projectId,
+            versionId,
+            commentId
+        )
+        newProjects = result.newProjects
+        newProfiles = result.newProfiles
     }
-    const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId;
+    const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId
 
-    delete newProjects[projectId].versions[versionId];
+    delete newProjects[projectId].versions[versionId]
     for (let i = 0; i < newProfiles[authorId].versionIds.length; i++) {
-        const vObj = newProfiles[authorId].versionIds[i];
+        const vObj = newProfiles[authorId].versionIds[i]
         if (vObj.projectId === projectId && vObj.versionId === versionId) {
-            newProfiles[authorId].versionIds = [...newProfiles[authorId].versionIds.slice(0, i), ...newProfiles[authorId].versionIds.slice(i+1)];
-            break;
+            newProfiles[authorId].versionIds = [
+                ...newProfiles[authorId].versionIds.slice(0, i),
+                ...newProfiles[authorId].versionIds.slice(i + 1)
+            ]
+            break
         }
     }
 
-    newProfiles = recalcRating(newProjects, newProfiles, authorId);
-    return {newProjects, newProfiles};
+    newProfiles = recalcRating(newProjects, newProfiles, authorId)
+    return { newProjects, newProfiles }
 }
 
 function cleanUpComment(projects, profiles, projectId, versionId, commentId) {
-    let newProjects = projects;
-    let newProfiles = profiles;
-    const authorId = newProjects[projectId].versions[versionId].comments[commentId].authorId;
+    let newProjects = projects
+    let newProfiles = profiles
+    const authorId =
+        newProjects[projectId].versions[versionId].comments[commentId].authorId
 
-    delete newProjects[projectId].versions[versionId].comments[commentId];
+    delete newProjects[projectId].versions[versionId].comments[commentId]
     for (let i = 0; i < newProfiles[authorId].commentIds.length; i++) {
-        const cObj = newProfiles[authorId].commentIds[i];
-        if (cObj.projectId === projectId && cObj.versionId === versionId && cObj.commentId === commentId) {
-            newProfiles[authorId].commentIds = [...newProfiles[authorId].commentIds.slice(0, i), ...newProfiles[authorId].commentIds.slice(i+1)];
-            break;
+        const cObj = newProfiles[authorId].commentIds[i]
+        if (
+            cObj.projectId === projectId &&
+            cObj.versionId === versionId &&
+            cObj.commentId === commentId
+        ) {
+            newProfiles[authorId].commentIds = [
+                ...newProfiles[authorId].commentIds.slice(0, i),
+                ...newProfiles[authorId].commentIds.slice(i + 1)
+            ]
+            break
         }
     }
 
-    newProfiles = recalcRating(newProjects, newProfiles, authorId);
-    return {newProjects, newProfiles};
+    newProfiles = recalcRating(newProjects, newProfiles, authorId)
+    return { newProjects, newProfiles }
 }
 
 function recalcRating(projects, profiles, profileId) {
-    let rating = 0;
-    let maxVersion = 0;
+    let rating = 0
+    let maxVersion = 0
     for (let projectId of profiles[profileId].projectIds) {
         for (let versionId in projects[projectId].versions) {
-            let cur = projects[projectId].versions[versionId].metaInfo.votes;
+            let cur = projects[projectId].versions[versionId].metaInfo.votes
             if (maxVersion < cur) {
-                maxVersion = cur;
+                maxVersion = cur
             }
         }
     }
-    rating += maxVersion * PROJECT_RATING;
+    rating += maxVersion * PROJECT_RATING
     for (let obj of profiles[profileId].versionIds) {
-        const projectId = obj.projectId;
-        const versionId = obj.versionId;
-        let cur = projects[projectId].versions[versionId].metaInfo.votes;
+        const projectId = obj.projectId
+        const versionId = obj.versionId
+        let cur = projects[projectId].versions[versionId].metaInfo.votes
         if (cur < 0) {
-            cur = 0;
+            cur = 0
         }
-        rating += cur * VERSION_RATING;
+        rating += cur * VERSION_RATING
     }
     for (let obj of profiles[profileId].commentIds) {
-        const projectId = obj.projectId;
-        const versionId = obj.versionId;
-        const commentId = obj.commentId;
-        let cur = projects[projectId].versions[versionId].comments[commentId].votes;
+        const projectId = obj.projectId
+        const versionId = obj.versionId
+        const commentId = obj.commentId
+        let cur = projects[projectId].versions[versionId].comments[commentId].votes
         if (cur < 0) {
-            cur = 0;
+            cur = 0
         }
-        rating += cur * COMMENT_RATING;
+        rating += cur * COMMENT_RATING
     }
-    profiles[profileId].metaInfo.communityRating = rating;
-    return profiles;
+    profiles[profileId].metaInfo.communityRating = rating
+    return profiles
 }
 
 const initialState = {
@@ -422,237 +447,285 @@ const initialState = {
 
 
 const database = (state = initialState, action) => {
-    switch (action.type) {
-        /*
-            userId,
-        */
-        case SET_USER: {
-            return {
-                ...state,
-                userId: action.payload.userId,
-            }
+  switch (action.type) {
+    /*
+        userId,
+    */
+    case SET_USER: {
+        return {
+            ...state,
+            userId: action.payload.userId
         }
-
-        /* payload format
-            ownerId,
-            trackTitle,
-            genre,
-            description,
-        */
-        case ADD_PROJECT: {
-            const projectId = 'project' + randomString();
-            const ownerId = action.payload.ownerId;
-
-            const project = {
-                metaInfo: {
-                    ...action.payload,
-                    creationTime: new Date(),
-                    lastModified: new Date(),
-                },
-                versions: {},
-            };
-
-            let newProjects = {...state.projects};
-            newProjects[projectId] = project;
-
-            let newProfiles = { ...state.profiles };
-            newProfiles[ownerId].projectIds.push(projectId);
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-
-        /* payload format
-            projectId,
-        */
-        case REMOVE_PROJECT: {
-            const projectId = action.payload.projectId;
-            const { newProjects, newProfiles } = cleanUpProject({...state.projects}, {...state.profiles}, projectId);
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-
-        /* payload format
-            projectId,
-            authorId,
-            contributionMessage,
-            parentVersionId,
-            duration,
-            tracks {url: '', type: ??},
-        */
-        case ADD_VERSION: {
-            const projectId = action.payload.projectId;
-            const versionId = 'version' + randomString();
-            const authorId = action.payload.authorId;
-            const version = {
-                metaInfo: {
-                    authorId: action.payload.authorId,
-                    contributionMessage: action.payload.contributionMessage,
-                    parentVersionId: action.payload.parentVersionId,
-                    duration: action.payload.duration,
-
-                    votes: 0,
-                    creationTime: new Date(),
-                    lastModified: new Date(),    
-                },
-                tracks: action.payload.tracks,
-                comments: {},
-            };
-
-            let newProjects = {...state.projects};
-            newProjects[projectId].versions[versionId] = version;
-            newProjects[projectId].metaInfo.lastModified = new Date(version.metaInfo.creationTime.getTime());
-            
-            let newProfiles = {...state.profiles};
-            newProfiles[authorId].versionIds.push({
-                projectId,
-                versionId,
-            });
-
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-
-        /* payload format
-            projectId,
-            versionId,
-        */
-        case REMOVE_VERSION: {
-            const projectId = action.payload.projectId;
-            const versionId = action.payload.versionId;
-            const { newProjects, newProfiles } = cleanUpVersion({...state.projects}, {...state.profiles}, projectId, versionId);
-            newProjects[projectId].metaInfo.lastModified = new Date();
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-
-        /* payload format
-            projectId,
-            versionId,
-            authorId,
-            commentMessage,
-            parentCommentId,
-            audioSegment {start: 0, finish: 0}
-            duration,
-            tracks {url: '', type: ??},
-        */
-        case ADD_COMMENT: {
-            if (action.payload.hasOwnProperty('audioSegment')) {
-                action.payload.audioSegment = {start: 0, finish: 0};
-            }
-
-            const projectId = action.payload.projectId;
-            const versionId = action.payload.versionId;
-            const commentId = 'comment' + randomString(); 
-            const authorId = action.payload.authorId;
-            const comment = {
-                authorId: action.payload.authorId,
-                commentMessage: action.payload.comment,
-                parentCommentId: action.payload.parentCommentId,
-                votes: 0,
-                audioSegment: action.payload.audioSegment,
-                creationTime: new Date(),
-            };
-
-            let newProjects = {...state.projects};
-            newProjects[projectId].versions[versionId].comments[commentId] = comment;
-            newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
-            
-            let newProfiles = {...state.profiles};
-            newProfiles[authorId].versionIds.push({
-                projectId,
-                versionId,
-                commentId,
-            });
-
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-        
-        /* payload format
-            projectId,
-            versionId,
-            commentId,
-        */
-        case REMOVE_COMMENT: {
-            const projectId = action.payload.projectId;
-            const versionId = action.payload.versionId;
-            const commentId = action.payload.commentId;
-            const { newProjects, newProfiles } = cleanUpComment({...state.projects}, {...state.profiles}, projectId, versionId, commentId);
-
-            newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date();
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-
-
-        /* payload format
-            projectId,
-            versionId,
-            votes,
-        */
-        case CHANGE_VOTE_VERSION: {
-            const projectId = action.payload.projectId;
-            const versionId = action.payload.versionId;
-
-            let newProjects = {...state.projects};
-
-            newProjects[projectId].versions[versionId].metaInfo.votes += action.payload.votes;
-            const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId;
-            let newProfiles = recalcRating(newProjects, {...state.profiles}, authorId);
-
-            const ownerId = newProjects[projectId].metaInfo.ownerId;
-            newProfiles = recalcRating(newProjects, {...state.profiles}, ownerId);
-
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-
-        /* payload format
-            projectId,
-            versionId,
-            commentId,
-            votes,
-        */
-        case CHANGE_VOTE_COMMENT: {
-            const projectId = action.payload.projectId;
-            const versionId = action.payload.versionId;
-            const commentId = action.payload.commentId;
-
-            let newProjects = {...state.projects};
-
-            newProjects[projectId].versions[versionId].comments[commentId].votes += action.payload.votes;
-            const authorId = newProjects[projectId].versions[versionId].comments[commentId].authorId;
-            const newProfiles = recalcRating(newProjects, {...state.profiles}, authorId);
-            return {
-                ...state,
-                projects: newProjects,
-                profiles: newProfiles,
-            };
-        }
-        default:
-            return state;
     }
+
+    /* payload format
+        ownerId,
+        trackTitle,
+        genre,
+        description,
+    */
+    case ADD_PROJECT: {
+      const projectId = 'project' + randomString()
+      const ownerId = action.payload.ownerId
+      const versionId = 'version' + randomString()
+      const authorId = ownerId
+
+      const version = {
+        metaInfo: {
+          authorId: authorId,
+          contributionMessage: action.payload.contributionMessage | '',
+          parentVersionId: action.payload.parentVersionId | '-1',
+          duration: action.payload.duration | 230,
+
+          votes: 0,
+          creationTime: new Date(),
+          lastModified: new Date()
+        },
+        tracks: action.payload.tracks,
+        comments: {}
+      }
+
+      const project = {
+        metaInfo: {
+          ...action.payload,
+          creationTime: new Date(),
+          lastModified: new Date()
+        },
+        versions: {
+          [versionId]: version
+        }
+      }
+
+      let newProjects = { ...state.projects }
+      newProjects[projectId] = project
+
+      let newProfiles = { ...state.profiles }
+      newProfiles[ownerId].projectIds.push(projectId)
+      newProfiles[ownerId].versionIds.push({
+        projectId,
+        versionId
+      })
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+        projectId,
+    */
+    case REMOVE_PROJECT: {
+      const projectId = action.payload.projectId
+      const { newProjects, newProfiles } = cleanUpProject(
+        { ...state.projects },
+        { ...state.profiles },
+        projectId
+      )
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+      projectId,
+      authorId,
+      contributionMessage,
+      parentVersionId,
+      duration,
+      tracks {url: '', type: ??},
+    */
+    case ADD_VERSION: {
+      const projectId = action.payload.projectId;
+      const versionId = 'version' + randomString();
+      const authorId = action.payload.authorId;
+      const version = {
+        metaInfo: {
+          authorId: action.payload.authorId,
+          contributionMessage: action.payload.contributionMessage,
+          parentVersionId: action.payload.parentVersionId,
+          duration: action.payload.duration,
+
+          votes: 0,
+          creationTime: new Date(),
+          lastModified: new Date()
+        },
+        tracks: action.payload.tracks,
+        comments: {}
+      };
+
+      let newProjects = { ...state.projects };
+      newProjects[projectId].versions[versionId] = version;
+      newProjects[projectId].metaInfo.lastModified = new Date(version.metaInfo.creationTime.getTime());
+
+      let newProfiles = { ...state.profiles };
+      newProfiles[authorId].versionIds.push({
+        projectId,
+        versionId
+      });
+
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+        projectId,
+        versionId,
+    */
+    case REMOVE_VERSION: {
+      const projectId = action.payload.projectId
+      const versionId = action.payload.versionId
+      const { newProjects, newProfiles } = cleanUpVersion(
+        { ...state.projects },
+        { ...state.profiles },
+        projectId,
+        versionId
+      )
+      newProjects[projectId].metaInfo.lastModified = new Date();
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+        projectId,
+        versionId,
+        authorId,
+        commentMessage,
+        parentCommentId,
+        audioSegment {start: 0, finish: 0}
+        duration,
+        tracks {url: '', type: ??},
+    */
+    case ADD_COMMENT: {
+      if (action.payload.hasOwnProperty('audioSegment')) {
+        action.payload.audioSegment = { start: 0, finish: 0 }
+      }
+
+      const projectId = action.payload.projectId;
+      const versionId = action.payload.versionId;
+      const commentId = 'comment' + randomString();
+      const authorId = action.payload.authorId;
+      const comment = {
+        authorId: action.payload.authorId,
+        commentMessage: action.payload.comment,
+        parentCommentId: action.payload.parentCommentId,
+        votes: 0,
+        audioSegment: action.payload.audioSegment,
+        creationTime: new Date()
+      };
+
+      let newProjects = { ...state.projects };
+      newProjects[projectId].versions[versionId].comments[commentId] = comment;
+      newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
+
+      let newProfiles = { ...state.profiles };
+      newProfiles[authorId].versionIds.push({
+        projectId,
+        versionId,
+        commentId
+      });
+
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+        projectId,
+        versionId,
+        commentId,
+    */
+    case REMOVE_COMMENT: {
+      const projectId = action.payload.projectId
+      const versionId = action.payload.versionId
+      const commentId = action.payload.commentId
+      const { newProjects, newProfiles } = cleanUpComment(
+        { ...state.projects },
+        { ...state.profiles },
+        projectId,
+        versionId,
+        commentId
+      )
+      newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date();
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+        projectId,
+        versionId,
+        votes,
+    */
+    case CHANGE_VOTE_VERSION: {
+      const projectId = action.payload.projectId
+      const versionId = action.payload.versionId
+
+      let newProjects = { ...state.projects }
+
+      newProjects[projectId].versions[versionId].metaInfo.votes +=
+        action.payload.votes
+      const authorId =
+        newProjects[projectId].versions[versionId].metaInfo.authorId
+      let newProfiles = recalcRating(
+        newProjects,
+        { ...state.profiles },
+        authorId
+      )
+
+      const ownerId = newProjects[projectId].metaInfo.ownerId
+      newProfiles = recalcRating(newProjects, { ...state.profiles }, ownerId)
+
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+
+    /* payload format
+        projectId,
+        versionId,
+        commentId,
+        votes,
+    */
+    case CHANGE_VOTE_COMMENT: {
+      const projectId = action.payload.projectId
+      const versionId = action.payload.versionId
+      const commentId = action.payload.commentId
+
+      let newProjects = { ...state.projects }
+
+      newProjects[projectId].versions[versionId].comments[commentId].votes +=
+        action.payload.votes
+      const authorId =
+        newProjects[projectId].versions[versionId].comments[commentId].authorId
+      const newProfiles = recalcRating(
+        newProjects,
+        { ...state.profiles },
+        authorId
+      )
+      return {
+        ...state,
+        projects: newProjects,
+        profiles: newProfiles
+      }
+    }
+    default:
+      return state
+  }
 }
 
-export default database;
+export default database

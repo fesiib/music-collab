@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import App from './App'
 import ProjectPage from './pages/projectPage/ProjectPage'
-import Homepage from './pages/Homepage';
-import VersionPage from './pages/VersionPage';
+import Homepage from './pages/Homepage'
+import VersionPage from './pages/VersionPage'
+import CreateProject from './pages/CreateProjectPage/CreateProject'
 
 class Routes extends React.Component {
   render() {
@@ -13,7 +14,12 @@ class Routes extends React.Component {
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/homepage" component={Homepage} />
-          <Route exact path="/version/:projectId/:versionId" component={VersionPage} />
+          <Route
+            exact
+            path="/version/:projectId/:versionId"
+            component={VersionPage}
+          />
+          <Route exact path="/create_project" component={CreateProject} />
           <Route
             exact
             path="/project/:projectId"
