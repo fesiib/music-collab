@@ -30,7 +30,7 @@ const homepagePanel = (state = initialState, action) => {
             }
         }
         default:
-                return state;
+            return state;
     }
 }
 

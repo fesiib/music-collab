@@ -26,8 +26,13 @@ const DUMMY_PROFILE_0 = {
         name: "Me",
         communityRating: 2,
     },
-    projectIds: [],
-    versionIds: [],
+    projectIds: ['love'],
+    versionIds: [
+        {
+            projectId: 'love',
+            versionId: 'love1',    
+        },
+    ],
     commentIds: [],
 }
 
@@ -37,11 +42,21 @@ const DUMMY_PROFILE_1 = {
         communityRating: 0,
     },
     projectIds: ['sunnyDay'],
-    versionIds: [{ 
-        projectId: 'sunnyDay',
-        versionId: 'sunnyDay1',
+    versionIds: [
+        { 
+            projectId: 'sunnyDay',
+            versionId: 'sunnyDay1',
+        },
+        {
+            projectId: 'love',
+            versionId: 'love2',    
+        }
+    ],
+    commentIds: [{ 
+        projectId: 'love',
+        versionId: 'love1',
+        commentId: 'comment2',
     }],
-    commentIds: [],
 }
 
 const DUMMY_PROFILE_2 = {
@@ -50,7 +65,10 @@ const DUMMY_PROFILE_2 = {
         communityRating: 1,
     },
     projectIds: [],
-    versionIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay2',
+    }],
     commentIds: [{ 
         projectId: 'sunnyDay',
         versionId: 'sunnyDay1',
@@ -66,7 +84,7 @@ const DUMMY_PROJECT_1 = {
         description: "It is a pop music",
 
         creationTime: new Date(0),
-        lastModified: new Date(0),
+        lastModified: new Date(2021, 11, 17),
     },
 
     //sorted by popularity
@@ -80,7 +98,7 @@ const DUMMY_PROJECT_1 = {
 
                 votes: 0,
                 creationTime: new Date(0),
-                lastModified: new Date(0),
+                lastModified: new Date(1),
             },
             tracks: [
                 {
@@ -98,6 +116,101 @@ const DUMMY_PROJECT_1 = {
                     audioSegment: {start: 0, finish: 0},
                     creationTime: new Date(1),
                 }
+            }
+        },
+        sunnyDay2: {
+            metaInfo: {
+                authorId: 'bob',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 17),
+                lastModified: new Date(2021, 11, 17),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+        }
+    },
+}
+
+const DUMMY_PROJECT_2 = {
+    metaInfo: {
+        ownerId: 'me',
+        trackTitle: "Love",
+        genre: "Rock",
+        description: "Hard Rock",
+
+        creationTime: new Date(2021, 11, 10),
+        lastModified: new Date(2021, 11, 10),
+    },
+
+    //sorted by popularity
+    versions: {
+        love1: {
+            metaInfo: {
+                authorId: 'me',
+                contributionMessage: "Draft version (very first)",
+                parentVersionId: null,
+                duration: 10,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 10),
+                lastModified: new Date(2021, 11, 11),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                }
+            ],
+            
+            comments: {
+                comment2: {
+                    authorId: 'helena',
+                    commentMessage: "This is amazing!",
+                    parentCommentId: null,
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(2021, 11, 11),
+                }
+            }
+        },
+        love2: {
+            metaInfo: {
+                authorId: 'helena',
+                contributionMessage: "LOL!",
+                parentVersionId: 'love1',
+                duration: 120,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 15),
+                lastModified: new Date(2021, 11, 15),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'drums',
+                }
+            ],
+            
+            comments: {
             }
         }
     },
@@ -260,6 +373,7 @@ function recalcRating(projects, profiles, profileId) {
 const initialState = {
     projects: {
         sunnyDay: DUMMY_PROJECT_1,
+        love: DUMMY_PROJECT_2,
     },
     profiles: {
         me: DUMMY_PROFILE_0,
@@ -495,7 +609,7 @@ const database = (state = initialState, action) => {
             };
         }
         default:
-                return state;
+            return state;
     }
 }
 
