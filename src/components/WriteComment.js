@@ -40,7 +40,7 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
         
         {reply >= 1 &&
             <div className = "flex-none w-35 text-white">
-            ........
+            ......
             </div>
         }
         
