@@ -5,12 +5,12 @@ import SlidingPanel from 'react-sliding-side-panel';
 import 'react-sliding-side-panel/lib/index.css';
 
 import GenericButton from '../components/GenericButton';
-import MusicList from '../components/MusicList';
+import MusicList, { TRANSFORM_AUTHOR, TRANSFORM_OWNER } from '../components/MusicList';
 import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePanel, openPanel } from '../reducers/homepagePanel';
-import { setTabIndex } from '../reducers/tabInfo';
+import { closePanel, openPanel } from '../reducers/homepage/homepagePanel';
+import { setTabIndex } from '../reducers/homepage/tabInfo';
 
 const albumBackgroundURL = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
@@ -69,9 +69,12 @@ function Homepage(props) {
                     <h1 className="p-10 text-center">
                         My Projects
                     </h1>
-                    <MusicList headers={
-                        ['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']
-                    } votes={true} className={"h-96"}/>
+                    <MusicList 
+                        headers={['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']}
+                        votes={true}
+                        className={"h-96"}
+                        transform={TRANSFORM_OWNER}
+                    />
                     <div className="flex justify-center m-5">    
                         <GenericButton title={"Create New Project"} className="text-xl w-2/5 p-2" />
                     </div>
@@ -98,9 +101,12 @@ function Homepage(props) {
                     <h1 className="p-10 text-center">
                         Contributions
                     </h1>
-                    <MusicList headers={
-                        ['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']
-                    } votes={true} className={"h-96"}/>
+                    <MusicList 
+                        headers={['trackTitle', 'genre', 'cntVersions', 'cntCollab', 'duration']}
+                        votes={true}
+                        className={"h-96"}
+                        transform={TRANSFORM_AUTHOR}
+                    />
                     <h2 className="p-3 text-center">
                         My Comments
                     </h2>

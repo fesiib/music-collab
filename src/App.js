@@ -6,10 +6,10 @@ import { increaseCounter } from './reducers/counter'
 
 import './index.css'
 import UploadAudio from './components/UploadAudio'
+import { resetApp } from './reducers'
 
 function App() {
   const count = useSelector((state) => {
-    console.log(state);
     return state?.counter?.cnt
   })
   const dispatch = useDispatch()
@@ -20,8 +20,14 @@ function App() {
       <button onClick={() => dispatch(increaseCounter())} className="bg-black">
         Increase
       </button>
+
+      <button onClick={() => dispatch(resetApp())} className="bg-black">
+        RESET
+      </button>
+
+      <UploadAudio/>
     </div>
   )
 }
 
-export default App
+export default App;
