@@ -2,9 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {useTable, usePagination, useBlockLayout, useFlexLayout} from 'react-table';
+import ReactTimeAgo from 'react-time-ago';
+
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en.json';
 
 import { openPanel } from '../reducers/homepage/homepagePanel';
 import GenericButton from './GenericButton';
+
+TimeAgo.addDefaultLocale(en);
 
 const ALLOWED_HEADERS = {
     'trackTitle': {
@@ -35,6 +41,10 @@ const ALLOWED_HEADERS = {
         header: 'Duration',
         width: 90,
     },
+    'updated': {
+        header: 'Updated',
+        width: 90,
+    },
     'playButton': {
         header: '',
         width: 60,    
@@ -46,17 +56,22 @@ const ALLOWED_HEADERS = {
 };
 
 export const TRANSFORM_POPULAR = "popular";
+export const TRANSFORM_RECENT = "recent";
 export const TRANSFORM_AUTHOR = "author";
-export const TRANSFORM_OWNER = 'owner';
+export const TRANSFORM_OWNER = "owner";
+export const TRANSFORM_POPULAR_SINGLE = "popular_single";
+export const TRANSFORM_RECENT_SINGLE = "recent_single";
 
 const DEF_PROPS = {
-    headers: ['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration'],
+    headers: [],
     panel: true,
     cntRows: 20,
     pageCount: 9,
     className: "",
     filter: {},
     transform: TRANSFORM_POPULAR,
+    projectId: "",
+    versionId: "",
 }
 
 
@@ -65,8 +80,8 @@ function Table(props) {
 
     const parentProps = props.parentProps;
 
-    const _openPanel = () => {
-        dispatch(openPanel());
+    const _openPanel = (projectId, versionId) => {
+        dispatch(openPanel({projectId, versionId}));
     }
 
     const defaultColumn = React.useMemo(
@@ -110,8 +125,7 @@ function Table(props) {
 
     const rowClick = (row) => {
         if (parentProps.panel)
-            _openPanel();
-        console.log(row);
+            _openPanel(row.original.projectId, row.original.versionId);
     }
 
     return (
@@ -170,6 +184,15 @@ function Table(props) {
                                             </td>
                                         );
                                     }
+                                    if (cell.column.id === 'updated') {
+                                        return (
+                                            <td {...cell.getCellProps({
+                                            className: "p-2 text-left overflow-ellipsis overflow-hidden"
+                                            })}>
+                                                <ReactTimeAgo date={cell.value} timeStyle="twitter-minute" locale="en-US"/>
+                                            </td>
+                                        );
+                                    }
                                     return (
                                         <td {...cell.getCellProps({
                                         className: "p-2 text-left overflow-ellipsis overflow-hidden"
@@ -201,6 +224,46 @@ function filterData(filter, data) {
     return data;
 }
 
+function sortByProjectCreated(p1, p2) {
+    if (p2.projectCreated.valueOf() - p1.projectCreated.valueOf() !== 0) {
+        return p2.projectCreated.valueOf() - p1.projectCreated.valueOf();
+    }
+    if (p2.versionCreated.valueOf() - p1.versionCreated.valueOf() !== 0) {
+        return p2.versionCreated.valueOf() - p1.versionCreated.valueOf();
+    }
+    if (p2.updated.valueOf() - p1.updated.valueOf() !== 0) {
+        return p2.updated.valueOf() - p1.updated.valueOf();
+    }
+    return p2.votes - p1.votes;
+}
+
+function sortByVersionUpdated(p1, p2) {
+    if (p2.updated.valueOf() - p1.updated.valueOf() !== 0) {
+        return p2.updated.valueOf() - p1.updated.valueOf();
+    }
+    if (p2.versionCreated.valueOf() - p1.versionCreated.valueOf() !== 0) {
+        return p2.versionCreated.valueOf() - p1.versionCreated.valueOf();
+    }
+    return p2.votes - p1.votes;
+}
+
+function sortByVersionCreated(p1, p2) {
+    if (p2.versionCreated.valueOf() - p1.versionCreated.valueOf() !== 0) {
+        return p2.versionCreated.valueOf() - p1.versionCreated.valueOf();
+    }
+    if (p2.updated.valueOf() - p1.updated.valueOf() !== 0) {
+        return p2.updated.valueOf() - p1.updated.valueOf();
+    }
+    return p2.votes - p1.votes;
+}
+
+function sortByPopularity(p1, p2) {
+    if (p2.votes - p1.votes !== 0) {
+        return p2.votes - p1.votes;
+    }
+    return p2.updated.valueOf() - p1.updated.valueOf();
+}
+
 function getCollaborators(project) {
     let collaborators = new Set();
     for (let versionId in project.versions) {
@@ -221,7 +284,19 @@ function getPopularVersionId(project) {
     return popularVersionId;
 }
 
-function transformSingleVersion(profiles, project, version, collaborators) {
+function getRecentVersionId(project) {
+    let recentVersionId = null;
+    for (let versionId in project.versions) {
+        if (recentVersionId === null
+            || project.versions[versionId].metaInfo.lastModified.valueOf() > project.versions[recentVersionId].metaInfo.lastModified.valueOf()
+        ) {
+            recentVersionId = versionId;
+        }
+    }
+    return recentVersionId;
+}
+
+function transformSingleVersion(profiles, project, version, collaborators, projectId, versionId) {
     let single = {
         trackTitle: project.metaInfo.trackTitle,
         genre: project.metaInfo.genre,
@@ -230,12 +305,19 @@ function transformSingleVersion(profiles, project, version, collaborators) {
         cntVersions: Object.keys(project.versions).length,
         cntCollab: collaborators.size - 1,
         duration: version.metaInfo.duration,
+        updated: version.metaInfo.lastModified,
+        versionCreated: version.metaInfo.creationTime,
+        projectCreated: project.metaInfo.creationTime, 
         votes: version.metaInfo.votes,
         playButton: version.tracks.map(track => track.url),
+
+        projectId,
+        versionId,
     };
-    console.log(single);
     return single;
 }
+
+
 
 function transformProjects_owner(projects, profiles, ownerId) {
     let data = [];
@@ -252,8 +334,10 @@ function transformProjects_owner(projects, profiles, ownerId) {
         }
         const collaborators = getCollaborators(project);
         const version = project.versions[popularVersionId];
-        data.push(transformSingleVersion(profiles, project, version, collaborators));
+        data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, popularVersionId));
     }
+
+    data.sort(sortByProjectCreated);
     return data;
 }
 
@@ -270,8 +354,11 @@ function transformProjects_author(projects, profiles, authorId) {
         const project = projects[projectId];
         const version = project.versions[versionId];
         const collaborators = getCollaborators(project);
-        data.push(transformSingleVersion(profiles, project, version, collaborators));
+        data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, versionId));
     }
+
+    data.sort(sortByVersionUpdated);
+    // sorted by recency
     return data;
 }
 
@@ -288,8 +375,67 @@ function transformProjects_popular(projects, profiles) {
 
         const collaborators = getCollaborators(project);
         const version = project.versions[popularVersionId];
-        data.push(transformSingleVersion(profiles, project, version, collaborators));
+        data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, popularVersionId));
     }
+
+    data.sort(sortByPopularity);
+    return data;
+}
+
+function transformProjects_recency(projects, profiles) {
+    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
+    let data = [];
+    for (let projectId in projects) {
+        const project = projects[projectId];
+        const recentVersionId = getRecentVersionId(project);
+
+        if (recentVersionId === null) {
+            continue;
+        }
+
+        const collaborators = getCollaborators(project);
+        const version = project.versions[recentVersionId];
+        data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, recentVersionId));
+    }
+
+    data.sort(sortByVersionCreated);
+    return data;
+}
+
+function transformProjects_popular_single(projects, profiles, projectId, versionId) {
+    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
+    let data = [];
+    
+    if (!projects.hasOwnProperty(projectId)) {
+        return [];
+    }
+    const project = projects[projectId];
+    
+    for (let versionId in project.versions) {
+        const version = project.versions[versionId];
+        data.push(transformSingleVersion(profiles, project, version, new Set(), projectId, versionId));
+    }
+
+    data.sort(sortByPopularity);
+    return data;
+}
+
+function transformProjects_recency_single(projects, profiles, projectId, versionId) {
+    //['trackTitle', 'genre', 'author', 'owner', 'cntVersions', 'cntCollab', 'duration', 'votes', 'playButton']
+    let data = [];
+    
+    if (!projects.hasOwnProperty(projectId)) {
+        return [];
+    }
+    
+    const project = projects[projectId];
+    
+    for (let versionId in project.versions) {
+        const version = project.versions[versionId];
+        data.push(transformSingleVersion(profiles, project, version, new Set(), projectId, versionId));
+    }
+
+    data.sort(sortByVersionUpdated);
     return data;
 }
 
@@ -328,7 +474,6 @@ function MusicList(props) {
 
     const { projects, profiles, userId } = useSelector(state => state.database);
 
-
     const filteredProjects = projects;
     //const data = filterData(props.filter, projects);
 
@@ -342,8 +487,17 @@ function MusicList(props) {
         if (props.transform === TRANSFORM_OWNER) {
             return transformProjects_owner(filteredProjects, profiles, userId);
         }
+        if (props.transform === TRANSFORM_RECENT) {
+            return transformProjects_recency(filteredProjects, profiles);
+        }
+        if (props.transform === TRANSFORM_POPULAR_SINGLE) {
+            return transformProjects_popular_single(filteredProjects, profiles, props.projectId, props.versionId);
+        }
+        if (props.transform === TRANSFORM_RECENT_SINGLE) {
+            return transformProjects_recency_single(filteredProjects, profiles, props.projectId, props.versionId);
+        }
         return transformProjects_popular(filteredProjects, profiles);
-    }, [filteredProjects, profiles, props.transform, userId]);
+    }, [filteredProjects, profiles, props.transform, userId, props.projectId, props.versionId]);
 
     return (
         <Table columns={columns} data={data} parentProps={props}/>

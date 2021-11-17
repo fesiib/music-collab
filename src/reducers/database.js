@@ -25,6 +25,7 @@ const DUMMY_PROFILE_0 = {
     metaInfo: {
         name: "Me",
         communityRating: 2,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
     projectIds: ['love'],
     versionIds: [
@@ -40,6 +41,7 @@ const DUMMY_PROFILE_1 = {
     metaInfo: {
         name: "Helena",
         communityRating: 0,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
     projectIds: ['sunnyDay'],
     versionIds: [
@@ -63,6 +65,7 @@ const DUMMY_PROFILE_2 = {
     metaInfo: {
         name: "Bob",
         communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
     projectIds: [],
     versionIds: [{ 
@@ -82,6 +85,7 @@ const DUMMY_PROJECT_1 = {
         trackTitle: "Sunny day",
         genre: "Pop",
         description: "It is a pop music",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
         creationTime: new Date(0),
         lastModified: new Date(2021, 11, 17),
@@ -152,6 +156,7 @@ const DUMMY_PROJECT_2 = {
         trackTitle: "Love",
         genre: "Rock",
         description: "Hard Rock",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
         creationTime: new Date(2021, 11, 10),
         lastModified: new Date(2021, 11, 10),
@@ -469,6 +474,7 @@ const database = (state = initialState, action) => {
 
             let newProjects = {...state.projects};
             newProjects[projectId].versions[versionId] = version;
+            newProjects[projectId].metaInfo.lastModified = new Date(version.metaInfo.creationTime.getTime());
             
             let newProfiles = {...state.profiles};
             newProfiles[authorId].versionIds.push({
@@ -491,6 +497,7 @@ const database = (state = initialState, action) => {
             const projectId = action.payload.projectId;
             const versionId = action.payload.versionId;
             const { newProjects, newProfiles } = cleanUpVersion({...state.projects}, {...state.profiles}, projectId, versionId);
+            newProjects[projectId].metaInfo.lastModified = new Date();
             return {
                 ...state,
                 projects: newProjects,
@@ -528,6 +535,7 @@ const database = (state = initialState, action) => {
 
             let newProjects = {...state.projects};
             newProjects[projectId].versions[versionId].comments[commentId] = comment;
+            newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
             
             let newProfiles = {...state.profiles};
             newProfiles[authorId].versionIds.push({
@@ -553,6 +561,8 @@ const database = (state = initialState, action) => {
             const versionId = action.payload.versionId;
             const commentId = action.payload.commentId;
             const { newProjects, newProfiles } = cleanUpComment({...state.projects}, {...state.profiles}, projectId, versionId, commentId);
+
+            newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date();
             return {
                 ...state,
                 projects: newProjects,
