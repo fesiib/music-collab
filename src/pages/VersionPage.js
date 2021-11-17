@@ -20,7 +20,7 @@ const VersionPage = () => {
         <MusicTracks/>
 
         
-        <CommentSection/>
+        <CommentSection versionId = {versionId}  projectId = {projectId}  />
 
     </div>
     
