@@ -1,7 +1,9 @@
 import randomString from "../services/randomString";
 
-const ADD_AUTHOR = "ADD_AUTHOR";
-const REMOVE_AUTHOR = "REMOVE_AUTHOR";
+const SET_USER = "SET_USER";
+
+const ADD_PROFILE = "ADD_PROFILE";
+const REMOVE_PROFILE = "REMOVE_PROFILE";
 
 const ADD_PROJECT = "ADD_PROJECT";
 const REMOVE_PROJECT = "REMOVE_PROJECT";
@@ -21,7 +23,7 @@ const COMMENT_RATING = 1;
 
 const DUMMY_PROFILE_0 = {
     metaInfo: {
-        author: "Me",
+        name: "Me",
         communityRating: 2,
     },
     projectIds: [],
@@ -31,7 +33,7 @@ const DUMMY_PROFILE_0 = {
 
 const DUMMY_PROFILE_1 = {
     metaInfo: {
-        author: "Helena",
+        name: "Helena",
         communityRating: 0,
     },
     projectIds: ['sunnyDay'],
@@ -44,7 +46,7 @@ const DUMMY_PROFILE_1 = {
 
 const DUMMY_PROFILE_2 = {
     metaInfo: {
-        author: "Bob",
+        name: "Bob",
         communityRating: 1,
     },
     projectIds: [],
@@ -58,7 +60,7 @@ const DUMMY_PROFILE_2 = {
 
 const DUMMY_PROJECT_1 = {
     metaInfo: {
-        authorId: 'helena',
+        ownerId: 'helena',
         trackTitle: "Sunny day",
         genre: "Pop",
         description: "It is a pop music",
@@ -101,13 +103,18 @@ const DUMMY_PROJECT_1 = {
     },
 }
 
-export const addAuthor = (payload) => ({
-    type: ADD_AUTHOR,
+export const setUser = (payload) => ({
+    type: SET_USER,
     payload,
 });
 
-export const removeAuthor = (payload) => ({
-    type: REMOVE_AUTHOR,
+export const addProfile = (payload) => ({
+    type: ADD_PROFILE,
+    payload,
+});
+
+export const removeprofile = (payload) => ({
+    type: REMOVE_PROFILE,
     payload,
 });
 
@@ -151,74 +158,74 @@ export const changeVoteComment = (payload) => ({
     payload,
 });
 
-function cleanUpProject(projects, authors, projectId) {
+function cleanUpProject(projects, profiles, projectId) {
     let newProjects = projects;
-    let newAuthors = authors;
+    let newProfiles = profiles;
     for (let versionId in projects[projectId].versions) {
-        const result = cleanUpVersion(newProjects, newAuthors, projectId, versionId);
+        const result = cleanUpVersion(newProjects, newProfiles, projectId, versionId);
         newProjects = result.newProjects;
-        newAuthors = result.newAuthors;
+        newProfiles = result.newProfiles;
     }
-    const authorId = newProjects[projectId].metaInfo.authorId;
+    const ownerId = newProjects[projectId].metaInfo.ownerId;
 
     delete newProjects[projectId];
-    for (let i = 0; i < newAuthors[authorId].projectIds.length; i++) {
-        const pId = newAuthors[authorId].projectIds[i];
+    for (let i = 0; i < newProfiles[ownerId].projectIds.length; i++) {
+        const pId = newProfiles[ownerId].projectIds[i];
         if (pId === projectId) {
-            newAuthors[authorId].projectIds = [...newAuthors[authorId].projectIds.slice(0, i), ...newAuthors[authorId].projectIds.slice(i+1)];
+            newProfiles[ownerId].projectIds = [...newProfiles[ownerId].projectIds.slice(0, i), ...newProfiles[ownerId].projectIds.slice(i+1)];
             break;
         }
     }
 
-    newAuthors = recalcRating(newProjects, newAuthors, authorId);
-    return {newProjects, newAuthors};
+    newProfiles = recalcRating(newProjects, newProfiles, ownerId);
+    return {newProjects, newProfiles};
 }
 
-function cleanUpVersion(projects, authors, projectId, versionId) {
+function cleanUpVersion(projects, profiles, projectId, versionId) {
     let newProjects = projects;
-    let newAuthors = authors;
+    let newProfiles = profiles;
     for (let commentId in projects[projectId].versions[versionId].comments) {
-        const result = cleanUpComment(newProjects, newAuthors, projectId, versionId, commentId);
+        const result = cleanUpComment(newProjects, newProfiles, projectId, versionId, commentId);
         newProjects = result.newProjects;
-        newAuthors = result.newAuthors;
+        newProfiles = result.newProfiles;
     }
     const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId;
 
     delete newProjects[projectId].versions[versionId];
-    for (let i = 0; i < newAuthors[authorId].versionIds.length; i++) {
-        const vObj = newAuthors[authorId].versionIds[i];
+    for (let i = 0; i < newProfiles[authorId].versionIds.length; i++) {
+        const vObj = newProfiles[authorId].versionIds[i];
         if (vObj.projectId === projectId && vObj.versionId === versionId) {
-            newAuthors[authorId].versionIds = [...newAuthors[authorId].versionIds.slice(0, i), ...newAuthors[authorId].versionIds.slice(i+1)];
+            newProfiles[authorId].versionIds = [...newProfiles[authorId].versionIds.slice(0, i), ...newProfiles[authorId].versionIds.slice(i+1)];
             break;
         }
     }
 
-    newAuthors = recalcRating(newProjects, newAuthors, authorId);
-    return {newProjects, newAuthors};
+    newProfiles = recalcRating(newProjects, newProfiles, authorId);
+    return {newProjects, newProfiles};
 }
 
-function cleanUpComment(projects, authors, projectId, versionId, commentId) {
+function cleanUpComment(projects, profiles, projectId, versionId, commentId) {
     let newProjects = projects;
-    let newAuthors = authors;
+    let newProfiles = profiles;
     const authorId = newProjects[projectId].versions[versionId].comments[commentId].authorId;
 
     delete newProjects[projectId].versions[versionId].comments[commentId];
-    for (let i = 0; i < newAuthors[authorId].commentIds.length; i++) {
-        const cObj = newAuthors[authorId].commentIds[i];
+    for (let i = 0; i < newProfiles[authorId].commentIds.length; i++) {
+        const cObj = newProfiles[authorId].commentIds[i];
         if (cObj.projectId === projectId && cObj.versionId === versionId && cObj.commentId === commentId) {
-            newAuthors[authorId].commentIds = [...newAuthors[authorId].commentIds.slice(0, i), ...newAuthors[authorId].commentIds.slice(i+1)];
+            newProfiles[authorId].commentIds = [...newProfiles[authorId].commentIds.slice(0, i), ...newProfiles[authorId].commentIds.slice(i+1)];
             break;
         }
     }
 
-    newAuthors = recalcRating(newProjects, newAuthors, authorId);
-    return {newProjects, newAuthors};
+    newProfiles = recalcRating(newProjects, newProfiles, authorId);
+    return {newProjects, newProfiles};
 }
 
-function recalcRating(projects, authors, authorId) {
+function recalcRating(projects, profiles, profileId) {
     let rating = 0;
     let maxVersion = 0;
-    for (let projectId of authors[authorId].projectIds) {
+    for (let projectId of profiles[profileId].projectIds) {
         for (let versionId in projects[projectId].versions) {
             let cur = projects[projectId].versions[versionId].metaInfo.votes;
             if (maxVersion < cur) {
@@ -227,7 +234,7 @@ function recalcRating(projects, authors, authorId) {
         }
     }
     rating += maxVersion * PROJECT_RATING;
-    for (let obj of authors[authorId].versionIds) {
+    for (let obj of profiles[profileId].versionIds) {
         const projectId = obj.projectId;
         const versionId = obj.versionId;
         let cur = projects[projectId].versions[versionId].metaInfo.votes;
@@ -236,7 +243,7 @@ function recalcRating(projects, authors, authorId) {
         }
         rating += cur * VERSION_RATING;
     }
-    for (let obj of authors[authorId].commentIds) {
+    for (let obj of profiles[profileId].commentIds) {
         const projectId = obj.projectId;
         const versionId = obj.versionId;
         const commentId = obj.commentId;
@@ -246,33 +253,44 @@ function recalcRating(projects, authors, authorId) {
         }
         rating += cur * COMMENT_RATING;
     }
-    authors[authorId].metaInfo.communityRating = rating;
-    return authors;
+    profiles[profileId].metaInfo.communityRating = rating;
+    return profiles;
 }
 
 const initialState = {
     projects: {
         sunnyDay: DUMMY_PROJECT_1,
     },
-    authors: {
+    profiles: {
         me: DUMMY_PROFILE_0,
         helena: DUMMY_PROFILE_1,
         bob: DUMMY_PROFILE_2,
-    }
+    },
+    userId: 'me',
 };
 
 
 const database = (state = initialState, action) => {
     switch (action.type) {
+        /*
+            userId,
+        */
+        case SET_USER: {
+            return {
+                ...state,
+                userId: action.payload.userId,
+            }
+        }
+
         /* payload format
-            authorId,
+            ownerId,
             trackTitle,
             genre,
             description,
         */
         case ADD_PROJECT: {
             const projectId = 'project' + randomString();
-            const authorId = action.payload.authorId;
+            const ownerId = action.payload.ownerId;
 
             const project = {
                 metaInfo: {
@@ -286,12 +304,12 @@ const database = (state = initialState, action) => {
             let newProjects = {...state.projects};
             newProjects[projectId] = project;
 
-            let newAuthors = { ...state.authors };
-            newAuthors[authorId].projectIds.push(projectId);
+            let newProfiles = { ...state.profiles };
+            newProfiles[ownerId].projectIds.push(projectId);
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
 
@@ -300,11 +318,11 @@ const database = (state = initialState, action) => {
         */
         case REMOVE_PROJECT: {
             const projectId = action.payload.projectId;
-            const { newProjects, newAuthors } = cleanUpProject({...state.projects}, {...state.authors}, projectId);
+            const { newProjects, newProfiles } = cleanUpProject({...state.projects}, {...state.profiles}, projectId);
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
 
@@ -338,8 +356,8 @@ const database = (state = initialState, action) => {
             let newProjects = {...state.projects};
             newProjects[projectId].versions[versionId] = version;
             
-            let newAuthors = {...state.authors};
-            newAuthors[authorId].versionIds.push({
+            let newProfiles = {...state.profiles};
+            newProfiles[authorId].versionIds.push({
                 projectId,
                 versionId,
             });
@@ -347,7 +365,7 @@ const database = (state = initialState, action) => {
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
 
@@ -358,11 +376,11 @@ const database = (state = initialState, action) => {
         case REMOVE_VERSION: {
             const projectId = action.payload.projectId;
             const versionId = action.payload.versionId;
-            const { newProjects, newAuthors } = cleanUpVersion({...state.projects}, {...state.authors}, projectId, versionId);
+            const { newProjects, newProfiles } = cleanUpVersion({...state.projects}, {...state.profiles}, projectId, versionId);
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
 
@@ -397,8 +415,8 @@ const database = (state = initialState, action) => {
             let newProjects = {...state.projects};
             newProjects[projectId].versions[versionId].comments[commentId] = comment;
             
-            let newAuthors = {...state.authors};
-            newAuthors[authorId].versionIds.push({
+            let newProfiles = {...state.profiles};
+            newProfiles[authorId].versionIds.push({
                 projectId,
                 versionId,
                 commentId,
@@ -407,7 +425,7 @@ const database = (state = initialState, action) => {
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
         
@@ -420,11 +438,11 @@ const database = (state = initialState, action) => {
             const projectId = action.payload.projectId;
             const versionId = action.payload.versionId;
             const commentId = action.payload.commentId;
-            const { newProjects, newAuthors } = cleanUpComment({...state.projects}, {...state.authors}, projectId, versionId, commentId);
+            const { newProjects, newProfiles } = cleanUpComment({...state.projects}, {...state.profiles}, projectId, versionId, commentId);
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
 
@@ -442,11 +460,15 @@ const database = (state = initialState, action) => {
 
             newProjects[projectId].versions[versionId].metaInfo.votes += action.payload.votes;
             const authorId = newProjects[projectId].versions[versionId].metaInfo.authorId;
-            const newAuthors = recalcRating(newProjects, {...state.authors}, authorId);
+            let newProfiles = recalcRating(newProjects, {...state.profiles}, authorId);
+
+            const ownerId = newProjects[projectId].metaInfo.ownerId;
+            newProfiles = recalcRating(newProjects, {...state.profiles}, ownerId);
+
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
 
@@ -465,11 +487,11 @@ const database = (state = initialState, action) => {
 
             newProjects[projectId].versions[versionId].comments[commentId].votes += action.payload.votes;
             const authorId = newProjects[projectId].versions[versionId].comments[commentId].authorId;
-            const newAuthors = recalcRating(newProjects, {...state.authors}, authorId);
+            const newProfiles = recalcRating(newProjects, {...state.profiles}, authorId);
             return {
                 ...state,
                 projects: newProjects,
-                authors: newAuthors,
+                profiles: newProfiles,
             };
         }
         default:
