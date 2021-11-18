@@ -22,7 +22,7 @@ function PlayPauseButton(props) {
     const { versionId, projectId, playing } = useSelector(state => state.player);
 
     const clickHandler = (event) => {
-
+        event.stopPropagation();
         if (versionId !== props.versionId || projectId !== props.projectId) {
             dispatch(setAudio({
                 versionId: props.versionId,
@@ -39,7 +39,7 @@ function PlayPauseButton(props) {
     };
 
     return (
-        <div className={"bg-gray-100 rounded-full border-2 " + props.className} onClick={clickHandler}>
+        <div className={"bg-gray-100 rounded-full border-2 hover:bg-white" + props.className} onClick={clickHandler}>
             {playing && versionId === props.versionId && projectId === props.projectId ? <PauseButton/> : <PlayButton/>}
         </div>
     )
