@@ -3,7 +3,7 @@ import React from 'react'
 const PauseButton = ()=> {
     return (
         
-<svg className="w-full h-full p-6"   viewBox="0 0 48 48" version="1.1" >
+<svg className="w-full h-full"   viewBox="0 0 48 48" version="1.1" >
 <g>
 	<path d="M17.991,40.976c0,3.662-2.969,6.631-6.631,6.631l0,0c-3.662,0-6.631-2.969-6.631-6.631V6.631C4.729,2.969,7.698,0,11.36,0
 		l0,0c3.662,0,6.631,2.969,6.631,6.631V40.976z"/>
