@@ -109,13 +109,16 @@ function RightPanel(props) {
             panelClassName=' bg-gray-50'
         >
             <div className='bg-white'>
-                <h3 className="text-center p-4"> Project Description </h3>
                 <div className="flex flex-row justify-between">
-                    <div className="pl-5 text-left">
-                        <p className="text-4xl underline hover:text-gray-600 cursor-pointer" onClick={redirectToProjectPage}> {trackTitle} </p>
-                        <p className="text-2xl text-gray-600"> {ownerName} </p>
-                    </div>
-                    <GenericButton title={"Go to Project"} className="h-16 m-3" onClick={redirectToProjectPage}/>
+                    <h3 className="text-left p-4"> About Project </h3>
+                    <GenericButton title={"Go to Project"} className="m-3" onClick={redirectToProjectPage}/>
+                </div>
+
+                <div className="pl-5 pb-5 text-left">
+                    <p> Title: </p>
+                    <p className="text-4xl underline hover:text-gray-600 cursor-pointer" onClick={redirectToProjectPage}> {trackTitle} </p>
+                    <p className="pt-5"> Owner: </p>
+                    <p className="text-2xl text-gray-600"> {ownerName} </p>
                 </div>
                 {/* <div style={{
                     backgroundImage:`url(${background})`,
