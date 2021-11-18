@@ -13,8 +13,8 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 
 import { openPanel } from '../reducers/homepage/homepagePanel';
-import GenericButton from './GenericButton';
 import iconUD from '../icons/updown.png';
+import iconProject from '../icons/playlist.png';
 import TagList from './TagList';
 import PlayPauseButton from './PlayPauseButton';
 
@@ -204,7 +204,10 @@ function Table(props) {
                                                 <td {...cell.getCellProps({
                                                     className: "p-2"
                                                 })}>
-                                                    <GenericButton title={"Icon"} className='w-12'/>
+                                                    <div className="flex flex-row w-10">
+                                                        {cell.render('Cell')}
+                                                        <img src={iconProject}></img>
+                                                    </div>
                                                 </td>
                                             );
                                         }
