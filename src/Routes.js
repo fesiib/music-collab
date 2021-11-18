@@ -6,6 +6,7 @@ import ProjectPage from './pages/projectPage/ProjectPage'
 import Homepage from './pages/Homepage'
 import VersionPage from './pages/VersionPage'
 import CreateProject from './pages/CreateProjectPage/CreateProject'
+import ContributeContainer from './pages/ContributePage/Contribute.container'
 
 class Routes extends React.Component {
   render() {
@@ -20,6 +21,7 @@ class Routes extends React.Component {
             component={VersionPage}
           />
           <Route exact path="/create_project" component={CreateProject} />
+          <Route exact path="/contribute/:projectId/:versionId" component={ContributeContainer} />
           <Route
             exact
             path="/project/:projectId"
