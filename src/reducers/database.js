@@ -27,12 +27,16 @@ const DUMMY_PROFILE_0 = {
         communityRating: 2,
         profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
-    projectIds: ['love'],
+    projectIds: ['love','hate'],
     versionIds: [
         {
             projectId: 'love',
             versionId: 'love1',    
         },
+        {
+            projectId: 'hate',
+            versionId: 'hate1',
+        }
     ],
     commentIds: [],
 }
@@ -52,13 +56,23 @@ const DUMMY_PROFILE_1 = {
         {
             projectId: 'love',
             versionId: 'love2',    
+        },
+        {
+            projectId: 'hate',
+            versionId: 'hate2',    
         }
     ],
     commentIds: [{ 
         projectId: 'love',
         versionId: 'love1',
         commentId: 'comment2',
-    }],
+    },
+    { 
+        projectId: 'hate',
+        versionId: 'hate1',
+        commentId: 'comment2',
+    }
+        ],
 }
 
 const DUMMY_PROFILE_2 = {
@@ -76,7 +90,80 @@ const DUMMY_PROFILE_2 = {
         projectId: 'sunnyDay',
         versionId: 'sunnyDay1',
         commentId: 'comment1',
-    }]
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment2',
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment3',
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment4',
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment5',
+    },
+        ]
+};
+const DUMMY_PROFILE_3 = {
+    metaInfo: {
+        name: "Michael",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay3',
+    }],
+    commentIds: []
+};
+const DUMMY_PROFILE_4 = {
+    metaInfo: {
+        name: "Dobby",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay4',
+    }],
+    commentIds: []
+};
+const DUMMY_PROFILE_5 = {
+    metaInfo: {
+        name: "Anna",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay5',
+    }],
+    commentIds: []
+};
+const DUMMY_PROFILE_6 = {
+    metaInfo: {
+        name: "Herald",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay6',
+    }],
+    commentIds: []
 };
 
 const DUMMY_PROJECT_1 = {
@@ -313,6 +400,11 @@ const DUMMY_PROJECT_2 = {
     metaInfo: {
         ownerId: 'Me',
         trackTitle: "Love",
+        tags: [
+            {label: "Guitar", value: "guitar"},
+            {label: "Rock", value: "rock"},
+            {label: "Hard", value: "hard"},
+        ],
         genre: "Rock",
         description: "Hard Rock",
         creationTime: new Date(2021, 11, 10),
@@ -383,7 +475,7 @@ const DUMMY_PROJECT_2 = {
 const DUMMY_PROJECT_3 = {
     metaInfo: {
         ownerId: 'Me',
-        trackTitle: "Love",
+        trackTitle: "Hate",
         tags: [
             {label: "Guitar", value: "guitar"},
             {label: "Rock", value: "rock"},
@@ -398,14 +490,14 @@ const DUMMY_PROJECT_3 = {
 
     //sorted by popularity
     versions: {
-        love1: {
+        hate1: {
             metaInfo: {
                 authorId: 'Me',
                 contributionMessage: "Draft version (very first)",
                 parentVersionId: null,
                 duration: 10,
 
-                votes: 0,
+                votes: 5,
                 creationTime: new Date(2021, 11, 10),
                 lastModified: new Date(2021, 11, 11),
             },
@@ -421,17 +513,17 @@ const DUMMY_PROJECT_3 = {
                     authorId: 'Helena',
                     commentMessage: "This is amazing!",
                     parentCommentId: null,
-                    votes: 0,
+                    votes: 6,
                     audioSegment: {start: 0, finish: 0},
                     creationTime: new Date(2021, 11, 11),
                 }
             }
         },
-        love2: {
+        hate2: {
             metaInfo: {
                 authorId: 'Helena',
                 contributionMessage: "LOL!",
-                parentVersionId: 'love1',
+                parentVersionId: 'hate1',
                 duration: 120,
 
                 votes: 0,
@@ -638,11 +730,16 @@ const initialState = {
     projects: {
         sunnyDay: DUMMY_PROJECT_1,
         love: DUMMY_PROJECT_2,
+        hate: DUMMY_PROJECT_3,
     },
     profiles: {
-        me: DUMMY_PROFILE_0,
-        helena: DUMMY_PROFILE_1,
-        bob: DUMMY_PROFILE_2,
+        Me: DUMMY_PROFILE_0,
+        Helena: DUMMY_PROFILE_1,
+        Bob: DUMMY_PROFILE_2,
+        Michael: DUMMY_PROFILE_3,
+        Dobby: DUMMY_PROFILE_4,
+        Anna: DUMMY_PROFILE_5,
+        Herald: DUMMY_PROFILE_6,
     },
     userId: 'me',
 };

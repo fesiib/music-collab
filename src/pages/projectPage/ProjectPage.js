@@ -82,7 +82,7 @@ const ProjectPage = ({
   // console.log(database);
   let project = database.projects[projectId];
   console.log(project);
-  
+  let tags = project.metaInfo.tags
   let g = {};
   let root = null;
   let timestamps = [];
@@ -121,7 +121,7 @@ const ProjectPage = ({
       >
         <h1>{project.metaInfo.trackTitle}</h1>
         <h3 className="mt-4">{project.metaInfo.description}</h3>
-        <Taglist tags={['fd', 'der']}/>
+        <Taglist tags={tags}/>
         <div className="mt-4 flex flex-col items-center">
           <h2>By {project.metaInfo.ownerId}</h2>
           <h3>Collabotors: {collaborators.length-1}</h3>
