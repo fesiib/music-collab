@@ -1,4 +1,7 @@
 # High-Fi Prototype
+
+## Prototype
+
 - Prototype URL: [https://music-collab-9ec47.web.app/](https://music-collab-9ec47.web.app/)
     - Hosted by Firebase
 - Repo URL: [https://github.com/fesiib/music-collab](https://github.com/fesiib/music-collab)
@@ -16,37 +19,39 @@
 
 **Screenshots**
 
-![Figure 1, Homepage](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b0b542a4-23e0-415a-9410-c8ed58ddca13/Screen_Shot_2021-11-18_at_10.33.20_PM.png)
+![Figure 1, Homepage](https://github.com/fesiib/music-collab/blob/main/README_images/Screen_Shot_2021-11-18_at_10.33.20_PM.png)
 
 Figure 1, Homepage
 
-![Figure 2, Homepage - with sidebar](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4b9ae796-4db6-4df0-b2ed-fdc46d9a818a/Screen_Shot_2021-11-18_at_10.39.19_PM.png)
+![Figure 2, Homepage - with sidebar](https://github.com/fesiib/music-collab/blob/main/README_images/Screen_Shot_2021-11-18_at_10.39.19_PM.png)
 
 Figure 2, Homepage - with sidebar
 
 Homepage (Figure 1) is starting page for all users, where they will be able to see a list of projects created by them in "My Studio Tab", and also browse and search for other people's projects in "Browse Tab". The homepage includes a sidebar (Figure 2), which allows users to explore more about the project, different versions, etc. Also, users can go to the "Project Page" from the sidebar.  
 
-![Figure 3, Project page](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/317184fb-ece6-4a68-93f5-7de300c282d5/Screen_Shot_2021-11-18_at_9.44.09_PM.png)
+![Figure 3, Project page](https://github.com/fesiib/music-collab/blob/main/README_images/Screen_Shot_2021-11-18_at_9.44.09_PM.png)
 
 Figure 3, Project page
 
 The "Project Page" (Figure 3, above) includes different versions of one project in a unique Version Tree, which shows what kind of versions with tracks are added by collaborators to the project. By clicking one of the versions in the Version Tree, which will open the "Version Page" (Figure 4, below), the user can explore and analyze that version in order to think about possible directions for the development of that version and project overall.
 
-![Figure 4, Version page](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55616435-6c4c-40d5-8269-6db823c02883/Screen_Shot_2021-11-18_at_22.04.55.png)
+![Figure 4, Version page](https://github.com/fesiib/music-collab/blob/main/README_images/Screen_Shot_2021-11-18_at_22.04.55.png)
 
 Figure 4, Version page
 
 After exploring a specific version in the Version Page (Figure 4), listening to the track, and analyzing comments and thoughts given by other musicians, users can start contributing to the project by clicking contribute button, or leaving their thoughts and feedback about the version and upvote/downvote it. 
 
-![Figure 5, Contribution page](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f5a0d638-b626-4282-8f30-d33970bafa91/Screen_Shot_2021-11-18_at_22.39.23.png)
+![Figure 5, Contribution page](https://github.com/fesiib/music-collab/blob/main/README_images/Screen_Shot_2021-11-18_at_22.39.23.png)
 
 Figure 5, Contribution page
 
 On the "Contribution Page" (Figure 5), users can add new tracks to the existing project. To do that they need to write a contribution message describing the new track and upload the track itself. 
 
-![Figure 6, Create Project page](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2a1ddfbd-3d69-478b-afe7-153541876e24/create_project.png)
+![Figure 6, Create Project page](https://github.com/fesiib/music-collab/blob/main/README_images/create_project.png)
 
 Figure 6, Create Project page
+
+If users want to create a project, they can do it using "Create Project Page" shown in figure 6. After that, the project will be available for other people to view and contribute to on the Homepage. It will have a similar tree of versions as in Figure 3. Other users will be able to find information about its versions through the "Version Page" (Figure 4) and contribute something new to it on the "Contribute Page" (Figure 5).
 
 # Getting Started with Create React App
 
