@@ -11,6 +11,7 @@ import { openPanel } from '../reducers/homepage/homepagePanel';
 import GenericButton from './GenericButton';
 import iconUD from '../icons/updown.png';
 import TagList from './TagList';
+import PlayPauseButton from './PlayPauseButton';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -204,7 +205,11 @@ function Table(props) {
                                                     <td {...cell.getCellProps({
                                                         className: "p-2"
                                                     })}>
-                                                        <GenericButton title={"Play"} className='w-12'/>
+                                                        <PlayPauseButton
+                                                            className="w-12"
+                                                            versionId={cell.value.versionId}
+                                                            projectId={cell.value.projectid}
+                                                        />
                                                     </td>
                                                 );
                                             }
@@ -369,6 +374,7 @@ function transformSingleVersion(profiles, project, version, collaborators, proje
         projectCreated: project.metaInfo.creationTime, 
         votes: version.metaInfo.votes,
         playButton: version.tracks.map(track => track.url),
+        tracks: version.tracks,
 
         projectId,
         versionId,

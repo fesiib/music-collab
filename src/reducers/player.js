@@ -1,5 +1,3 @@
-import testAudio from '../data/music-test.mp3';
-
 const PLAY = "PLAY";
 const PAUSE = "PAUSE";
 const SET_AUDIO = "SET_AUDIO";
@@ -18,8 +16,9 @@ export const pauseMusic = () => ({
 });
 
 const initialState = {
-    title: 'test',
-    audio: testAudio,
+    versionId: null,
+    projectId: null,
+    playing: false,
 };
 
 const player = (state = initialState, action) => {
@@ -27,8 +26,25 @@ const player = (state = initialState, action) => {
         case SET_AUDIO: {
             return {
                 ...state,
-                audio: action.payload.audio,
-                title: action.payload.title,
+                versionId: action.payload.versionId,
+                projectId: action.payload.projectId,
+                playing: false,
+            }
+        }
+        case PLAY: {
+            if (!state.playing) {
+                return {
+                    ...state,
+                    playing: true,
+                }
+            }
+        }
+        case PAUSE: {
+            if (state.playing) {
+                return {
+                    ...state,
+                    playing: false,
+                }
             }
         }
         default:

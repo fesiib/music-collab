@@ -1,31 +1,107 @@
-import React, { useEffect, useState } from 'react'
+import React, { createRef, useEffect, useRef } from 'react'
 import ReactAudioPlayer from 'react-audio-player'
 import { useDispatch, useSelector } from 'react-redux';
-import { setAudio } from '../../reducers/player';
-import { getFileURL } from '../../services/storage';
+import { pauseMusic, playMusic } from '../../reducers/player';
 
-const AUDIO_EXAMPLE_1 = "https://firebasestorage.googleapis.com/v0/b/music-collab-9ec47.appspot.com/o/projects%2F83448da950164b1886dafaa7fd14540abest_song.mp3?alt=media&token=3e0e5978-ff1e-4020-98d9-48de4a9df39e";
-const AUDIO_EXMPALE_2 = "https://firebasestorage.googleapis.com/v0/b/music-collab-9ec47.appspot.com/o/projects%2Fdf04c163723f4d76bbb74585dc61e559song.mp3?alt=media&token=07942ecb-a06b-44f7-af79-390d675ebc15";
+function getAllTracks(projectId, leafId, projects) {
+    let tracks = [{
+        url: "",
+        instrument: "piano",
+        duration: 0,
+    }];
+    if (!projects.hasOwnProperty(projectId)) {
+        return tracks;
+    }
+    const project = projects[projectId];
+    while (leafId !== null) {
+        if (!projects.versions.hasOwnProperty(leafId)) {
+            break;
+        }
+        const version = project.versions[leafId];
+        for (let track of version.tracks) {
+            tracks.push(track);
+        }
+        if (version.metaInfo.parentVersionId === -1) {
+            break;
+        }
+        leafId = version.metaInfo.parentVersionId;
+    }
+    return tracks;
+}
 
-
-const MusicPlayer = () => {
+function MusicPlayer() {
     const dispatch = useDispatch();
 
-    const { title, audio } = useSelector(state => state.player);
+    const { projects } = useSelector(state => state.database );
+    const { versionId, projectId, playing } = useSelector(state => state.player);
 
-    const _setAudio = (audio) => {
-        dispatch(setAudio({ title: 'best', audio }));
-    }
-
-    useEffect(() => {
-        if (title !== 'best') {
-            getFileURL("83448da950164b1886dafaa7fd14540abest_song.mp3", _setAudio);
-        }
+    let sortedTracks = getAllTracks(projectId, versionId, projects);
+    console.log(sortedTracks);
+    sortedTracks.sort((p1, p2) => {
+        return p1.duration - p2.duration;
     });
 
+    const mainTrack = sortedTracks.pop();
+    const mainTrackRef = useRef();
+
+    const refList = useRef([]);
+    refList.current = sortedTracks.map((_, i) => refList.current[i] ?? createRef());
+
+    const playAll = () => {
+        for (let ref of refList.current) {
+            const audioEl = ref.current.audioEl.current;
+            audioEl.play();
+        }
+    }
+
+    const pauseAll = () => {
+        for (let ref of refList.current) {
+            const audioEl = ref.current.audioEl.current;
+            audioEl.pause();
+        }
+    }
+
+    const seekAll = (event) => {
+        const timeStamp = event.target.currentTime;
+        for (let ref of refList.current) {
+            const audioEl = ref.current.audioEl.current;
+            let seek = timeStamp;
+            while (seek >= audioEl.duration) {
+                seek -= audioEl.duration;
+            }
+            audioEl.fastSeek(seek);
+        }
+    }
+
+    const volumeChangeAll = (event) => {
+        console.log(event);
+        const volume = event.target.volume;
+        for (let ref of refList.current) {
+            const audioEl = ref.current.audioEl.current;
+            audioEl.setVolume(volume);
+        }
+    }
+    useEffect(() => {
+        console.log(playing, mainTrackRef.current.audioEl.current.paused);
+        if (playing && mainTrackRef.current.audioEl.current.paused) {
+            playAll();
+        }
+        else if (!playing && !mainTrackRef.current.audioEl.current.paused) {
+            pauseAll();
+        }
+    }, [sortedTracks, playing]);
+
     return (
-        <div className="flex flex-1 flex-row justify-center" >  
-            <ReactAudioPlayer controls src={audio}/>
+        <div className="flex flex-1 flex-row justify-center" >
+            {
+                sortedTracks.map((element, idx) => {
+                    const key = "track_" + idx.toString()
+                    return (
+                        <ReactAudioPlayer key={key} controls loop src={element.url} className="" ref={refList[idx]}/>
+                    );
+                })
+            } 
+            <ReactAudioPlayer controls ref={mainTrackRef} src={mainTrack.url} onPlay={() => dispatch(playMusic())} onPause={() => dispatch(pauseMusic())} onEnded={pauseAll} onSeeked={seekAll} onVolumeChanged={volumeChangeAll}/>
         </div>
     )
 }
