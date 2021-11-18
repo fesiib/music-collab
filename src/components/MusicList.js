@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {useTable, usePagination, useBlockLayout, useFlexLayout} from 'react-table';
@@ -125,12 +125,19 @@ function Table(props) {
             _openPanel(row.original.projectId, row.original.versionId);
     }
 
+    const additionalRowClassName = useMemo(() => {
+        if (parentProps.panel) {
+            return "hover:bg-gray-100 cursor-pointer";
+        }
+        return "";
+    }, [parentProps.panel]);
+    console.log(parentProps.panel, additionalRowClassName);
     return (
         <div className={"overflow-x-scroll grid justify-items-center " + parentProps.className} >
             <table {...getTableProps({
                 className: ''
             })}>
-                <thead className="sticky top-0 bg-gray-100">
+                <thead className="sticky top-0 bg-gray-200">
                     {headerGroups.map(headerGroup => (
                         <tr {...headerGroup.getHeaderGroupProps({
                             className: "text-gray-600"
@@ -161,7 +168,7 @@ function Table(props) {
                                 prepareRow(row);
                                 return (
                                     <tr {...row.getRowProps({
-                                        className: "max-h-14",
+                                        className: "max-h-14 " + additionalRowClassName,
                                         onClick: () => rowClick(row),
                                     })}>
                                         {row.cells.map(cell => {

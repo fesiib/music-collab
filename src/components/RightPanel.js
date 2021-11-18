@@ -13,7 +13,7 @@ import GenericButton from "./GenericButton";
 import MusicList, { TRANSFORM_POPULAR_SINGLE, TRANSFORM_RECENT, TRANSFORM_RECENT_SINGLE } from "./MusicList";
 import CustomTag from "./CustomTag";
 
-const DEFAULT_BACKGROUND = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
+//const DEFAULT_BACKGROUND = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
 function getCollaborators(project) {
     let collaborators = new Set();
@@ -77,10 +77,10 @@ function RightPanel(props) {
 
     const project = projects[projectId];
 
-    let background = DEFAULT_BACKGROUND;
-    if (typeof project.metaInfo.backgroundImage === 'string' && project.metaInfo.backgroundImage > 0) {
-        background = project.metaInfo.backgroundImage;
-    }
+    // let background = null;
+    // if (typeof project.metaInfo.backgroundImage === 'string' && project.metaInfo.backgroundImage > 0) {
+    //     background = project.metaInfo.backgroundImage;
+    // }
 
     const collaborators = Array.from(getCollaborators(project));
 
@@ -104,7 +104,14 @@ function RightPanel(props) {
             panelClassName='bg-white'
         >
             <div className='bg-white'>
-                <div style={{
+                <div className="flex flex-row justify-between">
+                    <div className="pt-5 pl-5 text-left">
+                        <p className="text-4xl hover:underline cursor-pointer"> {trackTitle} </p>
+                        <p className="text-2xl text-gray-600"> {ownerName} </p>
+                    </div>
+                    <GenericButton title={"Go to Project"} className="h-16 m-6" />
+                </div>
+                {/* <div style={{
                     backgroundImage:`url(${background})`,
                     backgroundRepeat: 'no-repeat',
                     width: '100%',
@@ -118,11 +125,7 @@ function RightPanel(props) {
                         <GenericButton title={"Contribute"} />
                         <GenericButton title={"Go To Project"} />
                     </div>      
-                </div>
-                <div className="pt-5 pl-5 text-left">
-                    <p className="text-4xl"> {trackTitle} </p>
-                    <p className="text-2xl text-gray-600"> {ownerName} </p>
-                </div>
+                </div> */}
                 <div className="pl-5 flex flex-row flex-wrap">
                     {tags.map((tag) => {
                         return (
@@ -144,6 +147,7 @@ function RightPanel(props) {
                         <ReactTimeAgo date={creationTime} timeStyle="twitter-minute" locale="en-US"/>
                     </div>
                 </div>
+                <h2 className="m-5 text-left"> Versions </h2>
                 <MusicList 
                     headers={['author', 'duration']}
                     votes={true}
@@ -151,6 +155,7 @@ function RightPanel(props) {
                     transform={transform}
                     projectId={projectId}
                     versionId={versionId}
+                    panel={false}
                 />
                 <div>
                 <h2 className="pl-5 pt-5 text-left">
