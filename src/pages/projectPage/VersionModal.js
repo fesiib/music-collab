@@ -3,6 +3,7 @@ import React from 'react'
 
 import VersionPage from '../../pages/VersionPage'
 
+
 const DimmedBackground = ({ children }) => {
   return (
     <div className="bg-gray-200 bg-opacity-80 h-screen w-screen z-0 top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2">
@@ -38,12 +39,15 @@ const VersionModal = ({ onClose }) => {
     <DimmedBackground>
       <CenteredContent>
         <Container>
-          <button
-            onClick={onClose}
-            className="bg-blue-400 text-black h-7 w-20 self-end"
-          >
-            Close
-          </button>
+          
+          <div className=" text-black h-7 w-7 self-end cursor-pointer" onClick={() => {              
+              onClose();
+            }}> 
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+
           
           <VersionPage
             description={'This is my contribution'}

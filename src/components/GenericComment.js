@@ -21,7 +21,7 @@ const GenericComment = ({comment, reply, showReply, versionId, projectId}) => {
 */ 
     const dispatch = useDispatch();
     const id = comment.id;
-    const author = comment.authorId;
+    const authorId = comment.authorId;
 
     const contend = comment.commentMessage;
     const timeStamp = comment.timeStamp;
@@ -90,6 +90,11 @@ const GenericComment = ({comment, reply, showReply, versionId, projectId}) => {
             return;
         }
     }
+
+    const {projects, profiles} = useSelector(state => state.database);
+    const userName =  profiles[authorId]["metaInfo"]["name"];
+    const profilePic =  profiles[authorId]["metaInfo"]["profileImage"];
+
     return (
 
         <div className = "flex flex-raw">
@@ -107,11 +112,11 @@ const GenericComment = ({comment, reply, showReply, versionId, projectId}) => {
             <div className = "flex flex-row  ">
                 
                 <div className = "flex-none  w-14	 " >
-                    <img src= {ProfilePic} />
+                    <img class="w-14 h-14 rounded-full object-cover" src= {profilePic} />
                 </div>
                 <div className = "flex-none  flex flex-col	 w-11/12" >
                     <div className = "flex-grow  flex flex-row px-3  gap-x-3 " >
-                        <p className = "text-indigo-500 text  text-sm	" > {author} </p>
+                        <p className = "text-indigo-500 text  text-sm	" > {userName} </p>
                         <p className = "text-gray-600 text-sm	" > {time_dif} </p>
                     </div>
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import ProfilePic from '../media/profile-svgrepo-com.svg';
 
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,13 +12,15 @@ import GenericButton from './GenericButton';
 const VersionContributor = ( {versionId, projectId}) => {
 
     const {projects, profiles} = useSelector(state => state.database);
-
     const versionInfo = projects[projectId]["versions"][versionId]["metaInfo"];
     const authorId = versionInfo["authorId"];
     const contributionMessage = versionInfo["contributionMessage"];
     const votes = versionInfo["votes"];
     const creationTime = versionInfo["creationTime"];
     const timeAgoCreated = time_ago (creationTime);
+
+    const userName =  profiles[authorId]["metaInfo"]["name"];
+    const profilePic =  profiles[authorId]["metaInfo"]["profileImage"];
 
     console.log(projects)
 
@@ -33,20 +34,20 @@ const VersionContributor = ( {versionId, projectId}) => {
             dispatch (playTracks());
         }
     }
-    const goToContributePage = ()=> {
-        console.log ("goToContributePage");
-    }
-    const buttonClassName = "flex-none w-20  h-full place-items-center border rounded-full"
+    
+    const buttonClassName = "flex-none w-20  h-full place-items-center border rounded-full cursor-pointer"
 
     return (
+        <div>
+        {/* <div className="w-full h-2  text-right  ">
+                <GenericButton class="float-right ..." onClick = { goToContributePage } className="text-l mx-auto  px-2" title = {"contribute"}/>
+        </div> */}
         <div className = "flex flex-row h-20 my-10 gap-x-6">
 
             <div  onClick = {playAll} className= { playAllTracks? buttonClassName: buttonClassName + " pl-2" } >
                 {   playAllTracks ? <PauseButton/> :
                     <PlayButton  />
                 }
-                
-                
             </div>
 
             <div className="flex-grow h-full  rounded-3xl border border-black px-5">
@@ -60,20 +61,15 @@ const VersionContributor = ( {versionId, projectId}) => {
                 <div className = "flex flex-col ">
                     <div className = "flex-none text-gray-600	flex flex-raw " >
                             Contributor
-
-                        <div className="flex-none w-48 h-full  place-items-right ml-8 ">
-                            <GenericButton onClick = { goToContributePage } className="text-xs mx-auto  px-2 py-0" title = {"contribute"}/>
-                        </div>
-                        
                         </div>
 
                     <div className = "flex-grow" >
                     <div className = "flex flex-row ">
-                        <div className = "flex-none  w-14	 " >
-                            <img src= {ProfilePic} />
+                        <div className = "flex-none " >
+                            <img class="w-14 h-14 rounded-full object-cover" src= {profilePic} />
                         </div>
                         <div className = "flex-grow p-2 px-4 " >
-                            <p> {authorId} </p>
+                            <p> {userName} </p>
                             <p className = "text-gray-600 text-xs " > {timeAgoCreated} </p>
                         </div>
                     </div>
@@ -81,7 +77,7 @@ const VersionContributor = ( {versionId, projectId}) => {
                     </div>
                 </div>
             </div>
-            
+            </div>
         </div>
   )
 }

@@ -2,8 +2,13 @@
 import React, {useState} from 'react'
 import ProfilePic from '../media/profile-svgrepo-com.svg';
 import GenericButton from '../components/GenericButton'
+import { useDispatch, useSelector } from 'react-redux';
 
 const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
+    const {projects, profiles} = useSelector(state => state.database);
+    const userName =  profiles[authorId]["metaInfo"]["name"];
+    const profilePic =  profiles[authorId]["metaInfo"]["profileImage"];
+    
     const [comment, setComment] = useState("");
 
     const handleSubmit = (event) => {
@@ -49,11 +54,11 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
             <div className = "flex flex-row  ">
                 
                 <div className = "flex-none  w-14	 " >
-                    <img src= {ProfilePic} />
+                    <img class="w-14 h-14 rounded-full object-cover" src= {profilePic} />
                 </div>
                 <div className = "flex-none  flex flex-col	 w-11/12" >
                     <div className = "flex-grow  flex flex-row px-3  gap-x-3 " >
-                        <p className = "text-primary text  text-sm	" > {authorId} </p>
+                        <p className = "text-indigo-500 text  text-sm	" > {userName} </p>
                     </div>
 
                     <div className = "flex-grow px-3 w-full  pb-1">

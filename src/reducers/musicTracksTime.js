@@ -8,7 +8,7 @@ export const setTimeAllTracks = (payload) => ({
 });
 
 const initialState = {
-    timeAllTracks: 0,
+    timeAllTracks: null,
 };
 
 // timeAllTracks
