@@ -3,6 +3,10 @@ import React from 'react'
 
 import VersionPage from '../../pages/VersionPage'
 
+import { useDispatch, useSelector } from 'react-redux';
+import { pauseTracks, playTracks } from '../../reducers/musicTracks';
+
+
 const DimmedBackground = ({ children }) => {
   return (
     <div className="bg-gray-200 bg-opacity-80 h-screen w-screen z-0 top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2">
@@ -33,13 +37,20 @@ const Container = ({ children }) => {
 const VersionModal = ({ onClose }) => {
   const versionId  = "sunnyDay1"
   const projectId = "sunnyDay"
+
+  const dispatch = useDispatch();
+
   
   return (
     <DimmedBackground>
       <CenteredContent>
         <Container>
           <button
-            onClick={onClose}
+            onClick={() => {
+              dispatch (pauseTracks());
+              
+              onClose();
+            }}
             className="bg-blue-400 text-black h-7 w-20 self-end"
           >
             Close
