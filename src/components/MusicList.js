@@ -1,64 +1,69 @@
-import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import {useTable, usePagination, useBlockLayout, useFlexLayout} from 'react-table';
-import ReactTimeAgo from 'react-time-ago';
+import {
+    useTable,
+    usePagination,
+    useBlockLayout,
+    useFlexLayout,
+} from "react-table";
+import ReactTimeAgo from "react-time-ago";
 
-import TimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en.json';
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
 
-import { openPanel } from '../reducers/homepage/homepagePanel';
-import GenericButton from './GenericButton';
-import iconUD from '../icons/updown.png';
-import TagList from './TagList';
+import { openPanel } from "../reducers/homepage/homepagePanel";
+import GenericButton from "./GenericButton";
+import iconUD from "../icons/updown.png";
+import TagList from "./TagList";
 
 TimeAgo.addDefaultLocale(en);
 
 const ALLOWED_HEADERS = {
-    'trackTitle': {
-        header: 'Title',
+    trackTitle: {
+        header: "Title",
         width: 150,
     },
-    'tags': {
-        header: 'Tags',
+    tags: {
+        header: "Tags",
         width: 150,
     },
-    'owner': {
-        header: 'Owner',
+    owner: {
+        header: "Owner",
         width: 130,
     },
-    'author': {
-        header: 'Author',
+    author: {
+        header: "Author",
         width: 140,
     },
-    'cntVersions': {
-        header: '#Versions',
+    cntVersions: {
+        header: "#Versions",
         width: 100,
     },
-    'cntCollab': {
-        header: '#Collborators',
+    cntCollab: {
+        header: "#Collborators",
         width: 120,
     },
-    'duration': {
-        header: 'Duration',
+    duration: {
+        header: "Duration",
         width: 90,
     },
-    'updated': {
-        header: 'Last Activity',
+    updated: {
+        header: "Last Activity",
         width: 120,
     },
-    'playButton': {
-        header: '',
-        width: 60,    
-    },
-    'votes': {
-        header: '',
-        width: 100,    
-    },
-    'projectIcon': {
-        header: '',
+    playButton: {
+        header: "",
         width: 60,
-    }
+    },
+    votes: {
+        header: "",
+        width: 100,
+    },
+    projectIcon: {
+        header: "",
+        width: 60,
+    },
 };
 
 export const TRANSFORM_POPULAR = "popular";
@@ -78,8 +83,7 @@ const DEF_PROPS = {
     transform: TRANSFORM_POPULAR,
     projectId: "",
     versionId: "",
-}
-
+};
 
 function Table(props) {
     const dispatch = useDispatch();
@@ -87,17 +91,17 @@ function Table(props) {
     const parentProps = props.parentProps;
 
     const _openPanel = (projectId, versionId) => {
-        dispatch(openPanel({projectId, versionId}));
-    }
+        dispatch(openPanel({ projectId, versionId }));
+    };
 
     const defaultColumn = React.useMemo(
         () => ({
-          minWidth: 30, // minWidth is only used as a limit for resizing
-          width: 150, // width is used for both the flex-basis and flex-grow
-          maxWidth: 400, // maxWidth is only used as a limit for resizing
+            minWidth: 30, // minWidth is only used as a limit for resizing
+            width: 150, // width is used for both the flex-basis and flex-grow
+            maxWidth: 400, // maxWidth is only used as a limit for resizing
         }),
         []
-      )
+    );
 
     const {
         getTableProps,
@@ -119,20 +123,20 @@ function Table(props) {
         {
             columns: props.columns,
             data: props.data,
-            initialState: {pageIndex: 0},
+            initialState: { pageIndex: 0 },
             manualPagination: true,
             pageCount: parentProps.pageCount,
             defaultColumn,
         },
         useBlockLayout,
         usePagination,
-        useFlexLayout,
+        useFlexLayout
     );
 
     const rowClick = (row) => {
         if (parentProps.panel)
             _openPanel(row.original.projectId, row.original.versionId);
-    }
+    };
 
     const additionalRowClassName = useMemo(() => {
         if (parentProps.panel) {
@@ -142,120 +146,170 @@ function Table(props) {
     }, [parentProps.panel]);
 
     return (
-        <div className={"overflow-x-scroll grid justify-items-center " + parentProps.className} >
-            <table {...getTableProps({
-                className: ''
-            })}>
+        <div
+            className={
+                "overflow-x-scroll grid justify-items-center " +
+                parentProps.className
+            }
+        >
+            <table
+                {...getTableProps({
+                    className: "",
+                })}
+            >
                 <thead className="sticky top-0 bg-gray-200">
-                    {headerGroups.map(headerGroup => (
-                        <tr {...headerGroup.getHeaderGroupProps({
-                            className: "text-gray-600"
-                        })}>
-                            {
-                                headerGroup.headers.map(column => (
-                                    <th {...column.getHeaderProps(
-                                        {
-                                            className: "p-2 text-left"
-                                        }
-                                    )}>
-                                        {column.render('Header')}
-                                    </th>
-                                ))
-                            }
+                    {headerGroups.map((headerGroup) => (
+                        <tr
+                            {...headerGroup.getHeaderGroupProps({
+                                className: "text-gray-600",
+                            })}
+                        >
+                            {headerGroup.headers.map((column) => (
+                                <th
+                                    {...column.getHeaderProps({
+                                        className: "p-2 text-left",
+                                    })}
+                                >
+                                    {column.render("Header")}
+                                </th>
+                            ))}
                         </tr>
                     ))}
                 </thead>
-                {
-                    rows.length === 0 ? (
-                        <div className="text-lg text-center p-5"> Sorry, there are no projects with matching tags... </div>
-                    ) : (
-                        <tbody {...getTableBodyProps({
-                            className: 'divide-y-2'
-                        })}>
-                            {rows.map(
-                                (row, i) => {
-                                prepareRow(row);
-                                return (
-                                    <tr {...row.getRowProps({
-                                        className: "max-h-14 " + additionalRowClassName,
+                {rows.length === 0 ? (
+                    <div className="text-lg text-center p-5">
+                        {" "}
+                        Sorry, there are no projects with matching tags...{" "}
+                    </div>
+                ) : (
+                    <tbody
+                        {...getTableBodyProps({
+                            className: "divide-y-2",
+                        })}
+                    >
+                        {rows.map((row, i) => {
+                            prepareRow(row);
+                            return (
+                                <tr
+                                    {...row.getRowProps({
+                                        className:
+                                            "max-h-14 " +
+                                            additionalRowClassName,
                                         onClick: () => rowClick(row),
-                                    })}>
-                                        {row.cells.map(cell => {
-                                            if (cell.column.id === 'projectIcon') {
-                                                return (
-                                                    <td {...cell.getCellProps({
-                                                        className: "p-2"
-                                                    })}>
-                                                        <GenericButton title={"Icon"} className='w-12'/>
-                                                    </td>
-                                                );
-                                            }
-                                            if (cell.column.id === 'tags') {
-                                                return (
-                                                    <td {...cell.getCellProps({
-                                                        className: "p-2"
-                                                    })}>
-                                                        <TagList tags={cell.value} limit={2}/>
-                                                    </td>
-                                                );
-                                            }
-                                            if (cell.column.id === 'playButton') {
-                                                return (
-                                                    <td {...cell.getCellProps({
-                                                        className: "p-2"
-                                                    })}>
-                                                        <GenericButton title={"Play"} className='w-12'/>
-                                                    </td>
-                                                );
-                                            }
-                                            if (cell.column.id === 'votes') {
-                                                return (
-                                                    <td {...cell.getCellProps({
-                                                        className: "p-2"
-                                                    })}>
-                                                        <div className="flex flex-row w-10">
-                                                            {cell.render('Cell')}
-                                                            <img src={iconUD}></img>
-                                                        </div>
-                                                    </td>
-                                                );
-                                            }
-                                            if (cell.column.id === 'updated') {
-                                                return (
-                                                    <td {...cell.getCellProps({
-                                                    className: "p-2 text-left overflow-ellipsis overflow-hidden"
-                                                    })}>
-                                                        <ReactTimeAgo date={cell.value} timeStyle="twitter-minute" locale="en-US"/>
-                                                    </td>
-                                                );
-                                            }
-                                            if (cell.column.id === 'duration') {
-                                                const mins = (Math.floor(cell.value / 60)).toString().padStart(2, "0");
-                                                const secs = (cell.value % 60).toString().padStart(2, "0");;
-                                                return ( <td {...cell.getCellProps({
-                                                    className: "p-2 text-left overflow-ellipsis overflow-hidden"
-                                                    })}>
-                                                        {mins}:{secs}
-                                                    </td>
-                                                )
-                                            }
+                                    })}
+                                >
+                                    {row.cells.map((cell) => {
+                                        if (cell.column.id === "projectIcon") {
                                             return (
-                                                <td {...cell.getCellProps({
-                                                className: "p-2 text-left overflow-ellipsis overflow-hidden"
-                                                })}>
-                                                    {cell.render('Cell')}
+                                                <td
+                                                    {...cell.getCellProps({
+                                                        className: "p-2",
+                                                    })}
+                                                >
+                                                    <GenericButton
+                                                        title={"Icon"}
+                                                        className="w-12"
+                                                    />
                                                 </td>
                                             );
-                                        })}
-                                    </tr>
-                                )}
-                            )}
-                        </tbody>
-                    )
-                }
+                                        }
+                                        if (cell.column.id === "tags") {
+                                            return (
+                                                <td
+                                                    {...cell.getCellProps({
+                                                        className: "p-2",
+                                                    })}
+                                                >
+                                                    <TagList
+                                                        tags={cell.value}
+                                                        limit={2}
+                                                    />
+                                                </td>
+                                            );
+                                        }
+                                        if (cell.column.id === "playButton") {
+                                            return (
+                                                <td
+                                                    {...cell.getCellProps({
+                                                        className: "p-2",
+                                                    })}
+                                                >
+                                                    <GenericButton
+                                                        title={"Play"}
+                                                        className="w-12"
+                                                    />
+                                                </td>
+                                            );
+                                        }
+                                        if (cell.column.id === "votes") {
+                                            return (
+                                                <td
+                                                    {...cell.getCellProps({
+                                                        className: "p-2",
+                                                    })}
+                                                >
+                                                    <div className="flex flex-row w-10">
+                                                        {cell.render("Cell")}
+                                                        <img src={iconUD}></img>
+                                                    </div>
+                                                </td>
+                                            );
+                                        }
+                                        if (cell.column.id === "updated") {
+                                            return (
+                                                <td
+                                                    {...cell.getCellProps({
+                                                        className:
+                                                            "p-2 text-left overflow-ellipsis overflow-hidden",
+                                                    })}
+                                                >
+                                                    <ReactTimeAgo
+                                                        date={cell.value}
+                                                        timeStyle="twitter-minute"
+                                                        locale="en-US"
+                                                    />
+                                                </td>
+                                            );
+                                        }
+                                        if (cell.column.id === "duration") {
+                                            const mins = Math.floor(
+                                                cell.value / 60
+                                            )
+                                                .toString()
+                                                .padStart(2, "0");
+                                            const secs = (cell.value % 60)
+                                                .toString()
+                                                .padStart(2, "0");
+                                            return (
+                                                <td
+                                                    {...cell.getCellProps({
+                                                        className:
+                                                            "p-2 text-left overflow-ellipsis overflow-hidden",
+                                                    })}
+                                                >
+                                                    {mins}:{secs}
+                                                </td>
+                                            );
+                                        }
+                                        return (
+                                            <td
+                                                {...cell.getCellProps({
+                                                    className:
+                                                        "p-2 text-left overflow-ellipsis overflow-hidden",
+                                                })}
+                                            >
+                                                {cell.render("Cell")}
+                                            </td>
+                                        );
+                                    })}
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                )}
             </table>
         </div>
-    )
+    );
 }
 
 function sortByProjectCreated(p1, p2) {
@@ -321,8 +375,10 @@ function getCollaborators(project) {
 function getPopularVersionId(project) {
     let popularVersionId = null;
     for (let versionId in project.versions) {
-        if (popularVersionId === null
-            || project.versions[versionId].metaInfo.votes > project.versions[popularVersionId].metaInfo.votes
+        if (
+            popularVersionId === null ||
+            project.versions[versionId].metaInfo.votes >
+                project.versions[popularVersionId].metaInfo.votes
         ) {
             popularVersionId = versionId;
         }
@@ -333,8 +389,12 @@ function getPopularVersionId(project) {
 function getRecentVersionId(project) {
     let recentVersionId = null;
     for (let versionId in project.versions) {
-        if (recentVersionId === null
-            || project.versions[versionId].metaInfo.lastModified.valueOf() > project.versions[recentVersionId].metaInfo.lastModified.valueOf()
+        if (
+            recentVersionId === null ||
+            project.versions[versionId].metaInfo.lastModified.valueOf() >
+                project.versions[
+                    recentVersionId
+                ].metaInfo.lastModified.valueOf()
         ) {
             recentVersionId = versionId;
         }
@@ -343,19 +403,32 @@ function getRecentVersionId(project) {
 }
 
 function calculateProjectRelevance(single, tags) {
-    if (tags.length === 0) {
+    if (tags?.length === 0) {
         return 1;
     }
+
     let cnt = 0;
+    if (!tags) {
+        return cnt;
+    }
     for (let tag of tags) {
         cnt += single.tags.reduce((prev, cur) => {
-            return (cur.label.toLowerCase() === tag.label.toLowerCase() ? prev + 1 : prev)            
+            return cur.label.toLowerCase() === tag.label.toLowerCase()
+                ? prev + 1
+                : prev;
         }, 0);
     }
     return cnt;
 }
 
-function transformSingleVersion(profiles, project, version, collaborators, projectId, versionId) {
+function transformSingleVersion(
+    profiles,
+    project,
+    version,
+    collaborators,
+    projectId,
+    versionId
+) {
     let single = {
         trackTitle: project.metaInfo.trackTitle,
         tags: project.metaInfo.tags,
@@ -366,9 +439,9 @@ function transformSingleVersion(profiles, project, version, collaborators, proje
         duration: version.metaInfo.duration,
         updated: version.metaInfo.lastModified,
         versionCreated: version.metaInfo.creationTime,
-        projectCreated: project.metaInfo.creationTime, 
+        projectCreated: project.metaInfo.creationTime,
         votes: version.metaInfo.votes,
-        playButton: version.tracks.map(track => track.url),
+        playButton: version.tracks.map((track) => track.url),
 
         projectId,
         versionId,
@@ -377,8 +450,6 @@ function transformSingleVersion(profiles, project, version, collaborators, proje
     };
     return single;
 }
-
-
 
 function transformProjects_owner(projects, profiles, ownerId) {
     let data = [];
@@ -395,7 +466,16 @@ function transformProjects_owner(projects, profiles, ownerId) {
         }
         const collaborators = getCollaborators(project);
         const version = project.versions[popularVersionId];
-        data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, popularVersionId));
+        data.push(
+            transformSingleVersion(
+                profiles,
+                project,
+                version,
+                collaborators,
+                projectId,
+                popularVersionId
+            )
+        );
     }
 
     data.sort(sortByProjectCreated);
@@ -411,7 +491,7 @@ function transformProjects_author(projects, profiles, authorId) {
     for (let obj of author.versionIds) {
         const projectId = obj.projectId;
         const versionId = obj.versionId;
-        
+
         const project = projects[projectId];
         const version = project.versions[versionId];
         const collaborators = getCollaborators(project);
@@ -419,7 +499,16 @@ function transformProjects_author(projects, profiles, authorId) {
             continue;
         }
 
-        data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, versionId));
+        data.push(
+            transformSingleVersion(
+                profiles,
+                project,
+                version,
+                collaborators,
+                projectId,
+                versionId
+            )
+        );
     }
 
     data.sort(sortByVersionUpdated);
@@ -439,7 +528,14 @@ function transformProjects_popular(projects, profiles, searchTags) {
 
         const collaborators = getCollaborators(project);
         const version = project.versions[popularVersionId];
-        const single = transformSingleVersion(profiles, project, version, collaborators, projectId, popularVersionId);
+        const single = transformSingleVersion(
+            profiles,
+            project,
+            version,
+            collaborators,
+            projectId,
+            popularVersionId
+        );
         const relevance = calculateProjectRelevance(single, searchTags);
         if (relevance === 0) {
             continue;
@@ -466,7 +562,14 @@ function transformProjects_recency(projects, profiles, searchTags) {
 
         const collaborators = getCollaborators(project);
         const version = project.versions[recentVersionId];
-        const single = transformSingleVersion(profiles, project, version, collaborators, projectId, recentVersionId);
+        const single = transformSingleVersion(
+            profiles,
+            project,
+            version,
+            collaborators,
+            projectId,
+            recentVersionId
+        );
         const relevance = calculateProjectRelevance(single, searchTags);
         if (relevance === 0) {
             continue;
@@ -480,35 +583,63 @@ function transformProjects_recency(projects, profiles, searchTags) {
     return data;
 }
 
-function transformProjects_popular_single(projects, profiles, projectId, versionId) {
+function transformProjects_popular_single(
+    projects,
+    profiles,
+    projectId,
+    versionId
+) {
     let data = [];
-    
+
     if (!projects.hasOwnProperty(projectId)) {
         return [];
     }
     const project = projects[projectId];
-    
+
     for (let versionId in project.versions) {
         const version = project.versions[versionId];
-        data.push(transformSingleVersion(profiles, project, version, new Set(), projectId, versionId));
+        data.push(
+            transformSingleVersion(
+                profiles,
+                project,
+                version,
+                new Set(),
+                projectId,
+                versionId
+            )
+        );
     }
 
     data.sort(sortByPopularity);
     return data;
 }
 
-function transformProjects_recency_single(projects, profiles, projectId, versionId) {
+function transformProjects_recency_single(
+    projects,
+    profiles,
+    projectId,
+    versionId
+) {
     let data = [];
-    
+
     if (!projects.hasOwnProperty(projectId)) {
         return [];
     }
-    
+
     const project = projects[projectId];
-    
+
     for (let versionId in project.versions) {
         const version = project.versions[versionId];
-        data.push(transformSingleVersion(profiles, project, version, new Set(), projectId, versionId));
+        data.push(
+            transformSingleVersion(
+                profiles,
+                project,
+                version,
+                new Set(),
+                projectId,
+                versionId
+            )
+        );
     }
 
     data.sort(sortByVersionUpdated);
@@ -520,38 +651,41 @@ function MusicList(props) {
         ...DEF_PROPS,
         ...props,
     };
-    const columns = React.useMemo(
-        () => {
-            let headers = [];
-            for (let accessor of props.headers) {
-                if (ALLOWED_HEADERS.hasOwnProperty(accessor)) {
-                    headers.push({
-                        Header: ALLOWED_HEADERS[accessor].header,
-                        accessor: accessor,
-                        width: ALLOWED_HEADERS[accessor].width,
-                    })
-                }
-            }
-            if (props.votes) {
+    const columns = React.useMemo(() => {
+        let headers = [];
+        for (let accessor of props.headers) {
+            if (ALLOWED_HEADERS.hasOwnProperty(accessor)) {
                 headers.push({
-                    Header: ALLOWED_HEADERS['votes'].header,
-                    accessor: 'votes',
-                    width: ALLOWED_HEADERS['votes'].width,
+                    Header: ALLOWED_HEADERS[accessor].header,
+                    accessor: accessor,
+                    width: ALLOWED_HEADERS[accessor].width,
                 });
             }
-            return headers;
-        },
-        []
-    )
+        }
+        if (props.votes) {
+            headers.push({
+                Header: ALLOWED_HEADERS["votes"].header,
+                accessor: "votes",
+                width: ALLOWED_HEADERS["votes"].width,
+            });
+        }
+        return headers;
+    }, []);
 
-    const { projects, profiles, userId } = useSelector(state => state.database);
-    const { searchTags } = useSelector(state => state.tabInfo);
+    const { projects, profiles, userId } = useSelector(
+        (state) => state.database
+    );
+    const { searchTags } = useSelector((state) => state.tabInfo);
 
-    const adjustedSearchTags = (props.search ? searchTags : []);
+    const adjustedSearchTags = props.search ? searchTags : [];
 
     let data = React.useMemo(() => {
         if (props.transform === TRANSFORM_POPULAR) {
-            return transformProjects_popular(projects, profiles, adjustedSearchTags);
+            return transformProjects_popular(
+                projects,
+                profiles,
+                adjustedSearchTags
+            );
         }
         if (props.transform === TRANSFORM_AUTHOR) {
             return transformProjects_author(projects, profiles, userId);
@@ -560,20 +694,40 @@ function MusicList(props) {
             return transformProjects_owner(projects, profiles, userId);
         }
         if (props.transform === TRANSFORM_RECENT) {
-            return transformProjects_recency(projects, profiles, adjustedSearchTags);
+            return transformProjects_recency(
+                projects,
+                profiles,
+                adjustedSearchTags
+            );
         }
         if (props.transform === TRANSFORM_POPULAR_SINGLE) {
-            return transformProjects_popular_single(projects, profiles, props.projectId, props.versionId);
+            return transformProjects_popular_single(
+                projects,
+                profiles,
+                props.projectId,
+                props.versionId
+            );
         }
         if (props.transform === TRANSFORM_RECENT_SINGLE) {
-            return transformProjects_recency_single(projects, profiles, props.projectId, props.versionId);
+            return transformProjects_recency_single(
+                projects,
+                profiles,
+                props.projectId,
+                props.versionId
+            );
         }
         return transformProjects_popular(projects, profiles);
-    }, [projects, profiles, props.transform, userId, props.projectId, props.versionId, adjustedSearchTags]);
+    }, [
+        projects,
+        profiles,
+        props.transform,
+        userId,
+        props.projectId,
+        props.versionId,
+        adjustedSearchTags,
+    ]);
 
-    return (
-        <Table columns={columns} data={data} parentProps={props}/>
-    )
+    return <Table columns={columns} data={data} parentProps={props} />;
 }
 
 export default MusicList;
