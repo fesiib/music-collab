@@ -151,7 +151,7 @@ const CommentSection = ({versionId, projectId}) => {
 
 
     return (
-        <>
+        <div className= " h-full " >
         <div className= " w-full flex flex-raw my-5 h-10 text-indigo-500">
 
             <div className= " flex-none w-10 text-4xl	">
@@ -174,7 +174,7 @@ const CommentSection = ({versionId, projectId}) => {
 
         </div>
 
-        <div className = "flex flex-col my-5 gap-y-2 h-full">
+        <div className = "flex flex-col my-5 gap-y-2  overflow-y-auto  ">
             Comments 
 
             {showComment &&  <WriteComment  parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
@@ -185,7 +185,8 @@ const CommentSection = ({versionId, projectId}) => {
             
 
         </div>
-        </>
+        </div>
+        
   )
 }
 

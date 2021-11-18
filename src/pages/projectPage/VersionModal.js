@@ -1,5 +1,7 @@
 import React from 'react'
-import VersionPage from './VersionPage'
+// import VersionPage from './VersionPage'
+
+import VersionPage from '../../pages/VersionPage'
 
 const DimmedBackground = ({ children }) => {
   return (
@@ -29,6 +31,9 @@ const Container = ({ children }) => {
 }
 
 const VersionModal = ({ onClose }) => {
+  const versionId  = "sunnyDay1"
+  const projectId = "sunnyDay"
+  
   return (
     <DimmedBackground>
       <CenteredContent>
@@ -39,10 +44,14 @@ const VersionModal = ({ onClose }) => {
           >
             Close
           </button>
+          
           <VersionPage
             description={'This is my contribution'}
             contributor={{ name: 'Alan Zhui', lastUpdate: '2 weeks ago' }}
+            versionId  = {versionId}
+            projectId = {projectId}
           />
+
         </Container>
       </CenteredContent>
     </DimmedBackground>

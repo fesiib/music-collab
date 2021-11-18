@@ -8,6 +8,7 @@ import { pauseTracks, playTracks } from '../reducers/musicTracks';
 import time_ago from './utils/timeAgo'
 import PlayButton from '../icons/play-button'
 import PauseButton from '../icons/pause-button'
+import GenericButton from './GenericButton';
 
 const VersionContributor = ( {versionId, projectId}) => {
 
@@ -32,7 +33,9 @@ const VersionContributor = ( {versionId, projectId}) => {
             dispatch (playTracks());
         }
     }
-
+    const goToContributePage = ()=> {
+        console.log ("goToContributePage");
+    }
     const buttonClassName = "flex-none w-20  h-full place-items-center border rounded-full"
 
     return (
@@ -40,7 +43,7 @@ const VersionContributor = ( {versionId, projectId}) => {
 
             <div  onClick = {playAll} className= { playAllTracks? buttonClassName: buttonClassName + " pl-2" } >
                 {   playAllTracks ? <PauseButton/> :
-                    <PlayButton/>
+                    <PlayButton  />
                 }
                 
                 
@@ -53,9 +56,17 @@ const VersionContributor = ( {versionId, projectId}) => {
                 </div>
                 
             </div>
-            <div className="flex-none w-56 h-full  ">
+            <div className="flex-none w-40 h-full  ">
                 <div className = "flex flex-col ">
-                    <div className = "flex-none text-gray-600	 " >Contributor</div>
+                    <div className = "flex-none text-gray-600	flex flex-raw " >
+                            Contributor
+
+                        <div className="flex-none w-48 h-full  place-items-right ml-8 ">
+                            <GenericButton onClick = { goToContributePage } className="text-xs mx-auto  px-2 py-0" title = {"contribute"}/>
+                        </div>
+                        
+                        </div>
+
                     <div className = "flex-grow" >
                     <div className = "flex flex-row ">
                         <div className = "flex-none  w-14	 " >
@@ -63,15 +74,14 @@ const VersionContributor = ( {versionId, projectId}) => {
                         </div>
                         <div className = "flex-grow p-2 px-4 " >
                             <p> {authorId} </p>
-                            <p className = "text-gray-600" > {timeAgoCreated} </p>
+                            <p className = "text-gray-600 text-xs " > {timeAgoCreated} </p>
                         </div>
                     </div>
 
                     </div>
                 </div>
-
-
             </div>
+            
         </div>
   )
 }
