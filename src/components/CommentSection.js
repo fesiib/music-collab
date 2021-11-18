@@ -148,7 +148,9 @@ const CommentSection = ({versionId, projectId}) => {
             return;
         }
     }
-
+    const goToContributePage = ()=> {
+        console.log ("goToContributePage");
+    }
 
     return (
         <div className= " h-full " >
@@ -168,6 +170,11 @@ const CommentSection = ({versionId, projectId}) => {
                 </svg>
             </div>
             <div className= " flex-grow"> </div>
+
+            <div className="flex-none  mx-2 ">
+                <GenericButton  onClick = { goToContributePage } className="text-l mx-auto  px-2 " title = {"contribute"}/>
+            </div>
+
             <div className= " flex-none "> 
                 <GenericButton onClick = { () => setShowComment(!showComment) }  className="text-l mx-auto  px-2" title = {"comment"}/>
             </div>

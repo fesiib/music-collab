@@ -34,16 +34,14 @@ const VersionContributor = ( {versionId, projectId}) => {
             dispatch (playTracks());
         }
     }
-    const goToContributePage = ()=> {
-        console.log ("goToContributePage");
-    }
-    const buttonClassName = "flex-none w-20  h-full place-items-center border rounded-full"
+    
+    const buttonClassName = "flex-none w-20  h-full place-items-center border rounded-full cursor-pointer"
 
     return (
         <div>
-        <div className="w-full h-2  text-right  ">
+        {/* <div className="w-full h-2  text-right  ">
                 <GenericButton class="float-right ..." onClick = { goToContributePage } className="text-l mx-auto  px-2" title = {"contribute"}/>
-        </div>
+        </div> */}
         <div className = "flex flex-row h-20 my-10 gap-x-6">
 
             <div  onClick = {playAll} className= { playAllTracks? buttonClassName: buttonClassName + " pl-2" } >

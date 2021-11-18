@@ -3,9 +3,6 @@ import React from 'react'
 
 import VersionPage from '../../pages/VersionPage'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { pauseTracks, playTracks } from '../../reducers/musicTracks';
-
 
 const DimmedBackground = ({ children }) => {
   return (
@@ -37,24 +34,20 @@ const Container = ({ children }) => {
 const VersionModal = ({ onClose }) => {
   const versionId  = "sunnyDay1"
   const projectId = "sunnyDay"
-
-  const dispatch = useDispatch();
-
   
   return (
     <DimmedBackground>
       <CenteredContent>
         <Container>
-          <button
-            onClick={() => {
-              dispatch (pauseTracks());
-              
+          
+          <div className=" text-black h-7 w-7 self-end cursor-pointer" onClick={() => {              
               onClose();
-            }}
-            className="bg-blue-400 text-black h-7 w-20 self-end"
-          >
-            Close
-          </button>
+            }}> 
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+
           
           <VersionPage
             description={'This is my contribution'}

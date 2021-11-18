@@ -29,7 +29,7 @@ const OneTrack = (props) => {
           const wavesurfer = WaveSurfer.create({
                 container: waveformRef.current,
                 cursorWidth: 1,
-                progressColor: "#009688", //teal[500]
+                progressColor: "#3949AB", //teal[500]
                 responsive: true,
                 waveColor: "#424242", //grey[800]
                 cursorColor: "transparent",
