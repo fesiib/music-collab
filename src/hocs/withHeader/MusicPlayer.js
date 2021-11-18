@@ -1,8 +1,7 @@
 import React, { createRef, useEffect, useRef } from 'react'
 import ReactAudioPlayer from 'react-audio-player'
 import { useDispatch, useSelector } from 'react-redux';
-import { pauseMusic, playMusic } from '../../reducers/player';
-import idleSong from '../../media/song.mp3';
+import { pauseMusic, playMusic, startedOver } from '../../reducers/player';
 
 
 function getAllTracks(projectId, leafId, projects) {
@@ -25,8 +24,8 @@ function getAllTracks(projectId, leafId, projects) {
     }
     if (tracks.length === 0) {
         tracks.push({
-            url: idleSong,
-            duration: 10,
+            url: null,
+            duration: 0,
             type: 'song',
         });
     }
@@ -37,14 +36,14 @@ function MusicPlayer() {
     const dispatch = useDispatch();
 
     const { projects } = useSelector(state => state.database );
-    const { versionId, projectId, playing } = useSelector(state => state.player);
+    const { versionId, projectId, playing, startOver } = useSelector(state => state.player);
 
     const mainTrackRef = useRef();
     const refList = useRef([]);
     
 
     let sortedTracks = getAllTracks(projectId, versionId, projects);
-    console.log(sortedTracks);
+    //console.log(sortedTracks);
     sortedTracks.sort((p1, p2) => {
         return p1.duration - p2.duration;
     });
@@ -79,22 +78,27 @@ function MusicPlayer() {
     }
 
     const volumeChangeAll = (event) => {
-        console.log(event);
         const volume = event.target.volume;
         for (let ref of refList.current) {
             const audioEl = ref.current.audioEl.current;
-            audioEl.setVolume(volume);
+            audioEl.volume = volume;
         }
     }
     useEffect(() => {
-        console.log(playing, mainTrackRef.current.audioEl.current.paused);
-        if (playing && mainTrackRef.current.audioEl.current.paused) {
+        //console.log(startOver, playing, mainTrackRef.current.audioEl.current.paused);
+        if (startOver) {
+            mainTrackRef.current.audioEl.current.fastSeek(0);
+            dispatch(startedOver());
+            mainTrackRef.current.audioEl.current.play();
             playAll();
         }
-        else if (!playing && !mainTrackRef.current.audioEl.current.paused) {
-            pauseAll();
+        if (playing && mainTrackRef.current.audioEl.current.paused) {
+            mainTrackRef.current.audioEl.current.play();
         }
-    }, [sortedTracks, playing]);
+        else if (!playing && !mainTrackRef.current.audioEl.current.paused) {
+            mainTrackRef.current.audioEl.current.pause();
+        }
+    }, [sortedTracks, playing, startOver]);
 
     return (
         <div className="flex flex-1 flex-row justify-center" >
@@ -106,7 +110,21 @@ function MusicPlayer() {
                     );
                 })
             } 
-            <ReactAudioPlayer controls ref={mainTrackRef} src={mainTrack.url} onPlay={() => dispatch(playMusic())} onPause={() => dispatch(pauseMusic())} onEnded={pauseAll} onSeeked={seekAll} onVolumeChanged={volumeChangeAll}/>
+            <ReactAudioPlayer controls 
+                ref={mainTrackRef}
+                src={mainTrack.url}
+                onPlay={() => {
+                    playAll();
+                    dispatch(playMusic());
+                }}
+                onPause={() => {
+                    pauseAll();
+                    dispatch(pauseMusic());
+                }}
+                onEnded={pauseAll}
+                onSeeked={seekAll}
+                onVolumeChanged={volumeChangeAll}
+            />
         </div>
     )
 }

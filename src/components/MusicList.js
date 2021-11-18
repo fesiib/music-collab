@@ -180,7 +180,7 @@ function Table(props) {
                 {rows.length === 0 ? (
                     <div className="text-lg text-center p-5">
                         {" "}
-                        Sorry, there are no projects with matching tags...{" "}
+                        Sorry, there are no projects or versions {" "}
                     </div>
                 ) : (
                     <tbody
@@ -465,7 +465,8 @@ function transformProjects_author(projects, profiles, authorId) {
         const project = projects[projectId];
         const version = project.versions[versionId];
         const collaborators = getCollaborators(project);
-        if (project.metaInfo.authorId === authorId) {
+
+        if (project.metaInfo.ownerId === authorId) {
             continue;
         }
 

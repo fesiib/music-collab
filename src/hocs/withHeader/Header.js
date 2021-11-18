@@ -3,8 +3,13 @@ import { Link } from 'react-router-dom'
 import Logo from './logo.svg'
 import MusicPlayer from './MusicPlayer'
 import logout from './logout.svg'
+import { useSelector } from 'react-redux'
 
 const Header = () => {
+  const { profiles, userId } = useSelector(state => state.database);
+
+  const userName = profiles[userId].metaInfo.name;
+
   return (
     <div className="w-full h-28 flex flex-row items-center bg-white px-8 box-border ">
       <div className="flex flex-1 items-center justify-start">
@@ -20,7 +25,7 @@ const Header = () => {
       <MusicPlayer />
 
       <div className="flex flex-1 flex-row items-center justify-end">
-        <h1> John Clay</h1>
+        <h1> {userName} </h1>
         <div
           data-cy="separator"
           className="w-16 h-0 transform rotate-90 border-2 border-gray-20"
