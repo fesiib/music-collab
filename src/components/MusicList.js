@@ -10,12 +10,17 @@ import en from 'javascript-time-ago/locale/en.json';
 import { openPanel } from '../reducers/homepage/homepagePanel';
 import GenericButton from './GenericButton';
 import iconUD from '../icons/updown.png';
+import TagList from './TagList';
 
 TimeAgo.addDefaultLocale(en);
 
 const ALLOWED_HEADERS = {
     'trackTitle': {
         header: 'Track',
+        width: 150,
+    },
+    'tags': {
+        header: 'Tags',
         width: 150,
     },
     'owner': {
@@ -131,7 +136,7 @@ function Table(props) {
         }
         return "";
     }, [parentProps.panel]);
-    console.log(parentProps.panel, additionalRowClassName);
+
     return (
         <div className={"overflow-x-scroll grid justify-items-center " + parentProps.className} >
             <table {...getTableProps({
@@ -172,6 +177,15 @@ function Table(props) {
                                         onClick: () => rowClick(row),
                                     })}>
                                         {row.cells.map(cell => {
+                                            if (cell.column.id === 'tags') {
+                                                return (
+                                                    <td {...cell.getCellProps({
+                                                        className: "p-2"
+                                                    })}>
+                                                        <TagList tags={cell.value} limit={2}/>
+                                                    </td>
+                                                );
+                                            }
                                             if (cell.column.id === 'playButton') {
                                                 return (
                                                     <td {...cell.getCellProps({

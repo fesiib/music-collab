@@ -12,6 +12,7 @@ import SlidingPanel from 'react-sliding-side-panel';
 import GenericButton from "./GenericButton";
 import MusicList, { TRANSFORM_POPULAR_SINGLE, TRANSFORM_RECENT, TRANSFORM_RECENT_SINGLE } from "./MusicList";
 import CustomTag from "./CustomTag";
+import TagList from "./TagList";
 
 //const DEFAULT_BACKGROUND = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
@@ -126,15 +127,7 @@ function RightPanel(props) {
                         <GenericButton title={"Go To Project"} />
                     </div>      
                 </div> */}
-                <div className="pl-5 flex flex-row flex-wrap">
-                    {tags.map((tag) => {
-                        return (
-                            <div key={tag.value}>
-                                <CustomTag label={tag.label}/>
-                            </div>
-                        )
-                    })}
-                </div>
+                <TagList tags={tags}/>
                 <div className="p-5 flex flex-row justify-between">
                     <div className="text-xs text-gray-500"> 
                         Last Modified: 
