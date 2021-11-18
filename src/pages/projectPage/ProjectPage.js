@@ -40,6 +40,9 @@ const image = (type) => {
   
   
 }
+const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 const ProjectPage = ({
 }) => {
 
@@ -51,9 +54,9 @@ const ProjectPage = ({
     foreignObjectProps
   }) => (
     <g onClick={() => {setVisible((prevState) => !prevState);setProjectid(projectId); setVersionid(nodeDatum.name)}}>
-      <circle style={{stroke: 'none', fill:'white', }} r={30} ></circle>
+      <circle style={{stroke: 'black', fill:'white', }} r={30} ></circle>
       
-      <text fill="black" strokeWidth="1" x={-nodeDatum.attributes.author.length*4} y="-40">{nodeDatum.attributes.author}</text>
+      <text fill="black" strokeWidth="1" x={-nodeDatum.attributes.author.length*4} y="-40">{capitalize(nodeDatum.attributes.author)}</text>
       <image href={image(nodeDatum.attributes.type)} width="30" height="30" x="-13" y="-17"></image>
       <ellipse style={{stroke: 'none', fill: 'green',}} cx="15" cy="25" rx="10" ry="10"></ellipse>
       

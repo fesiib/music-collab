@@ -168,7 +168,7 @@ const DUMMY_PROFILE_6 = {
 
 const DUMMY_PROJECT_1 = {
     metaInfo: {
-        ownerId: 'Helena',
+        ownerId: 'helena',
         trackTitle: "Sunny day",
         tags: [
             {label: "Pop", value: "pop"},
@@ -189,7 +189,7 @@ const DUMMY_PROJECT_1 = {
     versions: {
         sunnyDay1: {
             metaInfo: {
-                authorId: 'Helena',
+                authorId: 'helena',
                 contributionMessage: "Draft version (very first)",
                 parentVersionId: null,
                 duration: 100,
@@ -215,7 +215,7 @@ const DUMMY_PROJECT_1 = {
             
             comments: {
                 comment1: {
-                    authorId: 'Bob',
+                    authorId: 'bob',
                     commentMessage: "This is amazing!",
                     parentCommentId: null,
                     votes: 0,
@@ -223,7 +223,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment2: {
-                    authorId: 'Bob',
+                    authorId: 'bob',
                     commentMessage: "This is Yes!",
                     parentCommentId: null,
                     votes: 4,
@@ -231,7 +231,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment3: {
-                    authorId: 'Bob',
+                    authorId: 'bob',
                     commentMessage: "Wooow amazing!",
                     parentCommentId: null,
                     votes: 1,
@@ -239,7 +239,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment4: {
-                    authorId: 'Bob',
+                    authorId: 'bob',
                     commentMessage: "Wooow amazing!",
                     parentCommentId: "comment1",
                     votes: 1,
@@ -247,7 +247,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment5: {
-                    authorId: 'Bob',
+                    authorId: 'bob',
                     commentMessage: "Wooow amazing!",
                     parentCommentId: "comment1",
                     votes: 0,
@@ -260,7 +260,7 @@ const DUMMY_PROJECT_1 = {
         
         sunnyDay2: {
             metaInfo: {
-                authorId: 'Bob',
+                authorId: 'bob',
                 contributionMessage: "See this, it is cool!",
                 parentVersionId: 'sunnyDay1',
                 duration: 100,
@@ -286,7 +286,7 @@ const DUMMY_PROJECT_1 = {
         },
         sunnyDay3: {
             metaInfo: {
-                authorId: 'Michael',
+                authorId: 'michael',
                 contributionMessage: "See this, it is cool!",
                 parentVersionId: 'sunnyDay1',
                 duration: 100,
@@ -311,7 +311,7 @@ const DUMMY_PROJECT_1 = {
         },
         sunnyDay4: {
             metaInfo: {
-                authorId: 'Dobby',
+                authorId: 'dobby',
                 contributionMessage: "See this, it is cool!",
                 parentVersionId: 'sunnyDay1',
                 duration: 100,
@@ -341,7 +341,7 @@ const DUMMY_PROJECT_1 = {
         },
         sunnyDay5: {
             metaInfo: {
-                authorId: 'Anna',
+                authorId: 'anna',
                 contributionMessage: "See this, it is cool!",
                 parentVersionId: 'sunnyDay2',
                 duration: 100,
@@ -366,7 +366,7 @@ const DUMMY_PROJECT_1 = {
         },
         sunnyDay6: {
             metaInfo: {
-                authorId: 'Herald',
+                authorId: 'herald',
                 contributionMessage: "See this, it is cool!",
                 parentVersionId: 'sunnyDay2',
                 duration: 100,
@@ -398,7 +398,7 @@ const DUMMY_PROJECT_1 = {
 
 const DUMMY_PROJECT_2 = {
     metaInfo: {
-        ownerId: 'Me',
+        ownerId: 'me',
         trackTitle: "Love",
         tags: [
             {label: "Guitar", value: "guitar"},
@@ -415,7 +415,7 @@ const DUMMY_PROJECT_2 = {
     versions: {
         love1: {
             metaInfo: {
-                authorId: 'Me',
+                authorId: 'me',
                 contributionMessage: "Draft version (very first)",
                 parentVersionId: null,
                 duration: 10,
@@ -433,7 +433,7 @@ const DUMMY_PROJECT_2 = {
             
             comments: {
                 comment2: {
-                    authorId: 'Helena',
+                    authorId: 'helena',
                     commentMessage: "This is amazing!",
                     parentCommentId: null,
                     votes: 0,
@@ -444,7 +444,7 @@ const DUMMY_PROJECT_2 = {
         },
         love2: {
             metaInfo: {
-                authorId: 'Helena',
+                authorId: 'helena',
                 contributionMessage: "LOL!",
                 parentVersionId: 'love1',
                 duration: 120,
@@ -474,7 +474,7 @@ const DUMMY_PROJECT_2 = {
 
 const DUMMY_PROJECT_3 = {
     metaInfo: {
-        ownerId: 'Me',
+        ownerId: 'me',
         trackTitle: "Hate",
         tags: [
             {label: "Guitar", value: "guitar"},
@@ -492,7 +492,7 @@ const DUMMY_PROJECT_3 = {
     versions: {
         hate1: {
             metaInfo: {
-                authorId: 'Me',
+                authorId: 'me',
                 contributionMessage: "Draft version (very first)",
                 parentVersionId: null,
                 duration: 10,
@@ -510,7 +510,7 @@ const DUMMY_PROJECT_3 = {
             
             comments: {
                 comment2: {
-                    authorId: 'Helena',
+                    authorId: 'helena',
                     commentMessage: "This is amazing!",
                     parentCommentId: null,
                     votes: 6,
@@ -521,7 +521,7 @@ const DUMMY_PROJECT_3 = {
         },
         hate2: {
             metaInfo: {
-                authorId: 'Helena',
+                authorId: 'helena',
                 contributionMessage: "LOL!",
                 parentVersionId: 'hate1',
                 duration: 120,
@@ -733,13 +733,13 @@ const initialState = {
         hate: DUMMY_PROJECT_3,
     },
     profiles: {
-        Me: DUMMY_PROFILE_0,
-        Helena: DUMMY_PROFILE_1,
-        Bob: DUMMY_PROFILE_2,
-        Michael: DUMMY_PROFILE_3,
-        Dobby: DUMMY_PROFILE_4,
-        Anna: DUMMY_PROFILE_5,
-        Herald: DUMMY_PROFILE_6,
+        me: DUMMY_PROFILE_0,
+        helena: DUMMY_PROFILE_1,
+        bob: DUMMY_PROFILE_2,
+        michael: DUMMY_PROFILE_3,
+        dobby: DUMMY_PROFILE_4,
+        anna: DUMMY_PROFILE_5,
+        herald: DUMMY_PROFILE_6,
     },
     userId: 'me',
 };
