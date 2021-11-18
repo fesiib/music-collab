@@ -111,14 +111,17 @@ const DUMMY_PROJECT_1 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'piano',
+                    duration: 48,
                 },
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'guitar',
+                    duration: 48,
                 },
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'piano',
+                    duration: 48,
                 }
             ],
             
@@ -180,10 +183,12 @@ const DUMMY_PROJECT_1 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'piano',
+                    duration: 48,
                 },
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'vocal',
+                    duration: 48,
                 }
             ],
             
@@ -226,6 +231,7 @@ const DUMMY_PROJECT_2 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'guitar',
+                    duration: 48,
                 }
             ],
             
@@ -255,10 +261,12 @@ const DUMMY_PROJECT_2 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'guitar',
+                    duration: 48,
                 },
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'drums',
+                    duration: 48,
                 }
             ],
             

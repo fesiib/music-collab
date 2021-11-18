@@ -2,29 +2,33 @@ import React, { createRef, useEffect, useRef } from 'react'
 import ReactAudioPlayer from 'react-audio-player'
 import { useDispatch, useSelector } from 'react-redux';
 import { pauseMusic, playMusic } from '../../reducers/player';
+import idleSong from '../../media/song.mp3';
+
 
 function getAllTracks(projectId, leafId, projects) {
-    let tracks = [{
-        url: "",
-        instrument: "piano",
-        duration: 0,
-    }];
-    if (!projects.hasOwnProperty(projectId)) {
-        return tracks;
+    let tracks = [];
+    if (projects.hasOwnProperty(projectId)) {
+        const project = projects[projectId];
+        while (leafId !== null) {
+            if (!project.versions.hasOwnProperty(leafId)) {
+                break;
+            }
+            const version = project.versions[leafId];
+            for (let track of version.tracks) {
+                tracks.push(track);
+            }
+            if (version.metaInfo.parentVersionId === -1) {
+                break;
+            }
+            leafId = version.metaInfo.parentVersionId;
+        }
     }
-    const project = projects[projectId];
-    while (leafId !== null) {
-        if (!projects.versions.hasOwnProperty(leafId)) {
-            break;
-        }
-        const version = project.versions[leafId];
-        for (let track of version.tracks) {
-            tracks.push(track);
-        }
-        if (version.metaInfo.parentVersionId === -1) {
-            break;
-        }
-        leafId = version.metaInfo.parentVersionId;
+    if (tracks.length === 0) {
+        tracks.push({
+            url: idleSong,
+            duration: 10,
+            type: 'song',
+        });
     }
     return tracks;
 }
@@ -35,6 +39,10 @@ function MusicPlayer() {
     const { projects } = useSelector(state => state.database );
     const { versionId, projectId, playing } = useSelector(state => state.player);
 
+    const mainTrackRef = useRef();
+    const refList = useRef([]);
+    
+
     let sortedTracks = getAllTracks(projectId, versionId, projects);
     console.log(sortedTracks);
     sortedTracks.sort((p1, p2) => {
@@ -42,9 +50,6 @@ function MusicPlayer() {
     });
 
     const mainTrack = sortedTracks.pop();
-    const mainTrackRef = useRef();
-
-    const refList = useRef([]);
     refList.current = sortedTracks.map((_, i) => refList.current[i] ?? createRef());
 
     const playAll = () => {
@@ -97,7 +102,7 @@ function MusicPlayer() {
                 sortedTracks.map((element, idx) => {
                     const key = "track_" + idx.toString()
                     return (
-                        <ReactAudioPlayer key={key} controls loop src={element.url} className="" ref={refList[idx]}/>
+                        <ReactAudioPlayer className="hidden" key={key} controls loop src={element.url} ref={refList.current[idx]}/>
                     );
                 })
             } 

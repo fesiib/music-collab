@@ -224,8 +224,8 @@ function Table(props) {
                                                 })}>
                                                     <PlayPauseButton
                                                         className="w-12"
-                                                        versionId={cell.value.versionId}
-                                                        projectId={cell.value.projectid}
+                                                        versionId={cell.row.original.versionId}
+                                                        projectId={cell.row.original.projectId}
                                                     />
                                                 </td>
                                             );

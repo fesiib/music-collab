@@ -16,7 +16,7 @@ function PlayPauseButton(props) {
 
     props = {
         ...DEF_PROPS,
-        props,
+        ...props,
     };
 
     const { versionId, projectId, playing } = useSelector(state => state.player);
@@ -40,7 +40,7 @@ function PlayPauseButton(props) {
 
     return (
         <div className={"bg-gray-100 rounded-full border-2 hover:bg-white" + props.className} onClick={clickHandler}>
-            {playing && versionId === props.versionId && projectId === props.projectId ? <PauseButton/> : <PlayButton/>}
+            {(playing && versionId === props.versionId && projectId === props.projectId) ? <PauseButton/> : <PlayButton/>}
         </div>
     )
 }
