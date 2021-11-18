@@ -22,7 +22,7 @@ const appReducer = combineReducers({
     database: database,
     player: player,
     playAllTracks: playAllTracks, 
-    timeAllTracks, timeAllTracks,
+    timeAllTracks: timeAllTracks,
 });
 
 export const resetApp = () => ({
