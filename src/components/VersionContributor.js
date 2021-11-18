@@ -5,11 +5,22 @@ import ProfilePic from '../media/profile-svgrepo-com.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { pauseTracks, playTracks } from '../reducers/musicTracks';
 
+import time_ago from './utils/timeAgo'
 import PlayButton from '../icons/play-button'
 import PauseButton from '../icons/pause-button'
 
-const VersionContributor = () => {
+const VersionContributor = ( {versionId, projectId}) => {
 
+    const {projects, profiles} = useSelector(state => state.database);
+
+    const versionInfo = projects[projectId]["versions"][versionId]["metaInfo"];
+    const authorId = versionInfo["authorId"];
+    const contributionMessage = versionInfo["contributionMessage"];
+    const votes = versionInfo["votes"];
+    const creationTime = versionInfo["creationTime"];
+    const timeAgoCreated = time_ago (creationTime);
+
+    console.log(projects)
 
     const dispatch = useDispatch();
 
@@ -38,7 +49,7 @@ const VersionContributor = () => {
             <div className="flex-grow h-full  rounded-3xl border border-black px-5">
                 <div className = "flex flex-col ">
                     <div className = "flex-none text-gray-600	 " >Description</div>
-                    <div className = "flex-grow" >Message about the changes </div>
+                    <div className = "flex-grow" >{contributionMessage} </div>
                 </div>
                 
             </div>
@@ -51,8 +62,8 @@ const VersionContributor = () => {
                             <img src= {ProfilePic} />
                         </div>
                         <div className = "flex-grow p-2 px-4 " >
-                            <p> Alan Zhi </p>
-                            <p className = "text-gray-600" > 2 weeks </p>
+                            <p> {authorId} </p>
+                            <p className = "text-gray-600" > {timeAgoCreated} </p>
                         </div>
                     </div>
 

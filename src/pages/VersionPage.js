@@ -12,8 +12,6 @@ import CommentSection from "../components/CommentSection"
 const VersionPage = () => {
     let { versionId, projectId } = useParams();
     const {projects, profiles} = useSelector(state => state.database);
-    
-    console.log(projects)
 
     var versionExists = true;
     if (projects[projectId] == undefined) {
@@ -35,7 +33,7 @@ const VersionPage = () => {
           <CommentSection versionId = {versionId}  projectId = {projectId}  />
         </div> :
         <div>
-          No such project of vertion found
+          No such project or version found
         </div>
       }
     

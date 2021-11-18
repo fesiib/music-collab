@@ -6,8 +6,10 @@ import GenericComment from './GenericComment'
 import WriteComment from './WriteComment'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addComment } from '../reducers/database';
+import { addComment, changeVoteVersion } from '../reducers/database';
 import changeCommentTree from './utils/changeCommentTree'
+
+
 /*
 comments: [
     {
@@ -31,18 +33,18 @@ comments: [
 ]
 */
 
-const Comment = ({comment, addCommentComp}) => {
+const Comment = ({comment, addCommentComp, versionId, projectId}) => {
     const replies = comment.replies
     const [showComment, setShowComment] = useState(false);
     return (
         <>
-        <GenericComment reply = {0} showReply = {()=>setShowComment(!showComment)} write={false} comment={comment} />
+        <GenericComment versionId = {versionId}  projectId = {projectId}   reply = {0} showReply = {()=>setShowComment(!showComment)} write={false} comment={comment} />
         
             {
                 replies.map ( c => { 
                     return (
                         <div>
-                            <GenericComment  write={false} reply = {1} comment = {c} />
+                            <GenericComment  versionId = {versionId}  projectId = {projectId}   write={false} reply = {1} comment = {c} />
 
                         </div>
                         )
@@ -60,14 +62,10 @@ const CommentSection = ({versionId, projectId}) => {
     const dispatch = useDispatch();
     const {projects, profiles} = useSelector(state => state.database);
     const comments_object = projects[projectId]["versions"][versionId]["comments"];
-    console.log (comments_object);
-
-    
+    const versionInfo = projects[projectId]["versions"][versionId]["metaInfo"];
+    const votes = versionInfo["votes"];
     const myUserId = "me";   //// TODO: Currently logged in user 
     const comments = changeCommentTree (comments_object);
-    const _addComment = (payload) => {
-    }
-
     const addCommentComp = (c) => {
         console.log("console.log(c);");
         console.log(c);
@@ -77,13 +75,9 @@ const CommentSection = ({versionId, projectId}) => {
             versionId: versionId,
             authorId: myUserId,
         }
-
         console.log("payload");
         console.log(payload);
         dispatch(addComment(payload));
-
-
-        // const {projects, profiles} = useSelector(state => state.database);
         console.log (projects);
     }
 
@@ -97,26 +91,79 @@ const CommentSection = ({versionId, projectId}) => {
         duration,
         tracks {url: '', type: ??},
     */
-
     const [showComment, setShowComment] = useState(false);
 
     
 
+    const [voted, setVoted ]= useState (0);  // 0 for none 1 for up -1 for down
+    const upVote = ()=> {
+
+        if (voted == 1) {
+            return;
+        }
+        if (voted ==0) {
+            setVoted (1);
+            const payload = {
+                projectId: projectId,
+                versionId: versionId, 
+                votes: 1,
+            }
+            dispatch (changeVoteVersion ( payload ))    
+            return;
+        }
+        if (voted ==-1) {
+            setVoted (0);
+            const payload = {
+                projectId: projectId,
+                versionId: versionId, 
+                votes: 1,
+            }
+            dispatch (changeVoteVersion ( payload ))    
+            return;
+        }
+    }
+
+    const downVote = ()=> {
+        if (voted == -1) {
+            return;
+        }
+        if (voted ==0) {
+            setVoted (-1);
+            const payload = {
+                projectId: projectId,
+                versionId: versionId, 
+                votes: -1,
+            }
+            dispatch (changeVoteVersion ( payload ))    
+            return;
+        }
+        if (voted ==1) {
+            setVoted (0);
+            const payload = {
+                projectId: projectId,
+                versionId: versionId, 
+                votes: -1,
+            }
+            dispatch (changeVoteVersion ( payload ))    
+            return;
+        }
+    }
+
 
     return (
         <>
-        <div className= " w-full flex flex-raw my-5 h-10 text-primary">
+        <div className= " w-full flex flex-raw my-5 h-10 text-indigo-500">
 
             <div className= " flex-none w-10 text-4xl	">
-                15
+                {votes}
             </div>
-            <div className= " flex-none w-10 ">
-                <svg class="h-10 w-10 fill-current " viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <div  onClick = {upVote} className= " flex-none w-10 ">
+                <svg class="h-10 w-10 fill-current text-indigo-500 cursor-pointer hover:text-indigo-600" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14z"/>
                 </svg>
             </div>
-            <div className= " flex-none w-10">
-                <svg class="h-10 w-10 fill-current " viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform='rotate(180)'>
+            <div onClick = {downVote} className= " flex-none w-10">
+                <svg className = "" class="h-10 w-10 fill-current text-indigo-500 cursor-pointer hover:text-indigo-600" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform='rotate(180)'>
                     <path d="M4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14z"/>
                 </svg>
             </div>
@@ -133,7 +180,7 @@ const CommentSection = ({versionId, projectId}) => {
             {showComment &&  <WriteComment  parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
 
             {
-                comments.map ( c => {  return <Comment addCommentComp = {addCommentComp}   reply = {0} comment = {c} />} )    
+                comments.map ( c => {  return <Comment versionId = {versionId}  projectId = {projectId}   addCommentComp = {addCommentComp}   reply = {0} comment = {c} />} )    
             }
             
 
