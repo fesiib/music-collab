@@ -33,7 +33,7 @@ comments: [
 ]
 */
 
-const Comment = ({comment, addCommentComp, versionId, projectId}) => {
+const Comment = ({comment, addCommentComp, versionId, projectId, authorId }) => {
     const replies = comment.replies
     const [showComment, setShowComment] = useState(false);
     return (
@@ -50,7 +50,7 @@ const Comment = ({comment, addCommentComp, versionId, projectId}) => {
                         )
                 })    
             }
-            {showComment &&  <WriteComment parentCommentId= {comment.commentId} reply={1} addCommentComp = {addCommentComp} />}
+            {showComment &&  <WriteComment authorId = {authorId} parentCommentId= {comment.commentId} reply={1} addCommentComp = {addCommentComp} />}
 
         </>
     )
@@ -184,10 +184,10 @@ const CommentSection = ({versionId, projectId}) => {
         <div className = "flex flex-col my-5 gap-y-2  overflow-y-auto  ">
             Comments 
 
-            {showComment &&  <WriteComment  parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
+            {showComment &&  <WriteComment  authorId = {myUserId} parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
 
             {
-                comments.map ( c => {  return <Comment versionId = {versionId}  projectId = {projectId}   addCommentComp = {addCommentComp}   reply = {0} comment = {c} />} )    
+                comments.map ( c => {  return <Comment authorId = {myUserId} versionId = {versionId}  projectId = {projectId}   addCommentComp = {addCommentComp}   reply = {0} comment = {c} />} )    
             }
             
 

@@ -13,16 +13,24 @@ import PauseButton from '../icons/pause-button'
 
 
 const OneTrack = (props) => {
-    const dispatch = useDispatch();
     const waveformRef = useRef();
-    const trackRef = useRef(); 
     var [waveSurfer, setWaveSurfer] = useState(null);
     var [playingAudio, setPlayingAudio] = useState(false);
-
     const [muted, setMuted] = useState(false);
-    const [buttonPressed, setButtonPressed] = useState(false);
 
+    const dispatch = useDispatch();
 
+    var {timeAllTracks} = useSelector(state => state.timeAllTracks);
+    useEffect(() =>() => {
+      if (timeAllTracks!=null){
+        console.log ("timeAllTracks - when unmount", timeAllTracks);
+        timeAllTracks.stop();
+        console.log ("timeAllTracks.stop()", timeAllTracks);
+        timeAllTracks.destroy();
+
+        dispatch (setTimeAllTracks ( {timeAllTracks: null,} ));
+      }
+    }, []);
   
       useEffect(() => {
         if(waveSurfer == null) { // First render
@@ -39,7 +47,9 @@ const OneTrack = (props) => {
                 // backgroundColor: "#424242"
             })
           setWaveSurfer(wavesurfer);
+          dispatch (setTimeAllTracks ( { timeAllTracks: wavesurfer} ));
           wavesurfer.load(props.audioUrl);
+          console.log ("timeAllTrack when created", wavesurfer);
           // wavesurfer.on('destroy', ()=> {} );
 
         } else { // Song changed
@@ -48,7 +58,10 @@ const OneTrack = (props) => {
         }
       }, [props.audioUrl]);
 
+    
+
     const presPlay = () =>{
+      // console.log(timeAllTracks);
       if (waveSurfer!=null) {
         if (playingAudio){
           waveSurfer.pause();
