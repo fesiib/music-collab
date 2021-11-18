@@ -27,12 +27,16 @@ const DUMMY_PROFILE_0 = {
         communityRating: 2,
         profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
-    projectIds: ['love'],
+    projectIds: ['love','hate'],
     versionIds: [
         {
             projectId: 'love',
             versionId: 'love1',    
         },
+        {
+            projectId: 'hate',
+            versionId: 'hate1',
+        }
     ],
     commentIds: [],
 }
@@ -52,13 +56,23 @@ const DUMMY_PROFILE_1 = {
         {
             projectId: 'love',
             versionId: 'love2',    
+        },
+        {
+            projectId: 'hate',
+            versionId: 'hate2',    
         }
     ],
     commentIds: [{ 
         projectId: 'love',
         versionId: 'love1',
         commentId: 'comment2',
-    }],
+    },
+    { 
+        projectId: 'hate',
+        versionId: 'hate1',
+        commentId: 'comment2',
+    }
+        ],
 }
 
 const DUMMY_PROFILE_2 = {
@@ -76,7 +90,80 @@ const DUMMY_PROFILE_2 = {
         projectId: 'sunnyDay',
         versionId: 'sunnyDay1',
         commentId: 'comment1',
-    }]
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment2',
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment3',
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment4',
+    },
+    { 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay1',
+        commentId: 'comment5',
+    },
+        ]
+};
+const DUMMY_PROFILE_3 = {
+    metaInfo: {
+        name: "Michael",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay3',
+    }],
+    commentIds: []
+};
+const DUMMY_PROFILE_4 = {
+    metaInfo: {
+        name: "Dobby",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay4',
+    }],
+    commentIds: []
+};
+const DUMMY_PROFILE_5 = {
+    metaInfo: {
+        name: "Anna",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay5',
+    }],
+    commentIds: []
+};
+const DUMMY_PROFILE_6 = {
+    metaInfo: {
+        name: "Herald",
+        communityRating: 1,
+        profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
+    },
+    projectIds: [],
+    versionIds: [{ 
+        projectId: 'sunnyDay',
+        versionId: 'sunnyDay6',
+    }],
+    commentIds: []
 };
 
 const DUMMY_PROJECT_1 = {
@@ -89,6 +176,10 @@ const DUMMY_PROJECT_1 = {
         ],
         description: "It is a pop music",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
+
+
+        genre: "Pop",
+        
 
         creationTime: new Date(0),
         lastModified: new Date(2021, 11, 17),
@@ -103,7 +194,7 @@ const DUMMY_PROJECT_1 = {
                 parentVersionId: null,
                 duration: 100,
 
-                votes: 0,
+                votes: 5,
                 creationTime: new Date(0),
                 lastModified: new Date(1),
             },
@@ -168,6 +259,8 @@ const DUMMY_PROJECT_1 = {
                 }
             }
         },
+
+        
         sunnyDay2: {
             metaInfo: {
                 authorId: 'bob',
@@ -175,11 +268,66 @@ const DUMMY_PROJECT_1 = {
                 parentVersionId: 'sunnyDay1',
                 duration: 100,
 
-                votes: 0,
-                creationTime: new Date(2021, 11, 17),
-                lastModified: new Date(2021, 11, 17),
+
+                votes: 6,
+                creationTime: new Date(2021, 5, 20),
+                lastModified: new Date(2021, 5, 17),
             },
             tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+            ],
+            
+            comments: {
+            }
+        },
+        sunnyDay3: {
+            metaInfo: {
+                authorId: 'michael',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 7,
+                creationTime: new Date(2021, 6, 17),
+                lastModified: new Date(2021, 6, 17),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                },
+                 {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+            ],
+            
+            comments: {
+            }
+        },
+        sunnyDay4: {
+            metaInfo: {
+                authorId: 'dobby',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 6,
+                creationTime: new Date(2021, 7, 20),
+                lastModified: new Date(2021, 7, 27),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'piano',
@@ -194,7 +342,62 @@ const DUMMY_PROJECT_1 = {
             
             comments: {
             }
-        }
+
+        },
+        sunnyDay5: {
+            metaInfo: {
+                authorId: 'anna',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay2',
+                duration: 100,
+
+                votes: 6,
+                creationTime: new Date(2021, 8, 20),
+                lastModified: new Date(2021, 8, 27),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+        },
+        sunnyDay6: {
+            metaInfo: {
+                authorId: 'herald',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay2',
+                duration: 100,
+
+                votes: 6,
+                creationTime: new Date(2021, 8, 27),
+                lastModified: new Date(2021, 8, 27),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+        },
     },
 }
 
@@ -207,9 +410,8 @@ const DUMMY_PROJECT_2 = {
             {label: "Rock", value: "rock"},
             {label: "Hard", value: "hard"},
         ],
+        genre: "Rock",
         description: "Hard Rock",
-        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
-
         creationTime: new Date(2021, 11, 10),
         lastModified: new Date(2021, 11, 10),
     },
@@ -251,6 +453,83 @@ const DUMMY_PROJECT_2 = {
                 authorId: 'helena',
                 contributionMessage: "LOL!",
                 parentVersionId: 'love1',
+                duration: 120,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 15),
+                lastModified: new Date(2021, 11, 15),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'drums',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                
+            ],
+            
+            comments: {
+            }
+
+        }
+    },
+}
+
+const DUMMY_PROJECT_3 = {
+    metaInfo: {
+        ownerId: 'me',
+        trackTitle: "Hate",
+        tags: [
+            {label: "Guitar", value: "guitar"},
+            {label: "Rock", value: "rock"},
+            {label: "Hard", value: "hard"},
+        ],
+        description: "Hard Rock",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
+
+        creationTime: new Date(2021, 11, 10),
+        lastModified: new Date(2021, 11, 10),
+    },
+
+    //sorted by popularity
+    versions: {
+        hate1: {
+            metaInfo: {
+                authorId: 'me',
+                contributionMessage: "Draft version (very first)",
+                parentVersionId: null,
+                duration: 10,
+
+                votes: 5,
+                creationTime: new Date(2021, 11, 10),
+                lastModified: new Date(2021, 11, 11),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                }
+            ],
+            
+            comments: {
+                comment2: {
+                    authorId: 'helena',
+                    commentMessage: "This is amazing!",
+                    parentCommentId: null,
+                    votes: 6,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(2021, 11, 11),
+                }
+            }
+        },
+        hate2: {
+            metaInfo: {
+                authorId: 'helena',
+                contributionMessage: "LOL!",
+                parentVersionId: 'hate1',
                 duration: 120,
 
                 votes: 0,
@@ -459,11 +738,16 @@ const initialState = {
     projects: {
         sunnyDay: DUMMY_PROJECT_1,
         love: DUMMY_PROJECT_2,
+        hate: DUMMY_PROJECT_3,
     },
     profiles: {
         me: DUMMY_PROFILE_0,
         helena: DUMMY_PROFILE_1,
         bob: DUMMY_PROFILE_2,
+        michael: DUMMY_PROFILE_3,
+        dobby: DUMMY_PROFILE_4,
+        anna: DUMMY_PROFILE_5,
+        herald: DUMMY_PROFILE_6,
     },
     userId: 'me',
 };
@@ -718,6 +1002,7 @@ const database = (state = initialState, action) => {
       }
     }
 
+
     /* payload format
         projectId,
         versionId,
@@ -745,6 +1030,7 @@ const database = (state = initialState, action) => {
         projects: newProjects,
         profiles: newProfiles
       }
+
     }
     default:
       return state

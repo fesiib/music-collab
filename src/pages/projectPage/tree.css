@@ -1,0 +1,19 @@
+.node__root > circle {
+    stroke: yellow;
+    
+  }
+  
+.node__branch > circle {
+    stroke: aliceblue;
+    
+  }
+  
+.node__leaf > circle {
+    stroke: aliceblue;
+    
+  }
+.custom-link  {
+  fill: none;
+  stroke: rgb(228, 2, 2);
+  stroke-width: 1cm;
+}

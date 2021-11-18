@@ -26,16 +26,7 @@ class Routes extends React.Component {
             exact
             path="/project/:projectId"
             component={() => (
-              <ProjectPage
-                {...{
-                  name: 'A Tender Heart',
-                  description:
-                    'Light and dreamy, with kids/ children gentle/ lullaby elements featuring heartfelt piano',
-                  author: 'Heidi',
-                  collaborators: 7,
-                  versions: 13
-                }}
-              />
+              <ProjectPage/>
             )}
           />
         </Switch>
