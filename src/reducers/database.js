@@ -27,7 +27,7 @@ const DUMMY_PROFILE_0 = {
         communityRating: 2,
         profileImage: "https://images.askmen.com/1080x540/2016/01/25-021526-facebook_profile_picture_affects_chances_of_getting_hired.jpg",
     },
-    projectIds: ['love','hate'],
+    projectIds: ['love', 'hate'],
     versionIds: [
         {
             projectId: 'love',
