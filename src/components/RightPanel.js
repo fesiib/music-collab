@@ -17,6 +17,7 @@ import MusicList, {
 } from "./MusicList";
 import CustomTag from "./CustomTag";
 import TagList from "./TagList";
+import { useHistory } from "react-router";
 
 //const DEFAULT_BACKGROUND = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
@@ -71,6 +72,7 @@ function AllCollaborators(props) {
 }
 
 function RightPanel(props) {
+    const history = useHistory();
     const dispatch = useDispatch();
 
     const { projects, profiles } = useSelector((state) => state.database);
@@ -97,7 +99,7 @@ function RightPanel(props) {
 
     const collaborators = Array.from(getCollaborators(project));
 
-
+    const backgroundImage = project?.metaInfo?.backgroundImage;
     const trackTitle = project?.metaInfo?.trackTitle;
     const tags = project?.metaInfo?.tags;
     const lastModified = project?.metaInfo?.lastModified;
@@ -106,7 +108,8 @@ function RightPanel(props) {
 
 
     const redirectToProjectPage = () => {
-        console.log("redirect");
+        history.push('/project/' + projectId + '/');
+        console.log("here", '/project/' + projectId + '/');
     };
 
     useEffect(() => {
@@ -131,18 +134,24 @@ function RightPanel(props) {
                     />
                 </div>
 
-                <div className="pl-5 pb-5 text-left">
-                    <p> Title: </p>
-                    <p
-                        className="text-4xl underline hover:text-gray-600 cursor-pointer"
+                <div className="flex flex-row p-5">
+                    <img src={backgroundImage}
+                        className="h-28 transform hover:scale-125 hover:border-4 cursor-pointer"
                         onClick={redirectToProjectPage}
-                    >
-                        {" "}
-                        {trackTitle}{" "}
-                    </p>
-                    <p className="pt-5"> Owner: </p>
-                    <p className="text-2xl text-gray-600"> {ownerName} </p>
+                    />
+                    <div className="pl-5 pb-5 text-left">
+                        <p
+                            className="text-2xl underline hover:text-gray-600 cursor-pointer"
+                            onClick={redirectToProjectPage}
+                        >
+                            {" "}
+                            {trackTitle}{" "}
+                        </p>
+                        <p className="text-xl text-gray-600"> {ownerName} </p>
+                    </div>
+                    
                 </div>
+
                 {/* <div style={{
                     backgroundImage:`url(${background})`,
                     backgroundRepeat: 'no-repeat',
@@ -159,6 +168,7 @@ function RightPanel(props) {
                     </div>      
                 </div> */}
                 <div className="pl-5">
+                    <p> Tags: </p>
                     <TagList tags={tags} />
                 </div>
                 <div className="p-5 flex flex-row justify-between">
