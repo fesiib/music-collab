@@ -97,11 +97,13 @@ function RightPanel(props) {
 
     const collaborators = Array.from(getCollaborators(project));
 
+
     const trackTitle = project?.metaInfo?.trackTitle;
     const tags = project?.metaInfo?.tags;
     const lastModified = project?.metaInfo?.lastModified;
     const creationTime = project?.metaInfo?.creationTime;
     const ownerName = profiles[project?.metaInfo?.ownerId]?.metaInfo?.name;
+
 
     const redirectToProjectPage = () => {
         console.log("redirect");

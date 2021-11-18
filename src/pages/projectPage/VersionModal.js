@@ -30,9 +30,9 @@ const Container = ({ children }) => {
   )
 }
 
-const VersionModal = ({ onClose }) => {
-  const versionId  = "sunnyDay1"
-  const projectId = "sunnyDay"
+const VersionModal = ({ onClose,versionId,projectId}) => {
+  // const versionId  = "sunnyDay1"
+  // const projectId = "sunnyDay"
   
   return (
     <DimmedBackground>
@@ -46,8 +46,6 @@ const VersionModal = ({ onClose }) => {
           </button>
           
           <VersionPage
-            description={'This is my contribution'}
-            contributor={{ name: 'Alan Zhui', lastUpdate: '2 weeks ago' }}
             versionId  = {versionId}
             projectId = {projectId}
           />

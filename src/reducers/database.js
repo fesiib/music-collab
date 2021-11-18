@@ -81,7 +81,7 @@ const DUMMY_PROFILE_2 = {
 
 const DUMMY_PROJECT_1 = {
     metaInfo: {
-        ownerId: 'helena',
+        ownerId: 'Helena',
         trackTitle: "Sunny day",
         tags: [
             {label: "Pop", value: "pop"},
@@ -89,6 +89,10 @@ const DUMMY_PROJECT_1 = {
         ],
         description: "It is a pop music",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
+
+
+        genre: "Pop",
+        
 
         creationTime: new Date(0),
         lastModified: new Date(2021, 11, 17),
@@ -98,12 +102,12 @@ const DUMMY_PROJECT_1 = {
     versions: {
         sunnyDay1: {
             metaInfo: {
-                authorId: 'helena',
+                authorId: 'Helena',
                 contributionMessage: "Draft version (very first)",
                 parentVersionId: null,
                 duration: 100,
 
-                votes: 0,
+                votes: 5,
                 creationTime: new Date(0),
                 lastModified: new Date(1),
             },
@@ -124,7 +128,7 @@ const DUMMY_PROJECT_1 = {
             
             comments: {
                 comment1: {
-                    authorId: 'bob',
+                    authorId: 'Bob',
                     commentMessage: "This is amazing!",
                     parentCommentId: null,
                     votes: 0,
@@ -132,7 +136,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment2: {
-                    authorId: 'bob',
+                    authorId: 'Bob',
                     commentMessage: "This is Yes!",
                     parentCommentId: null,
                     votes: 4,
@@ -140,7 +144,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment3: {
-                    authorId: 'bob',
+                    authorId: 'Bob',
                     commentMessage: "Wooow amazing!",
                     parentCommentId: null,
                     votes: 1,
@@ -148,7 +152,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment4: {
-                    authorId: 'bob',
+                    authorId: 'Bob',
                     commentMessage: "Wooow amazing!",
                     parentCommentId: "comment1",
                     votes: 1,
@@ -156,7 +160,7 @@ const DUMMY_PROJECT_1 = {
                     creationTime: new Date(1),
                 },
                 comment5: {
-                    authorId: 'bob',
+                    authorId: 'Bob',
                     commentMessage: "Wooow amazing!",
                     parentCommentId: "comment1",
                     votes: 0,
@@ -165,16 +169,99 @@ const DUMMY_PROJECT_1 = {
                 }
             }
         },
+
+        
         sunnyDay2: {
             metaInfo: {
-                authorId: 'bob',
+                authorId: 'Bob',
                 contributionMessage: "See this, it is cool!",
                 parentVersionId: 'sunnyDay1',
                 duration: 100,
 
-                votes: 0,
-                creationTime: new Date(2021, 11, 17),
-                lastModified: new Date(2021, 11, 17),
+
+                votes: 6,
+                creationTime: new Date(2021, 5, 20),
+                lastModified: new Date(2021, 5, 17),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+            ],
+            
+            comments: {
+            }
+        },
+        sunnyDay3: {
+            metaInfo: {
+                authorId: 'Michael',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 7,
+                creationTime: new Date(2021, 6, 17),
+                lastModified: new Date(2021, 6, 17),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                },
+                 {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+            ],
+            
+            comments: {
+            }
+        },
+        sunnyDay4: {
+            metaInfo: {
+                authorId: 'Dobby',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay1',
+                duration: 100,
+
+                votes: 6,
+                creationTime: new Date(2021, 7, 20),
+                lastModified: new Date(2021, 7, 27),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+
+        },
+        sunnyDay5: {
+            metaInfo: {
+                authorId: 'Anna',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay2',
+                duration: 100,
+
+                votes: 6,
+                creationTime: new Date(2021, 8, 20),
+                lastModified: new Date(2021, 8, 27),
             },
             tracks: [
                 {
@@ -189,22 +276,45 @@ const DUMMY_PROJECT_1 = {
             
             comments: {
             }
-        }
+        },
+        sunnyDay6: {
+            metaInfo: {
+                authorId: 'Herald',
+                contributionMessage: "See this, it is cool!",
+                parentVersionId: 'sunnyDay2',
+                duration: 100,
+
+                votes: 6,
+                creationTime: new Date(2021, 8, 27),
+                lastModified: new Date(2021, 8, 27),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'piano',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'vocal',
+                }
+            ],
+            
+            comments: {
+            }
+        },
     },
 }
 
 const DUMMY_PROJECT_2 = {
     metaInfo: {
-        ownerId: 'me',
+        ownerId: 'Me',
         trackTitle: "Love",
-        tags: [
-            {label: "Guitar", value: "guitar"},
-            {label: "Rock", value: "rock"},
-            {label: "Hard", value: "hard"},
-        ],
+        genre: "Rock",
         description: "Hard Rock",
-        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
-
         creationTime: new Date(2021, 11, 10),
         lastModified: new Date(2021, 11, 10),
     },
@@ -213,7 +323,7 @@ const DUMMY_PROJECT_2 = {
     versions: {
         love1: {
             metaInfo: {
-                authorId: 'me',
+                authorId: 'Me',
                 contributionMessage: "Draft version (very first)",
                 parentVersionId: null,
                 duration: 10,
@@ -231,7 +341,7 @@ const DUMMY_PROJECT_2 = {
             
             comments: {
                 comment2: {
-                    authorId: 'helena',
+                    authorId: 'Helena',
                     commentMessage: "This is amazing!",
                     parentCommentId: null,
                     votes: 0,
@@ -242,7 +352,84 @@ const DUMMY_PROJECT_2 = {
         },
         love2: {
             metaInfo: {
-                authorId: 'helena',
+                authorId: 'Helena',
+                contributionMessage: "LOL!",
+                parentVersionId: 'love1',
+                duration: 120,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 15),
+                lastModified: new Date(2021, 11, 15),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'drums',
+                },
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                },
+                
+            ],
+            
+            comments: {
+            }
+
+        }
+    },
+}
+
+const DUMMY_PROJECT_3 = {
+    metaInfo: {
+        ownerId: 'Me',
+        trackTitle: "Love",
+        tags: [
+            {label: "Guitar", value: "guitar"},
+            {label: "Rock", value: "rock"},
+            {label: "Hard", value: "hard"},
+        ],
+        description: "Hard Rock",
+        backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
+
+        creationTime: new Date(2021, 11, 10),
+        lastModified: new Date(2021, 11, 10),
+    },
+
+    //sorted by popularity
+    versions: {
+        love1: {
+            metaInfo: {
+                authorId: 'Me',
+                contributionMessage: "Draft version (very first)",
+                parentVersionId: null,
+                duration: 10,
+
+                votes: 0,
+                creationTime: new Date(2021, 11, 10),
+                lastModified: new Date(2021, 11, 11),
+            },
+            tracks: [
+                {
+                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
+                    type: 'guitar',
+                }
+            ],
+            
+            comments: {
+                comment2: {
+                    authorId: 'Helena',
+                    commentMessage: "This is amazing!",
+                    parentCommentId: null,
+                    votes: 0,
+                    audioSegment: {start: 0, finish: 0},
+                    creationTime: new Date(2021, 11, 11),
+                }
+            }
+        },
+        love2: {
+            metaInfo: {
+                authorId: 'Helena',
                 contributionMessage: "LOL!",
                 parentVersionId: 'love1',
                 duration: 120,
@@ -710,6 +897,7 @@ const database = (state = initialState, action) => {
       }
     }
 
+
     /* payload format
         projectId,
         versionId,
@@ -737,6 +925,7 @@ const database = (state = initialState, action) => {
         projects: newProjects,
         profiles: newProfiles
       }
+
     }
     default:
       return state
