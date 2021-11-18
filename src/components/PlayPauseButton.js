@@ -28,13 +28,14 @@ function PlayPauseButton(props) {
                 versionId: props.versionId,
                 projectId: props.projectId,
             }));
-            dispatch(pauseMusic());
-        }
-        if (!playing) {
-            dispatch(playMusic());    
         }
         else {
-            dispatch(pauseMusic());
+            if (!playing) {
+                dispatch(playMusic());    
+            }
+            else {
+                dispatch(pauseMusic());
+            }
         }
     };
 
