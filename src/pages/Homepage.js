@@ -96,9 +96,9 @@ function Homepage(props) {
                     {/* <div className="flex justify-center m-5">    
                         <GenericButton title={"Browse"} className="text-xl w-1/5 p-2" onClick={() => _setTabIndex(1)}/>
                     </div> */}
-                    <h1 className="p-10 text-center">
+                    {/* <h1 className="p-10 text-center">
                         My Comments
-                    </h1>
+                    </h1> */}
                 </TabPanel>
                 
                 {

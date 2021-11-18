@@ -21,7 +21,6 @@ function TagList(props) {
             moreTagsExist = "...";
         }
     }
-    console.log(moreTagsExist);
     return (
         <div className="flex flex-row flex-wrap">
             {tags.map((tag) => {

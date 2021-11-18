@@ -91,6 +91,10 @@ function RightPanel(props) {
     const creationTime = project.metaInfo.creationTime;
     const ownerName = profiles[project.metaInfo.ownerId].metaInfo.name;
 
+    const redirectToProjectPage = () => {
+        console.log("redirect");
+    }
+
 
     useEffect(() => {
         TimeAgo.addDefaultLocale(en);
@@ -105,12 +109,13 @@ function RightPanel(props) {
             panelClassName='bg-white'
         >
             <div className='bg-white'>
+                <h3 className="text-center p-4"> Project Description </h3>
                 <div className="flex flex-row justify-between">
-                    <div className="pt-5 pl-5 text-left">
-                        <p className="text-4xl hover:underline cursor-pointer"> {trackTitle} </p>
+                    <div className="pl-5 text-left">
+                        <p className="text-4xl underline hover:text-gray-600 cursor-pointer" onClick={redirectToProjectPage}> {trackTitle} </p>
                         <p className="text-2xl text-gray-600"> {ownerName} </p>
                     </div>
-                    <GenericButton title={"Go to Project"} className="h-16 m-6" />
+                    <GenericButton title={"Go to Project"} className="h-16 m-3" onClick={redirectToProjectPage}/>
                 </div>
                 {/* <div style={{
                     backgroundImage:`url(${background})`,
@@ -127,7 +132,9 @@ function RightPanel(props) {
                         <GenericButton title={"Go To Project"} />
                     </div>      
                 </div> */}
-                <TagList tags={tags}/>
+                <div className='pl-5'>
+                    <TagList tags={tags}/>
+                </div>
                 <div className="p-5 flex flex-row justify-between">
                     <div className="text-xs text-gray-500"> 
                         Last Modified: 
