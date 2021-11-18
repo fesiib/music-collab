@@ -16,7 +16,7 @@ TimeAgo.addDefaultLocale(en);
 
 const ALLOWED_HEADERS = {
     'trackTitle': {
-        header: 'Track',
+        header: 'Title',
         width: 150,
     },
     'tags': {
@@ -55,6 +55,10 @@ const ALLOWED_HEADERS = {
         header: '',
         width: 100,    
     },
+    'projectIcon': {
+        header: '',
+        width: 60,
+    }
 };
 
 export const TRANSFORM_POPULAR = "popular";
@@ -177,6 +181,15 @@ function Table(props) {
                                         onClick: () => rowClick(row),
                                     })}>
                                         {row.cells.map(cell => {
+                                            if (cell.column.id === 'projectIcon') {
+                                                return (
+                                                    <td {...cell.getCellProps({
+                                                        className: "p-2"
+                                                    })}>
+                                                        <GenericButton title={"Icon"} className='w-12'/>
+                                                    </td>
+                                                );
+                                            }
                                             if (cell.column.id === 'tags') {
                                                 return (
                                                     <td {...cell.getCellProps({
@@ -402,6 +415,10 @@ function transformProjects_author(projects, profiles, authorId) {
         const project = projects[projectId];
         const version = project.versions[versionId];
         const collaborators = getCollaborators(project);
+        if (project.metaInfo.authorId === authorId) {
+            continue;
+        }
+
         data.push(transformSingleVersion(profiles, project, version, collaborators, projectId, versionId));
     }
 
@@ -505,11 +522,7 @@ function MusicList(props) {
     };
     const columns = React.useMemo(
         () => {
-            let headers = [{
-                Header: ALLOWED_HEADERS['playButton'].header,
-                accessor: 'playButton',
-                width: ALLOWED_HEADERS['playButton'].width,
-            }];
+            let headers = [];
             for (let accessor of props.headers) {
                 if (ALLOWED_HEADERS.hasOwnProperty(accessor)) {
                     headers.push({

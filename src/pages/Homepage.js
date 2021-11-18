@@ -71,8 +71,8 @@ function Homepage(props) {
                         My Projects
                     </h1>
                     <MusicList 
-                        headers={['trackTitle', 'tags',  'owner', 'cntVersions', 'cntCollab', 'duration']}
-                        votes={true}
+                        headers={['projectIcon', 'trackTitle', 'tags',  'owner', 'cntVersions', 'cntCollab', 'updated']}
+                        votes={false}
                         className={"max-h-96"}
                         transform={TRANSFORM_OWNER}
                     />
@@ -85,10 +85,10 @@ function Homepage(props) {
                     </div>
 
                     <h1 className="p-10 text-center">
-                        My Contributions
+                        My Collaborations
                     </h1>
                     <MusicList 
-                        headers={['trackTitle', 'tags',  'owner', 'cntVersions', 'cntCollab', 'duration']}
+                        headers={['playButton', 'trackTitle', 'tags', 'owner', 'duration', 'updated']}
                         votes={true}
                         className={"max-h-96"}
                         transform={TRANSFORM_AUTHOR}
@@ -111,17 +111,17 @@ function Homepage(props) {
                     <div className="flex flex-justify m-5">
                         <GenericButton
                             title={"Most Popular"}
-                            className="text-l mx-auto w-1/5 p-2"
+                            className={"text-l mx-auto w-1/5 p-2 bg-" + (sortType === TRANSFORM_POPULAR ? " bg-indigo-600 border-4 border-pink-400": "")}
                             onClick={() => _setSortType(TRANSFORM_POPULAR)}/>
                         <GenericButton
                             title={"Most Recent"}
-                            className="text-l mx-auto w-1/5 p-2" 
+                            className={"text-l mx-auto w-1/5 p-2" + (sortType === TRANSFORM_RECENT ? " bg-indigo-600 border-4 border-pink-400": "")} 
                             onClick={() => _setSortType(TRANSFORM_RECENT)}
                         />
                     </div>                    
                     <MusicList
-                        headers={['trackTitle', 'tags', 'owner', 'cntVersions', 'cntCollab', 'duration']}
-                        votes={true}
+                        headers={['projectIcon', 'trackTitle', 'tags', 'owner', 'cntVersions', 'cntCollab']}
+                        votes={false}
                         search={true}
                         transform={sortType}
                     />

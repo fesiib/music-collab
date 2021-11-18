@@ -106,7 +106,7 @@ function RightPanel(props) {
             isOpen={panelState}
             size={30}
             backdropClicked={_closePanel}
-            panelClassName='bg-white'
+            panelClassName=' bg-gray-50'
         >
             <div className='bg-white'>
                 <h3 className="text-center p-4"> Project Description </h3>
@@ -149,7 +149,7 @@ function RightPanel(props) {
                 </div>
                 <h2 className="m-5 text-left"> Versions </h2>
                 <MusicList 
-                    headers={['author', 'duration']}
+                    headers={['playButton', 'author', 'duration']}
                     votes={true}
                     className={"max-h-96"}
                     transform={transform}
