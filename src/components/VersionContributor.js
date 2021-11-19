@@ -8,6 +8,7 @@ import time_ago from './utils/timeAgo'
 import PlayButton from '../icons/play-button'
 import PauseButton from '../icons/pause-button'
 import GenericButton from './GenericButton';
+import PlayPauseButton from './PlayPauseButton';
 
 const VersionContributor = ( {versionId, projectId}) => {
 
@@ -44,10 +45,8 @@ const VersionContributor = ( {versionId, projectId}) => {
         </div> */}
         <div className = "flex flex-row h-20 my-10 gap-x-6">
 
-            <div  onClick = {playAll} className= { playAllTracks? buttonClassName: buttonClassName + " pl-2" } >
-                {   playAllTracks ? <PauseButton/> :
-                    <PlayButton  />
-                }
+            <div  onClick = {playAll} className= {buttonClassName} >
+                <PlayPauseButton projectId={projectId} versionId={versionId} playing={playAllTracks}/>
             </div>
 
             <div className="flex-grow h-full  rounded-3xl border border-black px-5">
