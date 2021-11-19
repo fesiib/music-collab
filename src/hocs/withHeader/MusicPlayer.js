@@ -105,7 +105,7 @@ function MusicPlayer() {
                 sortedTracks.map((element, idx) => {
                     const key = "track_" + idx.toString()
                     return (
-                        <ReactAudioPlayer className="" key={key} controls loop src={element.url} ref={refList.current[idx]}/>
+                        <ReactAudioPlayer className="hidden" key={key} controls loop src={element.url} ref={refList.current[idx]}/>
                     );
                 })
             } 
