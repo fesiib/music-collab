@@ -50,7 +50,7 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
         }
         
         <div className = "flex-grow">
-        <div className = "flex flex-col border-1    rounded-3xl border border-black pt-2 px-1 ">
+        <div className = "flex flex-col border-1    rounded-3xl border border-black py-3 px-3 ">
             <div className = "flex flex-row  ">
                 
                 <div className = "flex-none  w-14	 " >
@@ -70,9 +70,10 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
                             rows="3"
                             placeholder="Write your comment here."
                             onChange={e => setComment(e.target.value)}
-                            ></textarea>
+                            className="w-full p-2"
+                            />
                         <span className = "float-right px-2" > 
-                            <GenericButton  className="text-xs mx-auto  px-2 py-0" title = "comment"/> 
+                            <GenericButton  className="text-s mx-auto  px-2 py-0" title = "comment"/> 
                         </span>
                         
                     </form  >
