@@ -28,7 +28,7 @@ const VersionPage = ({versionId,projectId}) => {
 
       {
         versionExists ?
-        <div className= "rounded-md mx-auto bg-white overflow-y-auto border-t-2 border-black w-2/3 mx-auto my-6 px-10 ">
+        <div className= "rounded-md mx-auto bg-white overflow-y-auto border-t-2 border-black w-5/6 mx-auto my-6 px-10 ">
           <VersionContributor versionId = {versionId}  projectId = {projectId}  />
           <MusicTracks versionId = {versionId}  projectId = {projectId}   />
           <CommentSection versionId = {versionId}  projectId = {projectId}  />
