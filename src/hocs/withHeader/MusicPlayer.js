@@ -86,6 +86,10 @@ function MusicPlayer() {
     }
     useEffect(() => {
         //console.log(startOver, playing, mainTrackRef.current.audioEl.current.paused);
+        console.log('before fail', mainTrackRef?.current?.audioEl?.current)
+        if (!mainTrackRef?.current?.audioEl?.current) {
+            return
+        }        
         if (startOver) {
             mainTrackRef.current.audioEl.current.fastSeek(0);
             dispatch(startedOver());
