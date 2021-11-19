@@ -76,7 +76,7 @@ const CreateProject = () => {
                 tags,
             })
         );
-        history.push("/homepage");
+        history.push("/");
     };
 
     console.log({

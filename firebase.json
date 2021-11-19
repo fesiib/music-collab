@@ -11,8 +11,8 @@
     ],
     "redirects": [
       {
-        "source": "/",
-        "destination": "/homepage",
+        "source": "/reset",
+        "destination": "/prototype",
         "type": 301
       }
     ],
