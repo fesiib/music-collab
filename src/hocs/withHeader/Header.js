@@ -14,7 +14,7 @@ const Header = () => {
     <div className="w-full h-28 flex flex-row items-center bg-white px-8 box-border ">
       <div className="flex flex-1 items-center justify-start">
         <Link
-          to="/homepage"
+          to="/"
           className="flex flex-row items-center justify-start"
         >
           {/* <img src={Logo} alt="logo" /> */}
