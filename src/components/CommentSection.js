@@ -4,6 +4,7 @@ import GenericButton from '../components/GenericButton'
 import commentsGen from "../data/commentsData.js"
 import GenericComment from './GenericComment'
 import WriteComment from './WriteComment'
+import { useHistory } from 'react-router';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addComment, changeVoteVersion } from '../reducers/database';
@@ -59,6 +60,7 @@ const Comment = ({comment, addCommentComp, versionId, projectId, authorId }) => 
 
 
 const CommentSection = ({versionId, projectId}) => {
+    const history = useHistory()
     const dispatch = useDispatch();
     const {projects, profiles} = useSelector(state => state.database);
     const comments_object = projects[projectId]["versions"][versionId]["comments"];
@@ -150,6 +152,7 @@ const CommentSection = ({versionId, projectId}) => {
     }
     const goToContributePage = ()=> {
         console.log ("goToContributePage");
+        history.push(`/contribute/${projectId}/${versionId}`)
     }
 
     return (
