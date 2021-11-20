@@ -67,6 +67,13 @@ const CreateProject = () => {
     }, [trackNames, updateTrackLink]);
 
     const handleCreateProject = () => {
+        if (
+            trackNames.length === 0
+            || name === ''
+            || description.trim() === ''
+        ) {
+            return
+        }
         dispatch(
             addProject({
                 ownerId: userId,
