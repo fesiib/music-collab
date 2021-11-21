@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "../../components/InputField";
-// import OneTrack from "../../components/OneTrack";
-import { OneTrack } from "../../components/MusicTracks";
+import OneTrack from "../../components/OneTrack";
 import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
