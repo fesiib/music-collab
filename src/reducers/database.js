@@ -199,19 +199,9 @@ const DUMMY_PROJECT_1 = {
             tracks: [
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'piano',
-                    duration: 48,
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'guitar',
                     duration: 48,
                 },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'piano',
-                    duration: 48,
-                }
             ],
             
             comments: {
@@ -276,10 +266,6 @@ const DUMMY_PROJECT_1 = {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'vocal',
                 },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'piano',
-                },
             ],
             
             comments: {
@@ -297,10 +283,6 @@ const DUMMY_PROJECT_1 = {
                 lastModified: new Date(2021, 6, 17),
             },
             tracks: [
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'vocal',
-                },
                  {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'piano',
@@ -326,16 +308,6 @@ const DUMMY_PROJECT_1 = {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'guitar',
                 },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'piano',
-                    duration: 48,
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'vocal',
-                    duration: 48,
-                }
             ],
             
             comments: {
@@ -357,10 +329,6 @@ const DUMMY_PROJECT_1 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'piano',
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'vocal',
                 }
             ],
             
@@ -381,16 +349,8 @@ const DUMMY_PROJECT_1 = {
             tracks: [
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'guitar',
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'piano',
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'vocal',
-                }
+                },
             ],
             
             comments: {
@@ -460,10 +420,6 @@ const DUMMY_PROJECT_2 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'drums',
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'guitar',
                 },
                 
             ],
@@ -537,11 +493,6 @@ const DUMMY_PROJECT_3 = {
                 {
                     url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
                     type: 'guitar',
-                    duration: 48,
-                },
-                {
-                    url: 'http://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3',
-                    type: 'drums',
                     duration: 48,
                 }
             ],

@@ -4,27 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pauseMusic, playMusic, startedOver } from '../../reducers/player';
 
 
-function getAllTracks(projectId, leafId, projects) {
+export function getAllTracks(project, leafId) {
     let tracks = [];
-    if (projects.hasOwnProperty(projectId)) {
-        const project = projects[projectId];
-        while (leafId !== null) {
-            if (!project?.versions.hasOwnProperty(leafId)) {
-                break;
-            }
-            const version = project?.versions[leafId];
-            for (let track of version?.tracks) {
-                tracks.push(track);
-            }
-            leafId = version?.metaInfo?.parentVersionId;
+    while (leafId !== null) {
+        if (!project?.versions.hasOwnProperty(leafId)) {
+            break;
         }
-    }
-    if (tracks.length === 0) {
-        tracks.push({
-            url: null,
-            duration: 0,
-            type: 'song',
-        });
+        const version = project?.versions[leafId];
+        for (let track of version?.tracks) {
+            tracks.push(track);
+        }
+        leafId = version?.metaInfo?.parentVersionId;
     }
     return tracks;
 }
@@ -38,8 +28,17 @@ function MusicPlayer() {
     const mainTrackRef = useRef();
     const refList = useRef([]);
     
-
-    let sortedTracks = getAllTracks(projectId, versionId, projects);
+    let sortedTracks = [{
+        url: null,
+        duration: 0,
+        type: 'song',
+    }];
+    if (projects.hasOwnProperty(projectId)) {
+        const project = projects[projectId];
+        const allTracks = getAllTracks(project, versionId);
+        if (allTracks.length > 0)
+            sortedTracks = allTracks;
+    }
     //console.log(sortedTracks);
     sortedTracks.sort((p1, p2) => {
         return p1?.duration - p2?.duration;

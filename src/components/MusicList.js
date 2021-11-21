@@ -461,10 +461,6 @@ function transformProjects_author(projects, profiles, authorId) {
         const version = project.versions[versionId];
         const collaborators = getCollaborators(project);
 
-        if (project.metaInfo.ownerId === authorId) {
-            continue;
-        }
-
         data.push(
             transformSingleVersion(
                 profiles,

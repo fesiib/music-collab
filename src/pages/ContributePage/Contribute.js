@@ -10,6 +10,7 @@ import GenericButton from "../../components/GenericButton";
 import { addVersion } from "../../reducers/database";
 import InstrumentSelector from "../../components/InstrumentSelector";
 import Loading from "../../components/Loading";
+import { getAllTracks } from "../../hocs/withHeader/MusicPlayer";
 
 const Contribute = ({ project, version, projectId, versionId }) => {
     const dispatch = useDispatch();
@@ -25,6 +26,10 @@ const Contribute = ({ project, version, projectId, versionId }) => {
 
     const fileInputRef = useRef();
     const { userId } = useSelector((state) => state.database);
+
+    const allTracks = getAllTracks(project, versionId);
+
+    console.log(allTracks, project, versionId);
 
     console.log("contribute inner page", project);
 
@@ -131,7 +136,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                     />
                     <h3 className="self-start"> Tracks </h3>
                     <TracksContainer>
-                        {version?.tracks?.map((track) => (
+                        {allTracks.map((track) => (
                             <>
                                 {" "}
                                 {track.url && (
