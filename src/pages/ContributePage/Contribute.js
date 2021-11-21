@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 
-
 import InputField from "../../components/InputField";
 import OneTrack from "../../components/OneTrack";
 import GetDuration from "../../components/GetDuration";
@@ -10,9 +9,7 @@ import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
 import { addVersion } from "../../reducers/database";
 import InstrumentSelector from "../../components/InstrumentSelector";
-
-
-
+import Loading from "../../components/Loading";
 
 const Contribute = ({ project, version, projectId, versionId }) => {
     const dispatch = useDispatch();
@@ -21,11 +18,10 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [description, setDescription] = useState("");
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
-    const [trackLoading, setTrackLoading] = useState(false)
+    const [trackLoading, setTrackLoading] = useState(false);
     // костыль чтобы апдейтить трек после аплоуда
-    const [wavesurfUpdater, setWavesurfUpdater] = useState('')
+    const [wavesurfUpdater, setWavesurfUpdater] = useState("");
     const [isSubmitPressed, setIsSubmitPressed] = useState(false);
-
 
     const fileInputRef = useRef();
     const { userId } = useSelector((state) => state.database);
@@ -35,7 +31,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const addTrackToList = (newTrack) => {
         console.log("adding track to the list", newTrack);
         setTrackNames([...trackNames, { name: newTrack, type: instrument }]);
-        setTrackLoading(false)
+        setTrackLoading(false);
     };
 
     const handleFileUpload = (event) => {
@@ -43,7 +39,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         console.log({
             "uploaded file": file,
         });
-        setTrackLoading(true)
+        setTrackLoading(true);
 
         uploadFile(file, addTrackToList);
     };
@@ -55,7 +51,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
             url: newLink,
         };
         setTrackNames(trackNamesCopy);
-        setWavesurfUpdater(newLink)
+        setWavesurfUpdater(newLink);
     };
 
     const updateTrackDuration = (index, duration, track) => {
@@ -70,13 +66,13 @@ const Contribute = ({ project, version, projectId, versionId }) => {
 
     const handleCreateVersion = () => {
         if (!description || !trackNames.length) {
-            setIsSubmitPressed(true)
-            return
+            setIsSubmitPressed(true);
+            return;
         }
-        let maxDuration = 0
-        trackNames.forEach(track => {
-            maxDuration = Math.max(maxDuration, track.duration)
-        })
+        let maxDuration = 0;
+        trackNames.forEach((track) => {
+            maxDuration = Math.max(maxDuration, track.duration);
+        });
         dispatch(
             addVersion({
                 projectId,
@@ -139,13 +135,19 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             <>
                                 {" "}
                                 {track.url && (
-                                    <OneTrack audioUrl={track.url} updaterState={wavesurfUpdater} type={track.type} />
+                                    <OneTrack
+                                        audioUrl={track.url}
+                                        updaterState={wavesurfUpdater}
+                                        type={track.type}
+                                    />
                                 )}{" "}
                             </>
                         ))}
                     </TracksContainer>
                     <h3 className="self-start"> Your Added track </h3>
-                    <TracksContainer shouldHighlightTracks={shouldHighlightTracks}>
+                    <TracksContainer
+                        shouldHighlightTracks={shouldHighlightTracks}
+                    >
                         {trackNames.map((track, index) => {
                             console.log(
                                 "inside map function, track link",
@@ -153,10 +155,13 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             );
 
                             return (
-                                <>                                    
+                                <>
                                     {track.url && (
                                         <>
-                                            <OneTrack audioUrl={track.url} type={track.type} />
+                                            <OneTrack
+                                                audioUrl={track.url}
+                                                type={track.type}
+                                            />
                                             <GetDuration
                                                 audioSrc={track.url}
                                                 setDuration={(duration) =>
@@ -172,12 +177,16 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 </>
                             );
                         })}
-                        {trackLoading && <div>Loading...</div>}        
+                        {trackLoading && <Loading />}
                         <div
-                            dat a-cy="buttonsContainer"
+                            dat
+                            a-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
                         >
-                           <InstrumentSelector instrument={instrument}  setInstrument={setInstrument} />
+                            <InstrumentSelector
+                                instrument={instrument}
+                                setInstrument={setInstrument}
+                            />
                             <GenericButton
                                 title={"Add track"}
                                 className="w-max"
@@ -214,7 +223,9 @@ const TracksContainer = ({ children, shouldHighlightTracks }) => {
     return (
         <div
             data-cy="tracks-container"
-            className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-3 ${shouldHighlightTracks && "border-2 border-red-400"}`}
+            className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-3 ${
+                shouldHighlightTracks && "border-2 border-red-400"
+            }`}
         >
             {children}
         </div>

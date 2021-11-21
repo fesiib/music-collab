@@ -11,6 +11,7 @@ import { addProject } from "../../reducers/database";
 import { useHistory } from "react-router";
 import GetDuration from "../../components/GetDuration";
 import InstrumentSelector from "../../components/InstrumentSelector";
+import Loading from "../../components/Loading";
 
 const CreateProject = () => {
     const history = useHistory();
@@ -164,7 +165,9 @@ const CreateProject = () => {
                     <h3> Starting Track</h3>
                     <div
                         data-cy="tracks-container"
-                        className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-5 ${shouldHighlightTracks && "border-2 border-red-400"}`}
+                        className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-5 ${
+                            shouldHighlightTracks && "border-2 border-red-400"
+                        }`}
                     >
                         {trackNames.map((track, index) => {
                             console.log(
@@ -196,7 +199,7 @@ const CreateProject = () => {
                                 </>
                             );
                         })}
-                        {trackLoading && <div>Loading...</div>}
+                        {trackLoading && <Loading />}
                         <div
                             data-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
