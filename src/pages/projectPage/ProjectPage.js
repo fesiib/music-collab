@@ -1,17 +1,5 @@
 import React from 'react'
 import Tree from 'react-d3-tree'
-import withHeader from '../../hocs/withHeader'
-import buildData from './data'
-import VersionModal from './VersionModal'
-import './tree.css'
-import image1 from '../../media/piano.svg'
-import image2 from '../../media/guitar.svg'
-import image3 from '../../media/vocal.svg'
-import image4 from '../../media/electric.svg'
-import image5 from '../../media/drums.svg'
-import Taglist from '../../components/TagList'
-import upvoteIcon from '../../icons/upvote.svg'
-import { useDispatch, useSelector } from 'react-redux';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,26 +8,19 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { version } from 'react-dom'
-const image = (type) => {
-  switch(type){
-    case "piano":
-      return image1
-    case "guitar":
-      return image2
-    case "vocal":
-      return image3
-    case "bass":
-      return image4
-    case "drums":
-      return image5
-    default: 
-      return image3
-  }
-  
-  
-  
-}
+
+import withHeader from '../../hocs/withHeader'
+import buildData from './data'
+import VersionModal from './VersionModal'
+import './tree.css'
+
+import Taglist from '../../components/TagList'
+import upvoteIcon from '../../icons/upvote.svg'
+import { useDispatch, useSelector } from 'react-redux';
+
+
+import getIcon from '../../components/utils/getIcon';
+
 const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -57,7 +38,7 @@ const ProjectPage = ({
       <circle style={{stroke: 'black', fill:'white', }} r={30} ></circle>
       
       <text fill="black" strokeWidth="1" x={-nodeDatum.attributes.author.length*4} y="-40">{capitalize(nodeDatum.attributes.author)}</text>
-      <image href={image(nodeDatum.attributes.type)} width="30" height="30" x="-13" y="-17"></image>
+      <image href={getIcon(nodeDatum.attributes.type)} width="30" height="30" x="-13" y="-17"></image>
       <ellipse style={{stroke: 'none', fill: 'green',}} cx="15" cy="25" rx="10" ry="10"></ellipse>
       
       

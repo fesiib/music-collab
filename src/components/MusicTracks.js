@@ -21,7 +21,7 @@ const MusicTracks = ({ versionId, projectId }) => {
     const { timeAllTracks } = useSelector((state) => state.timeAllTracks);
 
     return (
-        <div className="flex flex-col rounded-2xl mx-auto bg-gray-600 p-3 gap-3 my-5">
+        <div className="flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-5">
             <OneTrack
                 audioUrl={lastTrack?.url}
                 type={lastTrack?.type}

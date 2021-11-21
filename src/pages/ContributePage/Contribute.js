@@ -1,14 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+
+
 import InputField from "../../components/InputField";
 import OneTrack from "../../components/OneTrack";
 import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
 import { addVersion } from "../../reducers/database";
-import { useHistory } from "react-router";
 
-const INSTRUMENTS = ["Piano", "Guitar", "Bass", "Drums"];
+
+const INSTRUMENTS = [
+    {label: "Piano", value: 'piano'}, 
+    {label: "Guitar", value: 'guitar'}, 
+    {label: "Bass", value: 'bass'}, 
+    {label: "Drums", value: 'drums'}, 
+    {label: "Vocal", value: 'vocal'},
+];
 
 const Contribute = ({ project, version, projectId, versionId }) => {
     const dispatch = useDispatch();
@@ -18,6 +27,9 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
     const [trackLoading, setTrackLoading] = useState(false)
+    // костыль чтобы апдейтить трек после аплоуда
+    const [wavesurfUpdater, setWavesurfUpdater] = useState('')
+
     const fileInputRef = useRef();
     const { userId } = useSelector((state) => state.database);
 
@@ -46,6 +58,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
             url: newLink,
         };
         setTrackNames(trackNamesCopy);
+        setWavesurfUpdater(newLink)
     };
 
     const updateTrackDuration = (index, duration, track) => {
@@ -116,7 +129,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             <>
                                 {" "}
                                 {track.url && (
-                                    <OneTrack audioUrl={track.url} />
+                                    <OneTrack audioUrl={track.url} updaterState={wavesurfUpdater} type={track.type} />
                                 )}{" "}
                             </>
                         ))}
@@ -133,7 +146,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 <>                                    
                                     {track.url && (
                                         <>
-                                            <OneTrack audioUrl={track.url} />
+                                            <OneTrack audioUrl={track.url} type={track.type} />
                                             <GetDuration
                                                 audioSrc={track.url}
                                                 setDuration={(duration) =>
@@ -163,9 +176,9 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 className="w-20 rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 mr-4"
                             >
                                 {INSTRUMENTS.map((curInstrument) => (
-                                    <option value={curInstrument}>
-                                        {" "}
-                                        {curInstrument}
+                                    <option value={curInstrument.value}>
+                                        
+                                        {curInstrument.label}
                                     </option>
                                 ))}
                             </select>

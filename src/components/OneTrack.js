@@ -4,29 +4,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTimeAllTracks } from "../reducers/musicTracksTime";
 
 import WaveSurfer from "wavesurfer.js";
+import getIcon from "./utils/getIcon";
 
-const OneTrack = (props) => {
+const OneTrack = ({
+    audioUrl,
+    type,
+    playAllTracks,
+    updaterState,
+
+}) => {
     const waveformRef = useRef();
     var [waveSurfer, setWaveSurfer] = useState(null);
     var [playingAudio, setPlayingAudio] = useState(false);
     const [muted, setMuted] = useState(false);
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    var { timeAllTracks } = useSelector((state) => state.timeAllTracks);
-    useEffect(
-        () => () => {
-            if (timeAllTracks != null) {
-                console.log("timeAllTracks - when unmount", timeAllTracks);
-                timeAllTracks.stop();
-                console.log("timeAllTracks.stop()", timeAllTracks);
-                timeAllTracks.destroy();
+    // var { timeAllTracks } = useSelector((state) => state.timeAllTracks);
+    // useEffect(
+    //     () => () => {
+    //         if (timeAllTracks != null) {
+    //             console.log("timeAllTracks - when unmount", timeAllTracks);
+    //             timeAllTracks.stop();
+    //             console.log("timeAllTracks.stop()", timeAllTracks);
+    //             timeAllTracks.destroy();
 
-                dispatch(setTimeAllTracks({ timeAllTracks: null }));
-            }
-        },
-        []
-    );
+    //             // dispatch(setTimeAllTracks({ timeAllTracks: null }));
+    //         }
+    //     },
+    //     []
+    // );
 
     useEffect(() => {
         if (waveSurfer == null) {
@@ -44,16 +51,16 @@ const OneTrack = (props) => {
                 // backgroundColor: "#424242"
             });
             setWaveSurfer(wavesurfer);
-            dispatch(setTimeAllTracks({ timeAllTracks: wavesurfer }));
-            wavesurfer.load(props.audioUrl);
+            // dispatch(setTimeAllTracks({ timeAllTracks: wavesurfer }));
+            wavesurfer.load(audioUrl);
             console.log("timeAllTrack when created", wavesurfer);
             // wavesurfer.on('destroy', ()=> {} );
         } else {
             // Song changed
-            waveSurfer.load(props.audioUrl);
+            waveSurfer.load(audioUrl);
             // waveSurfer.on('seek', changeProgress);
         }
-    }, [props.audioUrl]);
+    }, [audioUrl]);
 
     const presPlay = () => {
         // console.log(timeAllTracks);
@@ -62,9 +69,9 @@ const OneTrack = (props) => {
                 waveSurfer.pause();
                 setPlayingAudio(!playingAudio);
             } else {
-                // waveSurfer.seekTo (  props.progressTime / waveSurfer.getDuration());
+                // waveSurfer.seekTo (  progressTime / waveSurfer.getDuration());
                 waveSurfer.play();
-                setPlayingAudio(!props.playAllTracks);
+                // setPlayingAudio(!playAllTracks);
             }
         }
     };
@@ -95,6 +102,7 @@ const OneTrack = (props) => {
         "flex-none w-6  h-full place-items-center cursor-pointer";
     return (
         <div className="flex flex-raw h-6 bg-white">
+            <div hidden> {updaterState} </div>
             <div onClick={presPlay} className={buttonClassName}>
                 {
                     playingAudio ? (
@@ -150,7 +158,7 @@ const OneTrack = (props) => {
                     <div //onClick = { presPlay}
                         className="flex-none w-5  my-0.5 mx-1"
                     >
-                        <img src={PianoIcon} />
+                        <img src={getIcon(type)} alt="track icon"/>
                     </div>
                     <div className="flex-grow ">
                         <div
