@@ -3,9 +3,7 @@ import React from 'react'
 import CreatableSelect from 'react-select/creatable'
 import DEFAULT_TAGS from '../../data/defTags'
 
-const DEF_PROPS = {
-  placeholder: 'Search'
-}
+
 
 const customStyles = {
   menu: (provided, state) => ({
@@ -49,24 +47,41 @@ const customStyles = {
   }
 }
 
-function StolenSearchBar(props) {
-  props = {
-    ...DEF_PROPS,
-    ...props
-  }
+function StolenSearchBar({
+  placeholder,
+  fillOutText,
+  isSubmitPressed,
+  isRequired,
+  setValue,
+  value
+}) {
 
+  const shouldHighlight = isSubmitPressed && isRequired && value?.length === 0;
+
+  let requiredStyling = shouldHighlight ? "rounded-lg border-2 border-red-400" : ''
+
+  console.log(placeholder, shouldHighlight)
   return (
     <div className="w-full">
       <CreatableSelect
+        className={`${requiredStyling}`}
         isMulti
         options={DEFAULT_TAGS}
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         styles={customStyles}
-        value={props.value}
-        onChange={(value) => props.setValue(value)}
+        value={value}
+        onChange={(value) => setValue(value)}
       />
+     {shouldHighlight && <p className="text-red-500">{fillOutText}</p>}
     </div>
   )
+}
+
+StolenSearchBar.defaultProps = {
+  placeholder: 'Search',
+  fillOutText: '', 
+  isSubmitPressed: false,
+  isRequired: false,
 }
 
 export default StolenSearchBar

@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
+
 import InputField from "../../components/InputField";
 import OneTrack from "../../components/OneTrack";
 import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
 import { addVersion } from "../../reducers/database";
-import { useHistory } from "react-router";
-
-const INSTRUMENTS = ["Piano", "Guitar", "Bass", "Drums"];
+import InstrumentSelector from "../../components/InstrumentSelector";
+import Loading from "../../components/Loading";
 
 const Contribute = ({ project, version, projectId, versionId }) => {
     const dispatch = useDispatch();
@@ -17,6 +18,11 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [description, setDescription] = useState("");
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
+    const [trackLoading, setTrackLoading] = useState(false);
+    // костыль чтобы апдейтить трек после аплоуда
+    const [wavesurfUpdater, setWavesurfUpdater] = useState("");
+    const [isSubmitPressed, setIsSubmitPressed] = useState(false);
+
     const fileInputRef = useRef();
     const { userId } = useSelector((state) => state.database);
 
@@ -25,6 +31,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const addTrackToList = (newTrack) => {
         console.log("adding track to the list", newTrack);
         setTrackNames([...trackNames, { name: newTrack, type: instrument }]);
+        setTrackLoading(false);
     };
 
     const handleFileUpload = (event) => {
@@ -32,6 +39,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         console.log({
             "uploaded file": file,
         });
+        setTrackLoading(true);
 
         uploadFile(file, addTrackToList);
     };
@@ -43,6 +51,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
             url: newLink,
         };
         setTrackNames(trackNamesCopy);
+        setWavesurfUpdater(newLink);
     };
 
     const updateTrackDuration = (index, duration, track) => {
@@ -56,14 +65,22 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     };
 
     const handleCreateVersion = () => {
+        if (!description || !trackNames.length) {
+            setIsSubmitPressed(true);
+            return;
+        }
+        let maxDuration = 0;
+        trackNames.forEach((track) => {
+            maxDuration = Math.max(maxDuration, track.duration);
+        });
         dispatch(
             addVersion({
                 projectId,
                 authorId: userId,
                 contributionMessage: description,
                 parentVersionId: versionId,
-                duration: trackNames[0]?.duration || 220,
-                tracks: trackNames,
+                duration: maxDuration || 220,
+                tracks: [...version?.tracks, ...trackNames],
             })
         );
         history.push(`/project/${projectId}`);
@@ -83,6 +100,8 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         duration: trackNames[0]?.duration || 220,
         tracks: trackNames,
     });
+
+    const shouldHighlightTracks = !trackNames.length && isSubmitPressed;
 
     return (
         <div
@@ -106,6 +125,9 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                         setValue={setDescription}
                         placeholder="Contribution message"
                         isTextArea
+                        isRequired
+                        isSubmitPressed={isSubmitPressed}
+                        fillOutText="Please fill out the contribution message"
                     />
                     <h3 className="self-start"> Tracks </h3>
                     <TracksContainer>
@@ -113,13 +135,19 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             <>
                                 {" "}
                                 {track.url && (
-                                    <OneTrack audioUrl={track.url} />
+                                    <OneTrack
+                                        audioUrl={track.url}
+                                        updaterState={wavesurfUpdater}
+                                        type={track.type}
+                                    />
                                 )}{" "}
                             </>
                         ))}
                     </TracksContainer>
                     <h3 className="self-start"> Your Added track </h3>
-                    <TracksContainer>
+                    <TracksContainer
+                        shouldHighlightTracks={shouldHighlightTracks}
+                    >
                         {trackNames.map((track, index) => {
                             console.log(
                                 "inside map function, track link",
@@ -130,7 +158,10 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 <>
                                     {track.url && (
                                         <>
-                                            <OneTrack audioUrl={track.url} />
+                                            <OneTrack
+                                                audioUrl={track.url}
+                                                type={track.type}
+                                            />
                                             <GetDuration
                                                 audioSrc={track.url}
                                                 setDuration={(duration) =>
@@ -146,26 +177,16 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 </>
                             );
                         })}
-
+                        {trackLoading && <Loading />}
                         <div
-                            data-cy="buttonsContainer"
+                            dat
+                            a-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
                         >
-                            <select
-                                value={instrument}
-                                onChange={(e) => {
-                                    console.log("value", e.target.value);
-                                    setInstrument(e.target.value);
-                                }}
-                                className="w-20 rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 mr-4"
-                            >
-                                {INSTRUMENTS.map((curInstrument) => (
-                                    <option value={curInstrument}>
-                                        {" "}
-                                        {curInstrument}
-                                    </option>
-                                ))}
-                            </select>
+                            <InstrumentSelector
+                                instrument={instrument}
+                                setInstrument={setInstrument}
+                            />
                             <GenericButton
                                 title={"Add track"}
                                 className="w-max"
@@ -181,6 +202,12 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             />
                         </div>
                     </TracksContainer>
+                    {shouldHighlightTracks && (
+                        <p className="text-red-500">
+                            {" "}
+                            Please upload your contribution
+                        </p>
+                    )}
                     <GenericButton
                         title={"Upload"}
                         className="w-max self-end"
@@ -192,11 +219,13 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     );
 };
 
-const TracksContainer = ({ children }) => {
+const TracksContainer = ({ children, shouldHighlightTracks }) => {
     return (
         <div
             data-cy="tracks-container"
-            className="w-full flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-3"
+            className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-3 ${
+                shouldHighlightTracks && "border-2 border-red-400"
+            }`}
         >
             {children}
         </div>

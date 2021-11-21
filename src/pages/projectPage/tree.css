@@ -17,3 +17,10 @@
   stroke: rgb(228, 2, 2);
   stroke-width: 1cm;
 }
+
+.rd3t-tree-container {
+  background-color: #EFF6FF;
+  background-image:       linear-gradient(0deg, transparent 24%, rgba(60, 60, 60, 0.20) 25%, rgba(60, 60, 60, 0.20) 26%, transparent 27%, transparent 74%, rgba(60, 60, 60, 0.20) 75%, rgba(60, 60, 60, 0.20) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(60, 60, 60, 0.20) 25%, rgba(60, 60, 60, 0.20) 26%, transparent 27%, transparent 74%, rgba(60, 60, 60, 0.20) 75%, rgba(60, 60, 60, 0.20) 76%, transparent 77%, transparent);
+height:100%;
+background-size:50px 50px;
+}
