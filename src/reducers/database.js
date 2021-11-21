@@ -781,7 +781,7 @@ const database = (state = initialState, action) => {
         metaInfo: {
           authorId: authorId,
           contributionMessage: action.payload.contributionMessage | '',
-          parentVersionId: action.payload.parentVersionId | '-1',
+          parentVersionId: null,
           duration: action.payload.duration | 230,
 
           votes: 0,
