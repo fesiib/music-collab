@@ -72,13 +72,17 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     };
 
     const handleCreateVersion = () => {
+        let maxDuration = 0
+        trackNames.forEach(track => {
+            maxDuration = Math.max(maxDuration, track.duration)
+        })
         dispatch(
             addVersion({
                 projectId,
                 authorId: userId,
                 contributionMessage: description,
                 parentVersionId: versionId,
-                duration: trackNames[0]?.duration || 220,
+                duration: maxDuration || 220,
                 tracks: [...version?.tracks, ...trackNames],
             })
         );
