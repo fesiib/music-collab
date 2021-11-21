@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import InputField from "../../components/InputField";
-import OneTrack from "../../components/OneTrack";
+// import OneTrack from "../../components/OneTrack";
+import { OneTrack } from "../../components/MusicTracks";
 import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
@@ -17,6 +18,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [description, setDescription] = useState("");
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
+    const [trackLoading, setTrackLoading] = useState(false)
     const fileInputRef = useRef();
     const { userId } = useSelector((state) => state.database);
 
@@ -25,6 +27,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const addTrackToList = (newTrack) => {
         console.log("adding track to the list", newTrack);
         setTrackNames([...trackNames, { name: newTrack, type: instrument }]);
+        setTrackLoading(false)
     };
 
     const handleFileUpload = (event) => {
@@ -32,6 +35,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         console.log({
             "uploaded file": file,
         });
+        setTrackLoading(true)
 
         uploadFile(file, addTrackToList);
     };
@@ -63,7 +67,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                 contributionMessage: description,
                 parentVersionId: versionId,
                 duration: trackNames[0]?.duration || 220,
-                tracks: trackNames,
+                tracks: [...version?.tracks, ...trackNames],
             })
         );
         history.push(`/project/${projectId}`);
@@ -127,7 +131,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             );
 
                             return (
-                                <>
+                                <>                                    
                                     {track.url && (
                                         <>
                                             <OneTrack audioUrl={track.url} />
@@ -146,9 +150,9 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 </>
                             );
                         })}
-
+                        {trackLoading && <div>Loading...</div>}        
                         <div
-                            data-cy="buttonsContainer"
+                            daa-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
                         >
                             <select
