@@ -12,7 +12,6 @@ import { useHistory } from "react-router";
 import GetDuration from "../../components/GetDuration";
 import InstrumentSelector from "../../components/InstrumentSelector";
 
-
 const CreateProject = () => {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -23,21 +22,23 @@ const CreateProject = () => {
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
     const [isSubmitPressed, setIsSubmitPressed] = useState(false);
-    const [trackLoading, setTrackLoading] = useState(false)
+    const [trackLoading, setTrackLoading] = useState(false);
 
+    const [imageLink, setImageLink] = useState("");
+    const [imageLoading, setImageLoading] = useState(false);
 
     // костыль чтобы апдейтить трек после аплоуда
-    const [wavesurfUpdater, setWavesurfUpdater] = useState('')
+    const [wavesurfUpdater, setWavesurfUpdater] = useState("");
 
     const { userId } = useSelector((state) => state.database);
 
     const fileInputRef = useRef();
+    const imageUploadRef = useRef();
 
     const addTrackToList = (newTrack) => {
         console.log("adding track to the list", newTrack);
         setTrackNames([...trackNames, { name: newTrack, type: instrument }]);
-        setTrackLoading(false)
-
+        setTrackLoading(false);
     };
 
     const handleFileUpload = (event) => {
@@ -45,9 +46,23 @@ const CreateProject = () => {
         console.log({
             "uploaded file": file,
         });
-        setTrackLoading(true)
+        setTrackLoading(true);
 
         uploadFile(file, addTrackToList);
+    };
+
+    const updateImageLink = (name) => {
+        getFileURL(name, (url) => setImageLink(url));
+        setImageLoading(false);
+    };
+
+    const handleImageUpload = (event) => {
+        const file = imageUploadRef.current.files[0];
+        console.log({
+            "uploaded file": file,
+        });
+        setImageLoading(true);
+        uploadFile(file, updateImageLink);
     };
 
     const updateTrackLink = (index, newLink, track) => {
@@ -57,7 +72,7 @@ const CreateProject = () => {
             url: newLink,
         };
         setTrackNames(trackNamesCopy);
-        setWavesurfUpdater(newLink)
+        setWavesurfUpdater(newLink);
     };
 
     const updateTrackDuration = (index, duration, track) => {
@@ -77,9 +92,9 @@ const CreateProject = () => {
     }, [trackNames, updateTrackLink]);
 
     const handleCreateProject = () => {
-        if (!description || !name || !trackNames.length) {
-            setIsSubmitPressed(true)
-            return
+        if (!description || !name || !trackNames.length || !imageLink) {
+            setIsSubmitPressed(true);
+            return;
         }
         dispatch(
             addProject({
@@ -88,6 +103,7 @@ const CreateProject = () => {
                 trackTitle: name,
                 description,
                 tags,
+                backgroundImage: imageLink,
             })
         );
         history.push("/");
@@ -99,8 +115,12 @@ const CreateProject = () => {
         trackTitle: name,
         description,
         tags,
+        imageLink,
         duration: trackNames[0]?.duration,
     });
+
+    const shouldHighlightTracks = !trackNames.length && isSubmitPressed;
+    const shouldHighlightImage = !imageLink && isSubmitPressed;
     return (
         <div
             className="w-full flex flex-col items-center p-6"
@@ -131,17 +151,17 @@ const CreateProject = () => {
                         isRequired
                         fillOutText="Please select at least one tag"
                         isSubmitPressed={isSubmitPressed}
-
                     />
                     <InputField
                         value={description}
                         setValue={setDescription}
                         placeholder="Project Description"
-                        isTextArea                       
-                        isSubmitPressed = {isSubmitPressed} 
+                        isTextArea
+                        isSubmitPressed={isSubmitPressed}
                         isRequired
                         fillOutText="Please fill out the project description"
                     />
+                    <h3> Starting Track</h3>
                     <div
                         data-cy="tracks-container"
                         className="w-full flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-5"
@@ -156,7 +176,11 @@ const CreateProject = () => {
                                 <>
                                     {track.url && (
                                         <>
-                                            <OneTrack audioUrl={track.url} updaterState={wavesurfUpdater} type={track.type}  />
+                                            <OneTrack
+                                                audioUrl={track.url}
+                                                updaterState={wavesurfUpdater}
+                                                type={track.type}
+                                            />
                                             <GetDuration
                                                 audioSrc={track.url}
                                                 setDuration={(duration) =>
@@ -172,17 +196,23 @@ const CreateProject = () => {
                                 </>
                             );
                         })}
-                        {trackLoading && <div>Loading...</div>}        
+                        {trackLoading && <div>Loading...</div>}
                         <div
                             data-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
                         >
-                           <InstrumentSelector instrument={instrument}  setInstrument={setInstrument} />
-                            
+                            <InstrumentSelector
+                                instrument={instrument}
+                                setInstrument={setInstrument}
+                            />
+
                             <GenericButton
                                 title={"Add track"}
                                 className="w-max"
-                                onClick={() => fileInputRef.current.click()}
+                                onClick={() => {
+                                    if (fileInputRef.current)
+                                        fileInputRef.current.click();
+                                }}
                             />
                             <input
                                 onChange={handleFileUpload}
@@ -194,6 +224,54 @@ const CreateProject = () => {
                             />
                         </div>
                     </div>
+                    {shouldHighlightTracks && (
+                        <p className="text-red-500">
+                            {" "}
+                            Please upload your starting track
+                        </p>
+                    )}
+                    <h3> Cover image </h3>
+                    <div
+                        data-cy="imageUpload"
+                        className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-5 ${
+                            shouldHighlightImage && "border-2 border-red-400"
+                        }`}
+                    >
+                        <div className="w-full flex flex-row">
+                            <div data-cy="imageUploadButton">
+                                <GenericButton
+                                    title={"Upload"}
+                                    className="w-max"
+                                    onClick={() => {
+                                        if (imageUploadRef.current)
+                                            imageUploadRef.current.click();
+                                    }}
+                                />
+                                <input
+                                    onChange={handleImageUpload}
+                                    multiple={false}
+                                    ref={imageUploadRef}
+                                    type="file"
+                                    accept="image/*"
+                                    hidden
+                                />
+                            </div>
+                            {imageLoading && <div>Loading...</div>}
+                            {imageLink && (
+                                <img
+                                    src={imageLink}
+                                    alt="project cover"
+                                    className="max-h-28 max-w-28 ml-5 rounded-lg"
+                                />
+                            )}
+                        </div>
+                    </div>
+                    {shouldHighlightImage && (
+                        <p className="text-red-500">
+                            {" "}
+                            Please upload your cover image{" "}
+                        </p>
+                    )}
                     <GenericButton
                         title={"Create Project"}
                         className="w-max self-end"
