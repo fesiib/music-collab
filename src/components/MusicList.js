@@ -158,7 +158,7 @@ function Table(props) {
                     className: "",
                 })}
             >
-                <thead className="sticky top-0 bg-gray-200">
+                <thead className="sticky top-0 bg-gray-200 z-10">
                     {headerGroups.map((headerGroup) => (
                         <tr
                             {...headerGroup.getHeaderGroupProps({
@@ -226,7 +226,7 @@ function Table(props) {
                                                     className: "p-2"
                                                 })}>
                                                     <PlayPauseButton
-                                                        className="w-12"
+                                                        className="my-auto"
                                                         versionId={cell.row.original.versionId}
                                                         projectId={cell.row.original.projectId}
                                                     />
@@ -256,7 +256,7 @@ function Table(props) {
                                         }
                                         if (cell.column.id === 'duration') {
                                             const mins = (Math.floor(cell.value / 60)).toString().padStart(2, "0");
-                                            const secs = (cell.value % 60).toString().padStart(2, "0");;
+                                            const secs = (Math.ceil(cell.value % 60)).toString().padStart(2, "0");;
                                             return ( <td {...cell.getCellProps({
                                                 className: "p-2 text-left overflow-ellipsis overflow-hidden"
                                                 })}>

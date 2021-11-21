@@ -40,7 +40,7 @@ function PlayPauseButton(props) {
     };
 
     return (
-        <div className={"bg-gray-100 rounded-full border-2 hover:bg-white" + props.className} onClick={clickHandler}>
+        <div className={"bg-gray-100 rounded-full border-2 hover:bg-white " + props.className} onClick={clickHandler}>
             {
                 (playing && versionId === props.versionId && projectId === props.projectId) ?
                         <div className="transform scale-75">
