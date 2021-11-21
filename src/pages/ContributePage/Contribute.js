@@ -80,7 +80,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                 contributionMessage: description,
                 parentVersionId: versionId,
                 duration: maxDuration || 220,
-                tracks: [...version?.tracks, ...trackNames],
+                tracks: [...trackNames],
             })
         );
         history.push(`/project/${projectId}`);

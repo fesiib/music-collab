@@ -1,4 +1,6 @@
 import React from 'react'
+import { useHistory } from 'react-router'
+import GenericButton from '../../components/GenericButton'
 // import VersionPage from './VersionPage'
 
 import VersionPage from '../../pages/VersionPage'
@@ -6,7 +8,7 @@ import VersionPage from '../../pages/VersionPage'
 
 const DimmedBackground = ({ children }) => {
   return (
-    <div className="bg-gray-200 bg-opacity-80 h-screen w-screen z-0 top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2">
+    <div className="bg-gray-200 bg-opacity-80 h-screen w-screen z-20 top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2">
       {children}
     </div>
   )
@@ -31,9 +33,16 @@ const Container = ({ children }) => {
   )
 }
 
-const VersionModal = ({ onClose,versionId,projectId}) => {
+const VersionModal = ({ onClose,versionId,projectId, fromHomepage=false}) => {
   // const versionId  = "sunnyDay1"
   // const projectId = "sunnyDay"
+
+  const history = useHistory();
+
+  const redirectToProjectPage = () => {
+    history.push('/project/' + projectId + '/');
+    console.log("modal", '/project/' + projectId + '/');
+  };
   
   return (
     <DimmedBackground>
@@ -47,6 +56,17 @@ const VersionModal = ({ onClose,versionId,projectId}) => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
+          {
+            fromHomepage ? 
+            (
+                <GenericButton
+                    title={"Go to Project"}
+                    className="mx-auto"
+                    onClick={redirectToProjectPage}
+                />
+            ) : null
+          }
+          
 
           
           <VersionPage

@@ -199,7 +199,7 @@ function RightPanel(props) {
                     transform={transform}
                     projectId={projectId}
                     versionId={versionId}
-                    panel={false}
+                    panel={true}
                 />
                 <div>
                     <h2 className="pl-5 pt-5 text-left">Collaborators</h2>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, version } from 'react';
 
 import {Tabs, TabList, Tab, TabPanel} from 'react-tabs';
 import 'react-sliding-side-panel/lib/index.css';
@@ -8,10 +8,11 @@ import MusicList, { TRANSFORM_AUTHOR, TRANSFORM_OWNER, TRANSFORM_POPULAR, TRANSF
 import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSortType } from '../reducers/homepage/homepagePanel';
+import { openPanel, setSortType } from '../reducers/homepage/homepagePanel';
 import { setTabIndex } from '../reducers/homepage/tabInfo';
 import RightPanel from '../components/RightPanel';
 import { useHistory } from 'react-router';
+import VersionModal from './projectPage/VersionModal';
 
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer border-t-2 border-l-2 border-r-2 border-black box-border";
 const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white cursor-pointer border-t-2 border-l-2 border-r-2  border-black hover:bg-indigo-500 hover:text-white box-border";
@@ -26,7 +27,11 @@ function Homepage(props) {
     const dispatch = useDispatch();
 
     const { sortType } = useSelector(state => state.homepagePanel);
-    const { tabIndex, searchTags } = useSelector(state => state.tabInfo);
+    const { tabIndex } = useSelector(state => state.tabInfo);
+
+    const [visible, setVisible] = useState(false);
+    const [projectId, setProjectId] = useState(null);
+    const [versionId, setVersionId] = useState(null);
 
     const _setSortType = (sortType) => {
         dispatch(setSortType({sortType}));
@@ -34,6 +39,16 @@ function Homepage(props) {
     
     const _setTabIndex = (tabIndex) => {
         dispatch(setTabIndex({tabIndex}))
+    }
+
+    const _openPanel = (projectId, versionId) => {
+        dispatch(openPanel({ projectId, versionId }));
+    };
+
+    const _openModal = (projectId, versionId) => {
+        setProjectId(projectId);
+        setVersionId(versionId);
+        setVisible(true);
     }
 
     const assignTabClassName = (curTabIndex) => {
@@ -75,6 +90,8 @@ function Homepage(props) {
                         votes={false}
                         className={"max-h-96"}
                         transform={TRANSFORM_OWNER}
+                        panel={false}
+                        onRowClick={_openPanel}
                     />
                     <div className="flex justify-center m-5">    
                         <GenericButton
@@ -92,7 +109,12 @@ function Homepage(props) {
                         votes={true}
                         className={"max-h-96"}
                         transform={TRANSFORM_AUTHOR}
+                        panel={false}
+                        onRowClick={_openModal}
                     />
+                    {
+                        visible ? <VersionModal onClose={() => setVisible(false)} projectId={projectId}  versionId={versionId} fromHomepage={true}/> : null
+                    }
                     {/* <div className="flex justify-center m-5">    
                         <GenericButton title={"Browse"} className="text-xl w-1/5 p-2" onClick={() => _setTabIndex(1)}/>
                     </div> */}
@@ -124,6 +146,8 @@ function Homepage(props) {
                         votes={false}
                         search={true}
                         transform={sortType}
+                        panel={false}
+                        onRowClick={_openPanel}
                     />
                 </TabPanel>
             </Tabs>

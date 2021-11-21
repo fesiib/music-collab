@@ -12,7 +12,6 @@ import ReactTimeAgo from "react-time-ago";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
 
-import { openPanel } from '../reducers/homepage/homepagePanel';
 import iconUD from '../icons/updown.png';
 import iconProject from '../icons/playlist.png';
 import TagList from './TagList';
@@ -76,7 +75,7 @@ export const TRANSFORM_RECENT_SINGLE = "recent_single";
 
 const DEF_PROPS = {
     headers: [],
-    panel: true,
+    panel: false,
     search: false,
     cntRows: 20,
     pageCount: 9,
@@ -84,16 +83,13 @@ const DEF_PROPS = {
     transform: TRANSFORM_POPULAR,
     projectId: "",
     versionId: "",
+    onRowClick: () => (console.log('unhandled')),
 };
 
 function Table(props) {
     const dispatch = useDispatch();
 
     const parentProps = props.parentProps;
-
-    const _openPanel = (projectId, versionId) => {
-        dispatch(openPanel({ projectId, versionId }));
-    };
 
     const defaultColumn = React.useMemo(
         () => ({
@@ -135,12 +131,11 @@ function Table(props) {
     );
 
     const rowClick = (row) => {
-        if (parentProps.panel)
-            _openPanel(row.original.projectId, row.original.versionId);
+        parentProps.onRowClick(row.original.projectId, row.original.versionId);
     };
 
     const additionalRowClassName = useMemo(() => {
-        if (parentProps.panel) {
+        if (!parentProps.panel) {
             return "hover:bg-gray-100 cursor-pointer";
         }
         return "";
