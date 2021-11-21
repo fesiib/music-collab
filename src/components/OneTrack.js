@@ -131,9 +131,9 @@ const OneTrack = ({
                             <g
                                 id="🔍-Product-Icons"
                                 stroke="none"
-                                stroke-width="1"
+                                strokeWidth="1"
                                 fill="none"
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                             >
                                 <g
                                     id="ic_fluent_play_48_filled"

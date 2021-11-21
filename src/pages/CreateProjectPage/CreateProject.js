@@ -10,8 +10,8 @@ import { getFileURL, uploadFile } from "../../services/storage";
 import { addProject } from "../../reducers/database";
 import { useHistory } from "react-router";
 import GetDuration from "../../components/GetDuration";
+import InstrumentSelector from "../../components/InstrumentSelector";
 
-const INSTRUMENTS = ["Piano", "Guitar", "Bass", "Drums"];
 
 const CreateProject = () => {
     const history = useHistory();
@@ -22,6 +22,12 @@ const CreateProject = () => {
     const [tags, setTags] = useState([]);
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
+    const [isSubmitPressed, setIsSubmitPressed] = useState(false);
+    const [trackLoading, setTrackLoading] = useState(false)
+
+
+    // костыль чтобы апдейтить трек после аплоуда
+    const [wavesurfUpdater, setWavesurfUpdater] = useState('')
 
     const { userId } = useSelector((state) => state.database);
 
@@ -30,6 +36,8 @@ const CreateProject = () => {
     const addTrackToList = (newTrack) => {
         console.log("adding track to the list", newTrack);
         setTrackNames([...trackNames, { name: newTrack, type: instrument }]);
+        setTrackLoading(false)
+
     };
 
     const handleFileUpload = (event) => {
@@ -37,6 +45,7 @@ const CreateProject = () => {
         console.log({
             "uploaded file": file,
         });
+        setTrackLoading(true)
 
         uploadFile(file, addTrackToList);
     };
@@ -48,6 +57,7 @@ const CreateProject = () => {
             url: newLink,
         };
         setTrackNames(trackNamesCopy);
+        setWavesurfUpdater(newLink)
     };
 
     const updateTrackDuration = (index, duration, track) => {
@@ -67,6 +77,10 @@ const CreateProject = () => {
     }, [trackNames, updateTrackLink]);
 
     const handleCreateProject = () => {
+        if (!description || !name || !trackNames.length) {
+            setIsSubmitPressed(true)
+            return
+        }
         dispatch(
             addProject({
                 ownerId: userId,
@@ -105,18 +119,28 @@ const CreateProject = () => {
                         value={name}
                         setValue={setName}
                         placeholder="Project name"
+                        isRequired
+                        isSubmitPressed={isSubmitPressed}
+                        fillOutText="Please fill out the project name"
                     />
                     <h3> Tag List </h3>
                     <StolenSearchBar
                         placeholder="Search for Music, Authors, and Tags."
                         value={tags}
                         setValue={setTags}
+                        isRequired
+                        fillOutText="Please select at least one tag"
+                        isSubmitPressed={isSubmitPressed}
+
                     />
                     <InputField
                         value={description}
                         setValue={setDescription}
                         placeholder="Project Description"
-                        isTextArea
+                        isTextArea                       
+                        isSubmitPressed = {isSubmitPressed} 
+                        isRequired
+                        fillOutText="Please fill out the project description"
                     />
                     <div
                         data-cy="tracks-container"
@@ -132,7 +156,7 @@ const CreateProject = () => {
                                 <>
                                     {track.url && (
                                         <>
-                                            <OneTrack audioUrl={track.url} />
+                                            <OneTrack audioUrl={track.url} updaterState={wavesurfUpdater} type={track.type}  />
                                             <GetDuration
                                                 audioSrc={track.url}
                                                 setDuration={(duration) =>
@@ -148,26 +172,13 @@ const CreateProject = () => {
                                 </>
                             );
                         })}
-
+                        {trackLoading && <div>Loading...</div>}        
                         <div
                             data-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
                         >
-                            <select
-                                value={instrument}
-                                onChange={(e) => {
-                                    console.log("value", e.target.value);
-                                    setInstrument(e.target.value);
-                                }}
-                                className="w-20 rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 mr-4"
-                            >
-                                {INSTRUMENTS.map((curInstrument) => (
-                                    <option value={curInstrument}>
-                                        {" "}
-                                        {curInstrument}
-                                    </option>
-                                ))}
-                            </select>
+                           <InstrumentSelector instrument={instrument}  setInstrument={setInstrument} />
+                            
                             <GenericButton
                                 title={"Add track"}
                                 className="w-max"

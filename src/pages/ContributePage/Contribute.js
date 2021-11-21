@@ -9,15 +9,10 @@ import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
 import { addVersion } from "../../reducers/database";
+import InstrumentSelector from "../../components/InstrumentSelector";
 
 
-const INSTRUMENTS = [
-    {label: "Piano", value: 'piano'}, 
-    {label: "Guitar", value: 'guitar'}, 
-    {label: "Bass", value: 'bass'}, 
-    {label: "Drums", value: 'drums'}, 
-    {label: "Vocal", value: 'vocal'},
-];
+
 
 const Contribute = ({ project, version, projectId, versionId }) => {
     const dispatch = useDispatch();
@@ -29,6 +24,8 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [trackLoading, setTrackLoading] = useState(false)
     // костыль чтобы апдейтить трек после аплоуда
     const [wavesurfUpdater, setWavesurfUpdater] = useState('')
+    const [isSubmitPressed, setIsSubmitPressed] = useState(false);
+
 
     const fileInputRef = useRef();
     const { userId } = useSelector((state) => state.database);
@@ -72,6 +69,10 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     };
 
     const handleCreateVersion = () => {
+        if (!description || !trackNames.length) {
+            setIsSubmitPressed(true)
+            return
+        }
         let maxDuration = 0
         trackNames.forEach(track => {
             maxDuration = Math.max(maxDuration, track.duration)
@@ -126,6 +127,9 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                         setValue={setDescription}
                         placeholder="Contribution message"
                         isTextArea
+                        isRequired
+                        isSubmitPressed={isSubmitPressed}
+                        fillOutText="Please fill out the contribution message"
                     />
                     <h3 className="self-start"> Tracks </h3>
                     <TracksContainer>
@@ -168,24 +172,10 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                         })}
                         {trackLoading && <div>Loading...</div>}        
                         <div
-                            daa-cy="buttonsContainer"
+                            dat a-cy="buttonsContainer"
                             hidden={trackNames.length > 0}
                         >
-                            <select
-                                value={instrument}
-                                onChange={(e) => {
-                                    console.log("value", e.target.value);
-                                    setInstrument(e.target.value);
-                                }}
-                                className="w-20 rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 mr-4"
-                            >
-                                {INSTRUMENTS.map((curInstrument) => (
-                                    <option value={curInstrument.value}>
-                                        
-                                        {curInstrument.label}
-                                    </option>
-                                ))}
-                            </select>
+                           <InstrumentSelector instrument={instrument}  setInstrument={setInstrument} />
                             <GenericButton
                                 title={"Add track"}
                                 className="w-max"
