@@ -177,8 +177,6 @@ const DUMMY_PROJECT_1 = {
         description: "It is a pop music",
         backgroundImage: "https://cdna.artstation.com/p/assets/images/images/029/031/880/large/universegfx-juice-wrld-album-cover-behance-version.jpg?1596238538",
 
-
-        genre: "Pop",
         
 
         creationTime: new Date(0),
@@ -410,7 +408,6 @@ const DUMMY_PROJECT_2 = {
             {label: "Rock", value: "rock"},
             {label: "Hard", value: "hard"},
         ],
-        genre: "Rock",
         description: "Hard Rock",
         creationTime: new Date(2021, 11, 10),
         lastModified: new Date(2021, 11, 10),
@@ -754,6 +751,12 @@ const initialState = {
 
 
 const database = (state = initialState, action) => {
+    const safe = (opt1, opt2) => {
+        if (opt1 === undefined)
+            return opt2;
+        return opt1;
+    }
+
   switch (action.type) {
     /*
         userId,
@@ -770,6 +773,7 @@ const database = (state = initialState, action) => {
         trackTitle,
         tags,
         description,
+        backgroundImage
     */
     case ADD_PROJECT: {
       const projectId = 'project' + randomString()
@@ -780,28 +784,34 @@ const database = (state = initialState, action) => {
       const version = {
         metaInfo: {
           authorId: authorId,
-          contributionMessage: action.payload.contributionMessage | '',
-          parentVersionId: null,
-          duration: action.payload.duration | 230,
+          contributionMessage: safe(action.payload.contributionMessage, 'No message'),
+          parentVersionId: safe(action.payload.parentVersionId, null),
+          duration: safe(action.payload.duration, 230),
 
           votes: 0,
           creationTime: new Date(),
           lastModified: new Date()
         },
-        tracks: action.payload.tracks,
+        tracks: safe(action.payload.tracks, [{url: null, type: null, duration: 0}]),
         comments: {}
       }
 
       const project = {
         metaInfo: {
-          ...action.payload,
-          creationTime: new Date(),
-          lastModified: new Date()
+            ownerId: ownerId,
+            trackTitle: safe(action.payload.description, 'No title'),
+            tags: safe(action.payload.tags, []),
+            description: safe(action.payload.description, 'No description'),
+            backgroundImage: safe(action.payload.backgroundImage, null),
+
+            creationTime: new Date(),
+            lastModified: new Date()
         },
         versions: {
           [versionId]: version
         }
       }
+      console.log(project);
 
       let newProjects = { ...state.projects }
       newProjects[projectId] = project
@@ -842,7 +852,7 @@ const database = (state = initialState, action) => {
       contributionMessage,
       parentVersionId,
       duration,
-      tracks {url: '', type: ??},
+      tracks {url: '', type: ??, duration: 0},
     */
     case ADD_VERSION: {
       const projectId = action.payload.projectId;
@@ -851,9 +861,9 @@ const database = (state = initialState, action) => {
       const version = {
         metaInfo: {
           authorId: action.payload.authorId,
-          contributionMessage: action.payload.contributionMessage,
-          parentVersionId: action.payload.parentVersionId,
-          duration: action.payload.duration,
+          contributionMessage: safe(action.payload.contributionMessage, 'No message'),
+          parentVersionId: safe(action.payload.parentVersionId, null),
+          duration: safe(action.payload.duration, 0),
 
           votes: 0,
           creationTime: new Date(),

@@ -16,9 +16,6 @@ function getAllTracks(projectId, leafId, projects) {
             for (let track of version?.tracks) {
                 tracks.push(track);
             }
-            if (version?.metaInfo?.parentVersionId === -1) {
-                break;
-            }
             leafId = version?.metaInfo?.parentVersionId;
         }
     }

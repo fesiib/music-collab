@@ -21,6 +21,9 @@ function TagList(props) {
             moreTagsExist = "...";
         }
     }
+    if (tags.length === 0) {
+        moreTagsExist = "No tags";
+    }
     return (
         <div className="flex flex-row flex-wrap">
             {tags.map((tag) => {
