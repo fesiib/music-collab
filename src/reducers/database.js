@@ -799,7 +799,7 @@ const database = (state = initialState, action) => {
       const project = {
         metaInfo: {
             ownerId: ownerId,
-            trackTitle: safe(action.payload.description, 'No title'),
+            trackTitle: safe(action.payload.trackTitle, 'No title'),
             tags: safe(action.payload.tags, []),
             description: safe(action.payload.description, 'No description'),
             backgroundImage: safe(action.payload.backgroundImage, null),
