@@ -13,8 +13,8 @@ import { setTabIndex } from '../reducers/homepage/tabInfo';
 import RightPanel from '../components/RightPanel';
 import { useHistory } from 'react-router';
 
-const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white border-t-2 border-l-2 border-r-2 border-black";
-const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600";
+const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer border-t-2 border-l-2 border-r-2 border-black box-border";
+const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white cursor-pointer border-t-2 border-l-2 border-r-2  border-black hover:bg-indigo-500 hover:text-white box-border";
 
 const AUDIO_EXAMPLE_1 = "https://firebasestorage.googleapis.com/v0/b/music-collab-9ec47.appspot.com/o/projects%2F83448da950164b1886dafaa7fd14540abest_song.mp3?alt=media&token=3e0e5978-ff1e-4020-98d9-48de4a9df39e";
 const AUDIO_EXMPALE_2 = "https://firebasestorage.googleapis.com/v0/b/music-collab-9ec47.appspot.com/o/projects%2Fdf04c163723f4d76bbb74585dc61e559song.mp3?alt=media&token=07942ecb-a06b-44f7-af79-390d675ebc15";
