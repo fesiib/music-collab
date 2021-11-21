@@ -164,7 +164,7 @@ const CreateProject = () => {
                     <h3> Starting Track</h3>
                     <div
                         data-cy="tracks-container"
-                        className="w-full flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-5"
+                        className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-5 ${shouldHighlightTracks && "border-2 border-red-400"}`}
                     >
                         {trackNames.map((track, index) => {
                             console.log(
@@ -233,7 +233,7 @@ const CreateProject = () => {
                     <h3> Cover image </h3>
                     <div
                         data-cy="imageUpload"
-                        className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-5 ${
+                        className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-5 ${
                             shouldHighlightImage && "border-2 border-red-400"
                         }`}
                     >

@@ -105,6 +105,8 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         tracks: trackNames,
     });
 
+    const shouldHighlightTracks = !trackNames.length && isSubmitPressed;
+
     return (
         <div
             className="w-full flex flex-col items-center p-6"
@@ -143,7 +145,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                         ))}
                     </TracksContainer>
                     <h3 className="self-start"> Your Added track </h3>
-                    <TracksContainer>
+                    <TracksContainer shouldHighlightTracks={shouldHighlightTracks}>
                         {trackNames.map((track, index) => {
                             console.log(
                                 "inside map function, track link",
@@ -191,6 +193,12 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                             />
                         </div>
                     </TracksContainer>
+                    {shouldHighlightTracks && (
+                        <p className="text-red-500">
+                            {" "}
+                            Please upload your contribution
+                        </p>
+                    )}
                     <GenericButton
                         title={"Upload"}
                         className="w-max self-end"
@@ -202,11 +210,11 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     );
 };
 
-const TracksContainer = ({ children }) => {
+const TracksContainer = ({ children, shouldHighlightTracks }) => {
     return (
         <div
             data-cy="tracks-container"
-            className="w-full flex flex-col rounded-2xl mx-auto bg-gray-300 p-3 gap-3 my-3"
+            className={`w-full flex flex-col rounded-2xl mx-auto bg-gray-100 p-3 gap-3 my-3 ${shouldHighlightTracks && "border-2 border-red-400"}`}
         >
             {children}
         </div>
