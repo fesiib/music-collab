@@ -1,7 +1,7 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import CreatableSelect from 'react-select/creatable'
-import DEFAULT_TAGS from '../../data/defTags'
 
 
 
@@ -58,7 +58,9 @@ function StolenSearchBar({
 
   const shouldHighlight = isSubmitPressed && isRequired && value?.length === 0;
 
-  let requiredStyling = shouldHighlight ? "rounded-lg border-2 border-red-400" : ''
+  let requiredStyling = shouldHighlight ? "rounded-lg border-2 border-red-400" : '';
+
+  const { data } = useSelector(state => state.tagsData);
 
   console.log(placeholder, shouldHighlight)
   return (
@@ -66,7 +68,7 @@ function StolenSearchBar({
       <CreatableSelect
         className={`${requiredStyling}`}
         isMulti
-        options={DEFAULT_TAGS}
+        options={data}
         placeholder={placeholder}
         styles={customStyles}
         value={value}

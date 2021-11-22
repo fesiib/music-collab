@@ -11,6 +11,7 @@ import storage from 'redux-persist/lib/storage';
 
 import playAllTracks from './musicTracks'
 import timeAllTracks from "./musicTracksTime"
+import tagsData from './tagsData';
 
 
 const RESET_APP = "RESET_APP";
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
     player: player,
     playAllTracks: playAllTracks, 
     timeAllTracks: timeAllTracks,
+    tagsData: tagsData,
 });
 
 export const resetApp = () => ({

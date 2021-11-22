@@ -12,6 +12,7 @@ import { useHistory } from "react-router";
 import GetDuration from "../../components/GetDuration";
 import InstrumentSelector from "../../components/InstrumentSelector";
 import Loading from "../../components/Loading";
+import { addNewTag } from "../../reducers/tagsData";
 
 const CreateProject = () => {
     const history = useHistory();
@@ -107,6 +108,14 @@ const CreateProject = () => {
                 backgroundImage: imageLink,
             })
         );
+        for (let tag of tags) {
+            if (tag?.__isNew__) {
+                console.log(tag);
+                dispatch(
+                    addNewTag({value: tag.value, label: tag.label})
+                );
+            }
+        }
         history.push("/");
     };
 
