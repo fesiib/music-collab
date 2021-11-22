@@ -8,7 +8,7 @@ import MusicList, { TRANSFORM_AUTHOR, TRANSFORM_OWNER, TRANSFORM_POPULAR, TRANSF
 import SearchBar from '../components/SearchBar';
 import withHeader from '../hocs/withHeader';
 import { useDispatch, useSelector } from 'react-redux';
-import { openPanel, setSortType } from '../reducers/homepage/homepagePanel';
+import { closePanel, openPanel, setSortType } from '../reducers/homepage/homepagePanel';
 import { setTabIndex } from '../reducers/homepage/tabInfo';
 import RightPanel from '../components/RightPanel';
 import { useHistory } from 'react-router';
@@ -58,6 +58,11 @@ function Homepage(props) {
         return DESELECTED_TAB_CLASSNAME;
     }
 
+    const goToCreateProject = () => {
+        dispatch(closePanel());
+        history.push('/create_project');
+    }
+
     return (
         <div>
             <Tabs
@@ -97,7 +102,7 @@ function Homepage(props) {
                         <GenericButton
                             title={"Create New Project"} 
                             className="text-xl w-2/5 p-2" 
-                            onClick = {() => history.push('/create_project')}
+                            onClick = {goToCreateProject}
                         />
                     </div>
 

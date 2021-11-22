@@ -108,6 +108,7 @@ function RightPanel(props) {
 
 
     const redirectToProjectPage = () => {
+        _closePanel();
         history.push('/project/' + projectId + '/');
         console.log("here", '/project/' + projectId + '/');
     };
