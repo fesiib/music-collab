@@ -137,7 +137,7 @@ function RightPanel(props) {
 
                 <div className="flex flex-row p-5">
                     <img src={backgroundImage}
-                        className="h-28 transform hover:scale-125 hover:border-4 cursor-pointer"
+                        className="max-h-28 max-w-28 transform hover:scale-125 hover:border-4 cursor-pointer"
                         onClick={redirectToProjectPage}
                     />
                     <div className="pl-5 pb-5 text-left">
