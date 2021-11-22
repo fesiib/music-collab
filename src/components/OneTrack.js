@@ -67,12 +67,13 @@ const OneTrack = ({
         if (waveSurfer != null) {
             if (playingAudio) {
                 waveSurfer.pause();
-                setPlayingAudio(!playingAudio);
+                // setPlayingAudio(!playingAudio);
             } else {
                 // waveSurfer.seekTo (  progressTime / waveSurfer.getDuration());
                 waveSurfer.play();
                 // setPlayingAudio(!playAllTracks);
             }
+            setPlayingAudio(!playingAudio);
         }
     };
 

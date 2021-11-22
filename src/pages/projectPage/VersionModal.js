@@ -8,7 +8,7 @@ import VersionPage from '../../pages/VersionPage'
 
 const DimmedBackground = ({ children }) => {
   return (
-    <div className="bg-gray-200 bg-opacity-80 h-screen w-screen z-20 top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2">
+    <div className="bg-gray-200 bg-opacity-80 h-screen w-screen z-20 top-1/2 left-1/2 fixed transform -translate-x-1/2 -translate-y-1/2">
       {children}
     </div>
   )

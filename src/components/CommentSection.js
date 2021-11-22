@@ -80,6 +80,7 @@ const CommentSection = ({versionId, projectId}) => {
         }
         console.log("payload");
         console.log(payload);
+        setShowComment(false)
         dispatch(addComment(payload));
         console.log (projects);
     }
