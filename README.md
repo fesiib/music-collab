@@ -17,7 +17,9 @@
 
 ## Instructions & User Interface
 
-**Screenshots**
+### Reseting the webpage
+
+Go to [https://music-collab-9ec47.web.app/prototype](https://music-collab-9ec47.web.app/prototype) to reset the webpage to its initial state. Might be needed to startover or if you encounter some weird issues.
 
 ![Figure 1, Homepage](https://github.com/fesiib/music-collab/blob/main/README_images/Screen_Shot_2021-11-18_at_10.33.20_PM.png)
 

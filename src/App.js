@@ -10,24 +10,19 @@ import UploadAudio from './components/UploadAudio'
 import { resetApp } from './reducers'
 
 function App() {
-  const count = useSelector((state) => {
-    return state?.counter?.cnt
-  })
   const dispatch = useDispatch()
 
   return (
-    <div className="flex flex-col w-40 justify-center align-middle ml-3 p-5">
-      Hello: {count}
+    <div className="flex flex-col justify-center align-middle ml-3 p-5">
+      <div className=""> Hello its Prototype page, you can reset the state of the website here! </div>
+      <div> Also you can check if you can upload something here! </div>
       <Link to="/">
-        <button className="bg-blue-300 text-black mt-4">
+        <button className="bg-blue-300 text-black mt-4 w-40">
           Go to homepage
         </button>
       </Link>
-      <button onClick={() => dispatch(increaseCounter())} className="bg-black mt-4">
-        Increase
-      </button>
 
-      <button onClick={() => dispatch(resetApp())} className="bg-black my-4">
+      <button onClick={() => dispatch(resetApp())} className="bg-black my-4 w-40">
         RESET
       </button>
 

@@ -12,8 +12,8 @@ function UploadAudio(props) {
 
     return (
         <>
-            <button className='bg-black' onClick={()=>fileInputRef.current.click()} > Upload </button>
-            <input onChange={handleChange} multiple={false} ref={fileInputRef} type='file' accept=".mp3," hidden/>
+            <button className='bg-black w-40' onClick={()=>fileInputRef.current.click()} > Upload </button>
+            <input onChange={handleChange} multiple={false} ref={fileInputRef} type='file' hidden/>
         </>
     );
 }
