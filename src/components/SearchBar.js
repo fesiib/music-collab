@@ -12,9 +12,9 @@ const DEF_PROPS = {
 const customStyles = {
     menu: (provided, state) => ({
         ...provided,
-        borderBottom: '1px dotted pink',
         color: state.selectProps.menuColor,
         padding: 20,
+        zIndex: 2,
     }),
     option: (styles) => {
         return {
@@ -75,6 +75,7 @@ function SearchBar(props) {
                 placeholder={props.placeholder}
                 styles={customStyles}
                 onChange={searchBarChangeHandler}
+                noOptionsMessage="No available tags..."
             />
         </div>
     );

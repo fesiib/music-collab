@@ -153,7 +153,7 @@ function Table(props) {
                     className: "",
                 })}
             >
-                <thead className="sticky top-0 bg-gray-200 z-10">
+                <thead className="sticky top-0 bg-gray-200 z-1">
                     {headerGroups.map((headerGroup) => (
                         <tr
                             {...headerGroup.getHeaderGroupProps({
