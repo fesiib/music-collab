@@ -8,7 +8,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-
+import ReactTimeAgo from "react-time-ago";
 import withHeader from '../../hocs/withHeader'
 import buildData from './data'
 import VersionModal from './VersionModal'
@@ -24,12 +24,14 @@ import getIcon from '../../components/utils/getIcon';
 const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
   }
+
 const ProjectPage = ({
 }) => {
 
   const [visible, setVisible] = React.useState(false)
   const [projectid, setProjectid] = React.useState('')
   const [versionid, setVersionid] = React.useState('')
+  
   const renderForeignObjectNode = ({
     nodeDatum,
     foreignObjectProps
@@ -66,6 +68,45 @@ const ProjectPage = ({
 
   // console.log(database);
   let project = database.projects[projectId];
+  const backgroundImage = project?.metaInfo?.backgroundImage;
+  const lastModified = project?.metaInfo?.lastModified;
+  const creationTime = project?.metaInfo?.creationTime;
+  function SingleCollaborator(props) {
+    return (
+        <div className="flex flex-col m-4">
+            <div className="rounded-full h-10 w-10 overflow-hidden">
+                <img src={props.profileImage} className="object-cover h-10" />
+            </div>
+            <p className="text-center"> {props.name} </p>
+        </div>
+    );
+}
+
+function AllCollaborators(props) {
+    const { profiles } = useSelector((state) => state.database);
+
+    let collaborators = props.collaborators;
+    if (collaborators.length > 10) {
+        collaborators = collaborators.slice(0, 10);
+    }
+    return (
+        <div className="flex flex-wrap justify-evenly">
+            {collaborators.map((authorId, idx) => {
+                const profileImage = profiles[authorId].metaInfo.profileImage;
+                const name = profiles[authorId].metaInfo.name;
+                const customKey = authorId;
+                return (
+                    <div key={customKey}>
+                        <SingleCollaborator
+                            name={name}
+                            profileImage={profileImage}
+                        />
+                    </div>
+                );
+            })}
+        </div>
+    );
+}
   console.log(project);
   let tags = project.metaInfo.tags
   let g = {};
@@ -102,15 +143,43 @@ const ProjectPage = ({
     <div className="w-full flex flex-col items-center p-6" data-cy="container">
       <div
         data-cy="content"
-        className="w-4/5 h-full rounded-xl bg-white shadow-lg flex flex-col items-center p-4 pt-8"
-      >
+        className="w-4/5 h-full rounded-xl bg-white shadow-lg flex flex-col p-4 pt-8"
+      > <div className="flex flex-row ml-20">
+        <img src={backgroundImage}
+        className="max-h-60 max-w-60 transform hover:scale-125 hover:border-4 cursor-pointer ml-10"
+                        
+        />
+        <div className="ml-4 mt-2 flex flex-col ">
         <h1>{project.metaInfo.trackTitle}</h1>
-        <h3 className="mt-4">{project.metaInfo.description}</h3>
+        <h2>{capitalize(project.metaInfo.ownerId)}</h2>
+        <h3 className="">{project.metaInfo.description}</h3>
         <Taglist tags={tags}/>
-        <div className="mt-4 flex flex-col items-center">
-          <h2>By {project.metaInfo.ownerId}</h2>
-          <h3>Collabotors: {collaborators.length-1}</h3>
-          <h3>Versions: {Object.keys(project.versions).length} </h3>
+        <h3>Versions: {Object.keys(project.versions).length} </h3>
+        <h3 >
+            Last Modified:&nbsp;
+            <ReactTimeAgo
+                date={lastModified}
+                timeStyle="twitter-minute"
+                locale="en-US"
+            />
+        </h3>
+        <h3 >
+            Created:&nbsp;
+            <ReactTimeAgo
+                date={creationTime}
+                timeStyle="twitter-minute"
+                locale="en-US"
+            />
+        </h3>
+        {/* <h3>Collabotors: {collaborators.length-1}</h3> */}
+
+        
+
+        </div>
+        <div className="w-1/4 mr-10 ml-4">
+          <h2 className="pl-5 pt-5 text-center">Collaborators</h2>
+          <AllCollaborators collaborators={collaborators} />
+        </div>
         </div>
         <div className="w-11/12 h-96 rounded-xl bg-blue-50 shadow-lg flex flex-col items-center p-4 m-10" >
             <Tree 
