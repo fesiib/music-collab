@@ -45,7 +45,7 @@ const ProjectPage = ({
       {/* `foreignObject` requires width & height to be explicitly set. */}
       <foreignObject width= '100' height =  '100' y="17" x="8">
         <div className="flex flex-row w-max items-center text-xs text-white">
-          +{nodeDatum.attributes?.votes}
+          {nodeDatum.attributes.votes < 0? nodeDatum.attributes.votes : "+"+String(nodeDatum.attributes.votes)}
           {/* <img
            className="h-1/4" 
           src={upvoteIcon}/>
