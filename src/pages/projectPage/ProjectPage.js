@@ -39,10 +39,11 @@ const ProjectPage = ({
       
       <text fill="black" strokeWidth="1" x={-nodeDatum.attributes.author.length*4} y="-40">{capitalize(nodeDatum.attributes.author)}</text>
       <image href={getIcon(nodeDatum.attributes.type)} width="30" height="30" x="-13" y="-17"></image>
-      <ellipse style={{stroke: 'none', fill: 'green',}} cx="15" cy="25" rx="10" ry="10"></ellipse>
+      {nodeDatum.attributes.votes !=0 && <ellipse style={{stroke: 'none', fill: 'green',}} cx="15" cy="25" rx="10" ry="10"></ellipse>}
       
       
       {/* `foreignObject` requires width & height to be explicitly set. */}
+      {nodeDatum.attributes.votes !=0 &&
       <foreignObject width= '100' height =  '100' y="17" x="8">
         <div className="flex flex-row w-max items-center text-xs text-white">
           {nodeDatum.attributes.votes < 0? nodeDatum.attributes.votes : "+"+String(nodeDatum.attributes.votes)}
@@ -53,7 +54,7 @@ const ProjectPage = ({
           className="h-1/4 self-end cursor-pointer transform rotate-180 "
           src={upvoteIcon}/> */}
         </div>
-      </foreignObject>
+      </foreignObject>}
     </g>
   );
 
