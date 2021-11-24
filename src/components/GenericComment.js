@@ -129,7 +129,7 @@ const GenericComment = ({comment, reply, showReply, setShowReply, versionId, pro
 
         <div className = "flex-grow">
         
-        <div className = "flex flex-col border-1    rounded-3xl border border-black py-3 px-3 ">
+        <div className = "flex flex-col rounded-3xl bg-gray-100 filter drop-shadow-lg py-3 px-3 mb-2">
             <div className = "flex flex-row  ">
                 
                 <div className = "flex-none  w-14	 " >

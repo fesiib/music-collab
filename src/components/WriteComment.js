@@ -50,7 +50,7 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
         }
         
         <div className = "flex-grow">
-        <div className = "bg-gray-200 flex flex-col rounded-3xl border border-black py-3 px-3 ">
+        <div className = "bg-gray-100 flex flex-col rounded-3xl filter drop-shadow-lg py-3 px-3 mb-2 ">
             <div className = "flex flex-row  ">
                 
                 <div className = "flex-none  w-14	 " >
@@ -69,7 +69,7 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
                                 rows="3"
                                 placeholder="Write your comment here."
                                 onChange={e => setComment(e.target.value)}
-                                className="p-2 w-full bg-gray-100 border-2 border-gray-300 rounded-lg"
+                                className="p-2 w-full border-2 border-gray-300 rounded-lg"
                                 />
                             
                             <span className = "float-right px-2" > 
