@@ -43,14 +43,19 @@ const CreateProject = () => {
         setTrackLoading(false);
     };
 
+    const removeTrackFromList = () => {        
+        setTrackNames([]);
+    };
+
     const handleFileUpload = (event) => {
         const file = fileInputRef.current.files[0];
         console.log({
             "uploaded file": file,
         });
         setTrackLoading(true);
-
-        uploadFile(file, addTrackToList);
+        if (file) {
+            uploadFile(file, addTrackToList);
+        }
     };
 
     const updateImageLink = (name) => {
@@ -58,13 +63,13 @@ const CreateProject = () => {
         setImageLoading(false);
     };
 
-    const handleImageUpload = (event) => {
+    const handleImageUpload = (event) => {        
         const file = imageUploadRef.current.files[0];
         console.log({
             "uploaded file": file,
         });
         setImageLoading(true);
-        uploadFile(file, updateImageLink);
+        uploadFile(file, updateImageLink);        
     };
 
     const updateTrackLink = (index, newLink, track) => {
@@ -235,6 +240,16 @@ const CreateProject = () => {
                                 hidden
                             />
                         </div>
+                        <div
+                            data-cy="buttonsContainer"
+                            hidden={trackNames.length === 0}
+                        >
+                            <GenericButton
+                                title={"Remove track"}
+                                className="w-max"
+                                onClick={removeTrackFromList}
+                            />
+                        </div>
                     </div>
                     {shouldHighlightTracks && (
                         <p className="text-red-500">
@@ -251,7 +266,8 @@ const CreateProject = () => {
                     >
                         <div className="w-full flex flex-row">
                             <div data-cy="imageUploadButton">
-                                <GenericButton
+                                {!imageLink ? (
+                                    <GenericButton                                    
                                     title={"Upload"}
                                     className="w-max"
                                     onClick={() => {
@@ -259,7 +275,19 @@ const CreateProject = () => {
                                             imageUploadRef.current.click();
                                     }}
                                 />
-                                <input
+
+                                ) : (
+
+                                    <GenericButton                                    
+                                        title={"Delete"}
+                                        className="w-max bg-red-500"
+                                        onClick={() => {
+                                            setImageLink('')
+                                        }}
+                                    />
+                                    )
+                                }
+                                <input                                
                                     onChange={handleImageUpload}
                                     multiple={false}
                                     ref={imageUploadRef}

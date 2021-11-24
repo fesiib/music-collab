@@ -39,6 +39,10 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         setTrackLoading(false);
     };
 
+    const removeTrackFromList = () => {        
+        setTrackNames([]);
+    };
+
     const handleFileUpload = (event) => {
         const file = fileInputRef.current.files[0];
         console.log({
@@ -46,7 +50,9 @@ const Contribute = ({ project, version, projectId, versionId }) => {
         });
         setTrackLoading(true);
 
-        uploadFile(file, addTrackToList);
+        if (file) {            
+            uploadFile(file, addTrackToList);
+        }
     };
 
     const updateTrackLink = (index, newLink, track) => {
@@ -204,6 +210,16 @@ const Contribute = ({ project, version, projectId, versionId }) => {
                                 type="file"
                                 accept=".mp3,"
                                 hidden
+                            />
+                        </div>
+                        <div
+                            data-cy="buttonsContainer"
+                            hidden={trackNames.length === 0}
+                        >
+                            <GenericButton
+                                title={"Remove track"}
+                                className="w-max"
+                                onClick={removeTrackFromList}
                             />
                         </div>
                     </TracksContainer>

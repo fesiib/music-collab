@@ -6,13 +6,7 @@ import { setTimeAllTracks } from "../reducers/musicTracksTime";
 import WaveSurfer from "wavesurfer.js";
 import getIcon from "./utils/getIcon";
 
-const OneTrack = ({
-    audioUrl,
-    type,
-    playAllTracks,
-    updaterState,
-
-}) => {
+const OneTrack = ({ audioUrl, type, playAllTracks, updaterState }) => {
     const waveformRef = useRef();
     var [waveSurfer, setWaveSurfer] = useState(null);
     var [playingAudio, setPlayingAudio] = useState(false);
@@ -60,6 +54,11 @@ const OneTrack = ({
             waveSurfer.load(audioUrl);
             // waveSurfer.on('seek', changeProgress);
         }
+        return () => {
+            if (waveSurfer) {
+                waveSurfer.pause();                
+            }
+        };
     }, [audioUrl]);
 
     const presPlay = () => {
@@ -159,7 +158,7 @@ const OneTrack = ({
                     <div //onClick = { presPlay}
                         className="flex-none w-5  my-0.5 mx-1"
                     >
-                        <img src={getIcon(type)} alt="track icon"/>
+                        <img src={getIcon(type)} alt="track icon" />
                     </div>
                     <div className="flex-grow ">
                         <div
