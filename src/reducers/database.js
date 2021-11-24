@@ -895,7 +895,7 @@ const database = (state = initialState, action) => {
       newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
 
       let newProfiles = { ...state.profiles };
-      newProfiles[authorId].versionIds.push({
+      newProfiles[authorId].commentIds.push({
         projectId,
         versionId,
         commentId
