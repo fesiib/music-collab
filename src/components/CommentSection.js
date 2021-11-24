@@ -211,7 +211,9 @@ const CommentSection = ({versionId, projectId}) => {
         </div>
 
         <div className = "flex flex-col my-5 gap-y-2  overflow-y-auto  ">
-            Comments 
+            <h2 className="">
+                Comments 
+            </h2>
 
             {showComment &&  <WriteComment  authorId = {myUserId} parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
 
@@ -229,7 +231,7 @@ const CommentSection = ({versionId, projectId}) => {
                     } )    
                 :
                     !showComment ? 
-                        (<div className="text-sm text-center">
+                        (<div className="p-2 mx-auto text-sm text-center filter drop-shadow-lg bg-gray-100 rounded-lg">
                             No comments, be first!
                         </div>)
                         :
