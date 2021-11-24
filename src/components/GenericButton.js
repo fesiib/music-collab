@@ -13,7 +13,7 @@ function GenericButton(props) {
     }
     return (
         <button 
-            className = {'rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 ' + props.className}
+            className = { "rounded-md text-center text-white bg-indigo-500 cursor-pointer hover:bg-indigo-600 " + props.className}
             onClick = {props.onClick}
         >
             {props.title}

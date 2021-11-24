@@ -50,7 +50,7 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
         }
         
         <div className = "flex-grow">
-        <div className = "flex flex-col border-1    rounded-3xl border border-black py-3 px-3 ">
+        <div className = "bg-gray-200 flex flex-col rounded-3xl border border-black py-3 px-3 ">
             <div className = "flex flex-row  ">
                 
                 <div className = "flex-none  w-14	 " >
@@ -61,22 +61,29 @@ const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
                         <p className = "text-indigo-500 text  text-sm	" > {userName} </p>
                     </div>
 
-                    <div className = "flex-grow px-3 w-full  pb-1">
-                        
-                    <form  onSubmit={handleSubmit}> 
-                        <textarea
-                            id="comment-text-area"
-                            class="form-textarea mt-1 block w-full"
-                            rows="3"
-                            placeholder="Write your comment here."
-                            onChange={e => setComment(e.target.value)}
-                            className="w-full p-2"
-                            />
+                    <div className = "flex-grow px-3 w-full">
+                        <form  onSubmit={handleSubmit}> 
+                            <textarea
+                                id="comment-text-area"
+                                class="form-textarea "
+                                rows="3"
+                                placeholder="Write your comment here."
+                                onChange={e => setComment(e.target.value)}
+                                className="p-2 w-full bg-gray-100 border-2 border-gray-300 rounded-lg"
+                                />
+                            
+                            <span className = "float-right px-2" > 
+                                <GenericButton  className="text-s my-2" title = "Comment"/> 
+                            </span>
+                        </form  >
+
                         <span className = "float-right px-2" > 
-                            <GenericButton  className="text-s mx-auto  px-2 py-0" title = "comment"/> 
+                                <GenericButton  className="text-s my-2 bg-black" title = "Cancel" 
+                                    onClick={() => {
+                                        addCommentComp(null);
+                                    }}
+                                /> 
                         </span>
-                        
-                    </form  >
                     </div>
                     
                 </div> 

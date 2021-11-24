@@ -26,7 +26,7 @@ const Container = ({ children }) => {
   return (
     <div
       className="h-5/6 flex flex-col align-center rounded-lg shadow-md bg-white"
-      style={{ height: '720px', width: '1020px' }}
+      style={{ maxHeight: '720px', width: '1020px' }}
     >
       {children}
     </div>
@@ -43,6 +43,11 @@ const VersionModal = ({ onClose,versionId,projectId, fromHomepage=false}) => {
     history.push('/project/' + projectId + '/');
     console.log("modal", '/project/' + projectId + '/');
   };
+
+  const goToContributePage = ()=> {
+    console.log ("goToContributePage");
+    history.push(`/contribute/${projectId}/${versionId}`)
+  };
   
   return (
     <DimmedBackground>
@@ -56,19 +61,20 @@ const VersionModal = ({ onClose,versionId,projectId, fromHomepage=false}) => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          {
-            fromHomepage ? 
-            (
-                <GenericButton
-                    title={"Go to Project"}
-                    className="mx-auto"
-                    onClick={redirectToProjectPage}
-                />
-            ) : null
-          }
-          
+          <div className="flex flex-row justify-start">          
+            {
+              fromHomepage ? 
+              (
+                  <GenericButton
+                      title={"Go to Project"}
+                      className="mx-auto"
+                      onClick={redirectToProjectPage}
+                  />
+              ) : null
+            }
+            <GenericButton  onClick = { goToContributePage } className="text-l mx-auto  px-2 " title = {"Contribute"}/>
 
-          
+          </div>
           <VersionPage
             versionId  = {versionId}
             projectId = {projectId}

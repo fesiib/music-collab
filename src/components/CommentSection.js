@@ -34,24 +34,25 @@ comments: [
 ]
 */
 
-const Comment = ({comment, addCommentComp, versionId, projectId, authorId }) => {
+const Comment = ({comment, addCommentComp, versionId, projectId, authorId}) => {
     const replies = comment.replies
-    const [showComment, setShowComment] = useState(false);
+
+    const [showReplyComment, setShowReplyComment] = useState(false);
+
+    const addReplyCommentComp = (c) => addCommentComp(c, setShowReplyComment)
     return (
         <>
-        <GenericComment versionId = {versionId}  projectId = {projectId}   reply = {0} showReply = {()=>setShowComment(!showComment)} write={false} comment={comment} />
-        
+        <GenericComment versionId = {versionId}  projectId = {projectId} reply = {0} showReply = {showReplyComment} setShowReply = {()=>setShowReplyComment(!showReplyComment)} write={false} comment={comment} />
+            {showReplyComment &&  <WriteComment authorId = {authorId} parentCommentId= {comment.commentId} reply={1} addCommentComp = {addReplyCommentComp} />}
             {
                 replies.map ( c => { 
                     return (
                         <div>
-                            <GenericComment  versionId = {versionId}  projectId = {projectId}   write={false} reply = {1} comment = {c} />
-
+                            <GenericComment  versionId = {versionId}  projectId = {projectId} write={false} reply = {1} comment = {c} />
                         </div>
                         )
                 })    
             }
-            {showComment &&  <WriteComment authorId = {authorId} parentCommentId= {comment.commentId} reply={1} addCommentComp = {addCommentComp} />}
 
         </>
     )
@@ -69,7 +70,12 @@ const CommentSection = ({versionId, projectId}) => {
     
     const myUserId = "me";   //// TODO: Currently logged in user 
     const comments = changeCommentTree (comments_object);
-    const addCommentComp = (c) => {
+    const addCommentComp = (c, setShowReplyComment) => {
+        if (c === null) {
+            setShowComment(false);
+            if (typeof setShowReplyComment == 'function')
+                setShowReplyComment(false);
+        }
         console.log("console.log(c);");
         console.log(c);
         const payload = {
@@ -80,7 +86,9 @@ const CommentSection = ({versionId, projectId}) => {
         }
         console.log("payload");
         console.log(payload);
-        setShowComment(false)
+        setShowComment(false);
+        if (typeof setShowReplyComment == 'function')
+            setShowReplyComment(false);
         dispatch(addComment(payload));
         console.log (projects);
     }
@@ -96,7 +104,6 @@ const CommentSection = ({versionId, projectId}) => {
         tracks {url: '', type: ??},
     */
     const [showComment, setShowComment] = useState(false);
-
     
 
     const [voted, setVoted ]= useState (0);  // 0 for none 1 for up -1 for down
@@ -167,10 +174,6 @@ const CommentSection = ({versionId, projectId}) => {
             return;
         }
     }
-    const goToContributePage = ()=> {
-        console.log ("goToContributePage");
-        history.push(`/contribute/${projectId}/${versionId}`)
-    }
 
 
     const upvoteColor = voted === 1 ? 'text-indigo-700' : 'text-indigo-400'
@@ -196,12 +199,13 @@ const CommentSection = ({versionId, projectId}) => {
             </div>
             <div className= " flex-grow"> </div>
 
-            <div className="flex-none  mx-2 ">
-                <GenericButton  onClick = { goToContributePage } className="text-l mx-auto  px-2 " title = {"contribute"}/>
-            </div>
-
             <div className= " flex-none "> 
-                <GenericButton onClick = { () => setShowComment(!showComment) }  className="text-l mx-auto  px-2" title = {"comment"}/>
+                {
+                    showComment ? 
+                        null
+                        :
+                        <GenericButton onClick = { () => setShowComment(!showComment) }  className="text-l mx-auto  px-2" title = {"Comment"}/>
+                }
             </div>
 
         </div>
@@ -212,7 +216,24 @@ const CommentSection = ({versionId, projectId}) => {
             {showComment &&  <WriteComment  authorId = {myUserId} parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
 
             {
-                comments.map ( c => {  return <Comment authorId = {myUserId} versionId = {versionId}  projectId = {projectId}   addCommentComp = {addCommentComp}   reply = {0} comment = {c} />} )    
+                comments.length > 0 ?
+                    comments.map ( c => {
+                        return <Comment 
+                            authorId = {myUserId}
+                            versionId = {versionId}
+                            projectId = {projectId}
+                            addCommentComp = {addCommentComp}
+                            reply = {0}
+                            comment = {c}
+                        />
+                    } )    
+                :
+                    !showComment ? 
+                        (<div className="text-sm text-center">
+                            No comments, be first!
+                        </div>)
+                        :
+                        null
             }
             
 

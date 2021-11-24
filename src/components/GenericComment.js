@@ -12,7 +12,7 @@ import { changeVoteComment } from '../reducers/database';
 
 
 
-const GenericComment = ({comment, reply, showReply, versionId, projectId}) => {
+const GenericComment = ({comment, reply, showReply, setShowReply, versionId, projectId}) => {
 /* payload format
     projectId,
     versionId,
@@ -169,7 +169,12 @@ const GenericComment = ({comment, reply, showReply, versionId, projectId}) => {
                 {
                     reply===0 &&
                     <div className= " flex-none m-auto"> 
-                    <GenericButton onClick = { showReply } className="text-s mx-auto  px-2 py-0" title = {"reply"}/>
+                        {
+                            !showReply ?
+                                <GenericButton onClick = { setShowReply } className="text-s mx-auto  px-2 py-0" title = {"reply"}/>
+                            :
+                                null
+                        }
                 </div>
                 }
             </div>
