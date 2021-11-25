@@ -144,7 +144,7 @@ function AllCollaborators(props) {
       <div
         data-cy="content"
         className="w-4/5 h-full rounded-xl bg-white shadow-lg flex flex-col p-4 pt-8"
-      > <div className="flex flex-row ml-20">
+      > <div className="flex flex-row">
         <img src={backgroundImage}
         className="max-h-60 max-w-60 transform hover:scale-125 hover:border-4 cursor-pointer ml-10"
                         
