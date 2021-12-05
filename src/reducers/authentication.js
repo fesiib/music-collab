@@ -1,4 +1,5 @@
 import { signInWithGoogle } from "../services/firebase";
+import { createProfile } from "./database";
 
 
 const LOGIN = "LOGIN";
@@ -14,8 +15,16 @@ export function loginUser() {
        if (response) {
            dispatch({
                type: LOGIN,
-               payload: response
-           })    
+               payload: {
+                   email: response.email,
+                   displayName: response.displayName,
+               }
+           });
+           dispatch(createProfile({
+               userId: response.email,
+               name: response.displayName,
+               profileImage: response.photoURL,
+           }));    
        } 
        const stateAfter = getState()
        console.log({stateAfter})

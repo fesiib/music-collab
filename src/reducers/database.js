@@ -740,7 +740,7 @@ const database = (state = initialState, action) => {
             ...state,
             profiles: {
                 ...state.profiles,
-                userId: {
+                [userId]: {
                     metaInfo: {
                         name: name,
                         communityRating: 0,
