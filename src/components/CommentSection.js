@@ -68,7 +68,8 @@ const CommentSection = ({versionId, projectId}) => {
     const versionInfo = projects[projectId]["versions"][versionId]["metaInfo"];
     const votes = versionInfo["votes"];
     
-    const myUserId = "me";   //// TODO: Currently logged in user 
+    const {userId} = useSelector(state => state.authentication);
+    console.log(userId);
     const comments = changeCommentTree (comments_object);
     const addCommentComp = (c, setShowReplyComment) => {
         if (c === null) {
@@ -82,7 +83,7 @@ const CommentSection = ({versionId, projectId}) => {
             ...c, 
             projectId: projectId,
             versionId: versionId,
-            authorId: myUserId,
+            authorId: userId,
         }
         console.log("payload");
         console.log(payload);
@@ -215,13 +216,13 @@ const CommentSection = ({versionId, projectId}) => {
                 Comments 
             </h2>
 
-            {showComment &&  <WriteComment  authorId = {myUserId} parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
+            {showComment &&  <WriteComment  authorId = {userId} parentCommentId = {null} reply={0} addCommentComp = {addCommentComp} />}
 
             {
                 comments.length > 0 ?
                     comments.map ( c => {
                         return <Comment 
-                            authorId = {myUserId}
+                            authorId = {userId}
                             versionId = {versionId}
                             projectId = {projectId}
                             addCommentComp = {addCommentComp}

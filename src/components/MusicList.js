@@ -634,9 +634,10 @@ function MusicList(props) {
         return headers;
     }, []);
 
-    const { projects, profiles, userId } = useSelector(
+    const { projects, profiles } = useSelector(
         (state) => state.database
     );
+    const { userId } = useSelector(state => state.authentication);
     const { searchTags } = useSelector((state) => state.tabInfo);
 
     const adjustedSearchTags = props.search ? searchTags : [];

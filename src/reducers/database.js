@@ -1,8 +1,8 @@
-import randomString from "../services/randomString"
+import randomString from '../services/randomString'
+
+const UPDATE_DATABASE = 'UPDATE_DATABASE'
 
 const CREATE_PROFILE = 'CREATE_PROFILE'
-
-const SET_USER = 'SET_USER'
 
 const ADD_PROFILE = 'ADD_PROFILE'
 const REMOVE_PROFILE = 'REMOVE_PROFILE'
@@ -505,13 +505,13 @@ const DUMMY_PROJECT_3 = {
       }
     }
 
-export const createProfile = (payload) => ({
-    type: CREATE_PROFILE,
+export const updateDatabase = (payload) => ({
+    type: UPDATE_DATABASE,
     payload
 })
 
-export const setUser = (payload) => ({
-    type: SET_USER,
+export const createProfile = (payload) => ({
+    type: CREATE_PROFILE,
     payload
 })
 
@@ -715,6 +715,13 @@ const database = (state = initialState, action) => {
     }
 
   switch (action.type) {
+    case UPDATE_DATABASE: {
+        const newDatabase = action.payload;
+        return {
+            ...state,
+            ...newDatabase
+        };
+    }
     case CREATE_PROFILE: {
         const userId = action.payload.userId
         const name = action.payload.name
@@ -726,7 +733,7 @@ const database = (state = initialState, action) => {
             ...state,
             profiles: {
                 ...state.profiles,
-                userId: {
+                [userId]: {
                     metaInfo: {
                         name: name,
                         communityRating: 0,
@@ -739,16 +746,6 @@ const database = (state = initialState, action) => {
             }
         }
     }
-    /*
-        userId,
-    */
-    case SET_USER: {
-        return {
-            ...state,
-            userId: action.payload.userId,
-        }
-    }
-
     /* payload format
         ownerId,
         trackTitle,

@@ -22,9 +22,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import getIcon from '../../components/utils/getIcon';
 import withLogin from '../../hocs/withLogin';
 
-const capitalize = (str) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+function SingleCollaborator(props) {
+  return (
+      <div className="flex flex-col m-4">
+          <div className="rounded-full h-10 w-10 overflow-hidden">
+              <img src={props.profileImage} className="object-cover h-10" />
+          </div>
+          <p className="text-center"> {props.name} </p>
+      </div>
+  );
+}
+
+function AllCollaborators(props) {
+  const { profiles } = useSelector((state) => state.database);
+
+  let collaborators = props.collaborators;
+  if (collaborators.length > 10) {
+      collaborators = collaborators.slice(0, 10);
   }
+  return (
+      <div className="flex flex-wrap justify-evenly">
+          {collaborators.map((authorId, idx) => {
+              const profileImage = profiles[authorId].metaInfo.profileImage;
+              const name = profiles[authorId].metaInfo.name;
+              const customKey = authorId;
+              return (
+                  <div key={customKey}>
+                      <SingleCollaborator
+                          name={name}
+                          profileImage={profileImage}
+                      />
+                  </div>
+              );
+          })}
+      </div>
+  );
+}
 
 const ProjectPage = ({
 }) => {
@@ -40,7 +73,7 @@ const ProjectPage = ({
     <g onClick={() => {setVisible((prevState) => !prevState);setProjectid(projectId); setVersionid(nodeDatum.name)}}>
       <circle style={{stroke: 'black', fill:'white', }} r={30} ></circle>
       
-      <text fill="black" strokeWidth="1" x={-nodeDatum.attributes.author.length*4} y="-40">{capitalize(nodeDatum.attributes.author)}</text>
+      <text fill="black" strokeWidth="1" x={-nodeDatum.attributes.author.length*4} y="-40">{nodeDatum.attributes.author}</text>
       <image href={getIcon(nodeDatum.attributes.type)} width="30" height="30" x="-13" y="-17"></image>
       {nodeDatum.attributes.votes !=0 && <ellipse style={{stroke: 'none', fill: 'green',}} cx="15" cy="25" rx="10" ry="10"></ellipse>}
       
@@ -68,46 +101,11 @@ const ProjectPage = ({
   const {projectId} = useParams();
 
   // console.log(database);
-  let project = database.projects[projectId];
+  const project = database.projects[projectId];
+  const profiles = database.profiles;
   const backgroundImage = project?.metaInfo?.backgroundImage;
   const lastModified = project?.metaInfo?.lastModified;
   const creationTime = project?.metaInfo?.creationTime;
-  function SingleCollaborator(props) {
-    return (
-        <div className="flex flex-col m-4">
-            <div className="rounded-full h-10 w-10 overflow-hidden">
-                <img src={props.profileImage} className="object-cover h-10" />
-            </div>
-            <p className="text-center"> {props.name} </p>
-        </div>
-    );
-}
-
-function AllCollaborators(props) {
-    const { profiles } = useSelector((state) => state.database);
-
-    let collaborators = props.collaborators;
-    if (collaborators.length > 10) {
-        collaborators = collaborators.slice(0, 10);
-    }
-    return (
-        <div className="flex flex-wrap justify-evenly">
-            {collaborators.map((authorId, idx) => {
-                const profileImage = profiles[authorId].metaInfo.profileImage;
-                const name = profiles[authorId].metaInfo.name;
-                const customKey = authorId;
-                return (
-                    <div key={customKey}>
-                        <SingleCollaborator
-                            name={name}
-                            profileImage={profileImage}
-                        />
-                    </div>
-                );
-            })}
-        </div>
-    );
-}
   console.log(project);
   let tags = project.metaInfo.tags
   let g = {};
@@ -116,7 +114,6 @@ function AllCollaborators(props) {
   let timestampId = {};
   let collaborators = []
   for(const [key, value] of Object.entries(project.versions)) {
-    console.log(key, value);
     timestamps.push(value.metaInfo.creationTime);
     if(!(value.metaInfo.authorId in collaborators) ){
       collaborators.push(value.metaInfo.authorId);
@@ -133,13 +130,10 @@ function AllCollaborators(props) {
   }
   timestamps.sort();
   for(let i = 0; i < timestamps.length; i ++) {
-    console.log(timestamps[i])
     timestampId[timestamps[i]] = (i + 1);
   }
-  console.log(root);
-  console.log(g);
-  let data = buildData(root, g, project.versions, timestampId);
-  console.log(data);
+  console.log(profiles, project.versions)
+  let data = buildData(root, g, profiles, project.versions, timestampId);
   return (
     <div className="w-full flex flex-col items-center p-6" data-cy="container">
       <div
@@ -152,7 +146,7 @@ function AllCollaborators(props) {
         />
         <div className="ml-4 mt-2 flex flex-col ">
         <h1>{project.metaInfo.trackTitle}</h1>
-        <h2>{capitalize(project.metaInfo.ownerId)}</h2>
+        <h2>{profiles[project.metaInfo.ownerId].metaInfo.name}</h2>
         <h3 className="">{project.metaInfo.description}</h3>
         <Taglist tags={tags}/>
         <h3>Versions: {Object.keys(project.versions).length} </h3>
