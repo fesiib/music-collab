@@ -3,6 +3,7 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/database";
 
 
 const firebaseConfig = {
@@ -17,7 +18,9 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const db = firebaseApp.firestore();
+const database = firebaseApp.database();
+
+const firestore = firebaseApp.firestore();
 
 const analytics = firebaseApp.analytics();
 
@@ -42,4 +45,4 @@ export const logOut = () => {
   })
 }
 
-export {db, storage, auth, analytics, firebaseApp, firebase as default};
+export {database, firestore, storage, auth, analytics, firebaseApp, firebase as default};
