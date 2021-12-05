@@ -56,7 +56,7 @@ const Header = () => {
                     <>
                         <div className="flex flex-row items-center">
                             <div className="rounded-full h-12 w-12 overflow-hidden">
-                                <img src={profiles[userId].metaInfo.profileImage} className="object-cover h-12" />
+                                <img src={profiles[userId]?.metaInfo?.profileImage} className="object-cover h-12" />
                             </div>
                             <h1 className="pl-4 text-3xl"> {userName} </h1>
                         </div>

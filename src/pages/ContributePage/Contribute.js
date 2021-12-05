@@ -25,7 +25,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [isSubmitPressed, setIsSubmitPressed] = useState(false);
 
     const fileInputRef = useRef();
-    const { userId } = useSelector((state) => state.database);
+    const { userId } = useSelector((state) => state.authentication);
 
     const allTracks = getAllTracks(project, versionId);
 

@@ -4,8 +4,6 @@ const UPDATE_DATABASE = 'UPDATE_DATABASE'
 
 const CREATE_PROFILE = 'CREATE_PROFILE'
 
-const SET_USER = 'SET_USER'
-
 const ADD_PROFILE = 'ADD_PROFILE'
 const REMOVE_PROFILE = 'REMOVE_PROFILE'
 
@@ -517,11 +515,6 @@ export const createProfile = (payload) => ({
     payload
 })
 
-export const setUser = (payload) => ({
-    type: SET_USER,
-    payload
-})
-
 export const addProfile = (payload) => ({
     type: ADD_PROFILE,
     payload
@@ -753,16 +746,6 @@ const database = (state = initialState, action) => {
             }
         }
     }
-    /*
-        userId,
-    */
-    case SET_USER: {
-        return {
-            ...state,
-            userId: action.payload.userId,
-        }
-    }
-
     /* payload format
         ownerId,
         trackTitle,

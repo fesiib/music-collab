@@ -20,6 +20,7 @@ export function loginUser() {
                    displayName: response.displayName,
                }
            });
+           console.log("creating")
            dispatch(createProfile({
                userId: response.email,
                name: response.displayName,

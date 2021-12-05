@@ -32,7 +32,7 @@ const CreateProject = () => {
     // костыль чтобы апдейтить трек после аплоуда
     const [wavesurfUpdater, setWavesurfUpdater] = useState("");
 
-    const { userId } = useSelector((state) => state.database);
+    const { userId } = useSelector((state) => state.authentication);
 
     const fileInputRef = useRef();
     const imageUploadRef = useRef();
