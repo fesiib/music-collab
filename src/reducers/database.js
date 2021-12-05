@@ -922,11 +922,20 @@ const database = (state = initialState, action) => {
       newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
 
       let newProfiles = { ...state.profiles };
-      newProfiles[authorId].commentIds.push({
-        projectId,
-        versionId,
-        commentId
-      });
+      if (!(authorId in newProfiles)) {
+        newProfiles[authorId] = {}
+        newProfiles[authorId].commentIds = []
+      }
+      newProfiles[authorId].commentIds = 
+      [ 
+        ...newProfiles[authorId].commentIds,
+        {
+            projectId,
+            versionId,
+            commentId
+          }
+      ]
+    //   .push();
 
       return {
         ...state,
