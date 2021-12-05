@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import withHeader from "../../hocs/withHeader";
+import withLogin from "../../hocs/withLogin";
 import Contribute from "./Contribute";
 
 const ContributeContainer = ({ match }) => {
@@ -28,4 +29,4 @@ const ContributeContainer = ({ match }) => {
     );
 };
 
-export default withHeader(ContributeContainer);
+export default withHeader(withLogin(ContributeContainer));

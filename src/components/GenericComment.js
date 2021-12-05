@@ -110,8 +110,15 @@ const GenericComment = ({comment, reply, showReply, setShowReply, versionId, pro
     }
 
     const {projects, profiles} = useSelector(state => state.database);
-    const userName =  profiles[authorId]["metaInfo"]["name"];
-    const profilePic =  profiles[authorId]["metaInfo"]["profileImage"];
+    let userName = ''  
+    if (authorId in profiles && 'metaInfo' in profiles[authorId]) {    
+        userName = profiles[authorId]["metaInfo"]["name"] || '';
+    }
+    let profilePic = ''
+    //  profiles[authorId]["metaInfo"]["profileImage"];
+    if (authorId in profiles && 'metaInfo' in profiles[authorId]) {    
+        profilePic = profiles[authorId]["metaInfo"]["profileImage"] || '';
+    }
 
     const upvoteColor = voted === 1 ? 'text-indigo-700' : 'text-indigo-400'
     const downvoteColor = voted === -1 ? 'text-indigo-700' : 'text-indigo-400'

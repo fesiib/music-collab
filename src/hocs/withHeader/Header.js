@@ -48,7 +48,8 @@ const Header = () => {
 
             <div className="flex flex-1 flex-row items-center justify-end">
                 {!userId ? (
-                    <GenericButton title={"Login"} onClick={onLogin} />
+                    <> </>
+                    // <GenericButton title={"Login"} onClick={onLogin} />
                 ) : (
                     <>
                         <div className="flex flex-row items-center">

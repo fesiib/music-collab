@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import getIcon from '../../components/utils/getIcon';
+import withLogin from '../../hocs/withLogin';
 
 function SingleCollaborator(props) {
   return (
@@ -190,4 +191,4 @@ const ProjectPage = ({
   )
 }
 
-export default withHeader(ProjectPage)
+export default withHeader(withLogin(ProjectPage))

@@ -6,8 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const WriteComment = ({addCommentComp, reply, authorId, parentCommentId}) => {
     const {projects, profiles} = useSelector(state => state.database);
-    const userName =  profiles[authorId]["metaInfo"]["name"];
-    const profilePic =  profiles[authorId]["metaInfo"]["profileImage"];
+
+    let userName, profilePic;
+    if (profiles[authorId]) {
+        userName = profiles[authorId]["metaInfo"]["name"];
+        profilePic = profiles[authorId]["metaInfo"]["profileImage"];
+    }
     
     const [comment, setComment] = useState("");
 
