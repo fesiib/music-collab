@@ -8,7 +8,7 @@ import ProfilePic from '../media/profile-svgrepo-com.svg';
 import UpDownVote from '../icons/up-down-vote.js'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { changeVoteComment } from '../reducers/database';
+import { changeVoteComment } from '../services/firebase_database';
 
 
 
@@ -19,12 +19,13 @@ const GenericComment = ({comment, reply, showReply, setShowReply, versionId, pro
     commentId,
     votes,
 */ 
+
+    console.log(comment);
     const dispatch = useDispatch();
     const id = comment.id;
     const authorId = comment.authorId;
-
     const contend = comment.commentMessage;
-    const timeStamp = comment.timeStamp;
+    const timeStamp = comment.creationTime;
     const votes = comment.votes;
     const time_dif = time_ago (timeStamp);
     

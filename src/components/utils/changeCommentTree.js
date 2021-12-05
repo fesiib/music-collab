@@ -21,7 +21,7 @@ const changeCommentTree = (comments_obj)     => {
     }
 
     for (const [commentId, comment] of Object.entries(comments_obj)) {
-        if (comment["parentCommentId"] != null) {
+        if (comment["parentCommentId"] !== null) {
             const parent = comment["parentCommentId"];
             comments_obj[parent]["replies"].push ( {
                     ...comment,

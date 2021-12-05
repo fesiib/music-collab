@@ -4,7 +4,7 @@ import React from "react";
 
 function SingleCollaborator(props) {
     return (
-        <div className="flex flex-col m-4">
+        <div className="flex flex-col m-4 items-center">
             <div className="rounded-full h-24 w-24 overflow-hidden">
                 <img src={props.profileImage} className="object-cover h-24" />
             </div>

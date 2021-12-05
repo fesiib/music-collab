@@ -23,11 +23,11 @@ import getIcon from '../../components/utils/getIcon';
 
 function SingleCollaborator(props) {
   return (
-      <div className="flex flex-col m-4">
+      <div className="flex flex-col m-4 items-center">
           <div className="rounded-full h-10 w-10 overflow-hidden">
               <img src={props.profileImage} className="object-cover h-10" />
           </div>
-          <p className="text-center"> {props.name} </p>
+          <p className="text-center text-sm"> {props.name} </p>
       </div>
   );
 }
@@ -105,7 +105,6 @@ const ProjectPage = ({
   const backgroundImage = project?.metaInfo?.backgroundImage;
   const lastModified = project?.metaInfo?.lastModified;
   const creationTime = project?.metaInfo?.creationTime;
-  console.log(project);
   let tags = project.metaInfo.tags
   let g = {};
   let root = null;
@@ -114,7 +113,7 @@ const ProjectPage = ({
   let collaborators = []
   for(const [key, value] of Object.entries(project.versions)) {
     timestamps.push(value.metaInfo.creationTime);
-    if(!(value.metaInfo.authorId in collaborators) ){
+    if(!collaborators.includes(value.metaInfo.authorId)) {
       collaborators.push(value.metaInfo.authorId);
     }
     if(value.metaInfo.parentVersionId != null) {
@@ -127,11 +126,11 @@ const ProjectPage = ({
       root = key;
     }
   }
+  console.log(collaborators);
   timestamps.sort();
   for(let i = 0; i < timestamps.length; i ++) {
     timestampId[timestamps[i]] = (i + 1);
   }
-  console.log(profiles, project.versions)
   let data = buildData(root, g, profiles, project.versions, timestampId);
   return (
     <div className="w-full flex flex-col items-center p-6" data-cy="container">
@@ -140,7 +139,7 @@ const ProjectPage = ({
         className="w-4/5 h-full rounded-xl bg-white shadow-lg flex flex-col p-4 pt-8"
       > <div className="flex flex-row">
         <img src={backgroundImage}
-        className="max-h-60 max-w-60 transform hover:scale-125 hover:border-4 cursor-pointer ml-10"
+        className="max-h-60 max-w-60 transform cursor-pointer ml-10"
                         
         />
         <div className="ml-4 mt-2 flex flex-col ">

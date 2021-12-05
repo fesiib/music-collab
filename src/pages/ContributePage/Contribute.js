@@ -7,7 +7,7 @@ import OneTrack from "../../components/OneTrack";
 import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
-import { addVersion } from "../../reducers/database";
+import { addVersion } from "../../services/firebase_database";
 import InstrumentSelector from "../../components/InstrumentSelector";
 import Loading from "../../components/Loading";
 import { getAllTracks } from "../../hocs/withHeader/MusicPlayer";

@@ -1,5 +1,4 @@
 function buildData(root, g, profiles, versions, timestampId) {
-    console.log(root, g, profiles, versions);
     let res = {
         name: root,
         attributes: {

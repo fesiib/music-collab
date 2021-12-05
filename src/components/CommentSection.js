@@ -7,7 +7,7 @@ import WriteComment from './WriteComment'
 import { useHistory } from 'react-router';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addComment, changeVoteVersion } from '../reducers/database';
+import { addComment, changeVoteVersion } from '../services/firebase_database';
 import changeCommentTree from './utils/changeCommentTree'
 
 
@@ -69,7 +69,7 @@ const CommentSection = ({versionId, projectId}) => {
     const votes = versionInfo["votes"];
     
     const {userId} = useSelector(state => state.authentication);
-    console.log(userId);
+    console.log(userId, comments_object);
     const comments = changeCommentTree (comments_object);
     const addCommentComp = (c, setShowReplyComment) => {
         if (c === null) {

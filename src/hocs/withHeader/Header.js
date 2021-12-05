@@ -30,10 +30,7 @@ const Header = () => {
         dispatch(logoutUser());
     };
     useEffect(() => {
-      const callback = (profiles, projects) => {
-        dispatch(updateDatabase({profiles, projects}));
-      }
-      fetchDatabase(callback);
+      fetchDatabase(dispatch);
     }, []);
     return (
         <div className="w-full h-28 flex flex-row items-center bg-white px-8 box-border ">

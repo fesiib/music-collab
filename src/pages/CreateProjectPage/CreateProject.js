@@ -7,7 +7,7 @@ import StolenSearchBar from "./StolenSearchBar";
 import OneTrack from "../../components/OneTrack";
 import GenericButton from "../../components/GenericButton";
 import { getFileURL, uploadFile } from "../../services/storage";
-import { addProject } from "../../reducers/database";
+import { addProject } from "../../services/firebase_database";
 import { useHistory } from "react-router";
 import GetDuration from "../../components/GetDuration";
 import InstrumentSelector from "../../components/InstrumentSelector";

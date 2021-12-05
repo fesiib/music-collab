@@ -1,6 +1,7 @@
 import randomString from '../services/randomString'
 
-const UPDATE_DATABASE = 'UPDATE_DATABASE'
+const UPDATE_PROJECT = 'UPDATE_PROJECT'
+const UPDATE_PROFILE = 'UPDATE_PROFILE'
 
 const CREATE_PROFILE = 'CREATE_PROFILE'
 
@@ -502,11 +503,16 @@ const DUMMY_PROJECT_3 = {
             comments: {
             }
         }
-      }
     }
+}
 
-export const updateDatabase = (payload) => ({
-    type: UPDATE_DATABASE,
+export const updateProfile = (payload) => ({
+    type: UPDATE_PROFILE,
+    payload
+})
+
+export const updateProject = (payload) => ({
+    type: UPDATE_PROJECT,
     payload
 })
 
@@ -715,11 +721,26 @@ const database = (state = initialState, action) => {
     }
 
   switch (action.type) {
-    case UPDATE_DATABASE: {
-        const newDatabase = action.payload;
+    case UPDATE_PROJECT: {
+        const projectId = action.payload.projectId;
+        const data = action.payload.data;
         return {
             ...state,
-            ...newDatabase
+            projects: {
+                ...state.projects,
+                [projectId]: data,
+            }
+        };
+    }
+    case UPDATE_PROFILE: {
+    const userId = action.payload.userId;
+        const data = action.payload.data;
+        return {
+            ...state,
+            profiles: {
+                ...state.profiles,
+                [userId]: data,
+            }
         };
     }
     case CREATE_PROFILE: {

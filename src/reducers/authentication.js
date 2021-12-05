@@ -1,5 +1,5 @@
 import { signInWithGoogle } from "../services/firebase";
-import { createProfile } from "./database";
+import { addProfile } from "../services/firebase_database";
 
 
 const LOGIN = "LOGIN";
@@ -16,13 +16,12 @@ export function loginUser() {
            dispatch({
                type: LOGIN,
                payload: {
-                   email: response.email,
+                   email: response.uid,
                    displayName: response.displayName,
                }
            });
-           console.log("creating")
-           dispatch(createProfile({
-               userId: response.email,
+           dispatch(addProfile({
+               userId: response.uid,
                name: response.displayName,
                profileImage: response.photoURL,
            }));    
