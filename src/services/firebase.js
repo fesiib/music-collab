@@ -4,6 +4,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
+
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_firebaseKey,
     authDomain: process.env.REACT_APP_authDomain,
@@ -25,13 +26,13 @@ const storage = firebaseApp.storage();
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 
-export const signInWithGoogle = () => {
-  auth.signInWithPopup(googleProvider).then((res) => {
-    // user object
-    console.log(res.user)
-  }).catch((error) => {
-    console.log(error.message)
-  })
+export const signInWithGoogle = async () => {
+  try {
+    const res = await auth.signInWithPopup(googleProvider);    
+    return res.user
+  } catch (error) {
+    return null
+  }  
 }
 export const logOut = () => {
   auth.signOut().then(()=> {

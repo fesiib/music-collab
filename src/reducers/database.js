@@ -696,8 +696,7 @@ const initialState = {
         dobby: DUMMY_PROFILE_4,
         anna: DUMMY_PROFILE_5,
         herald: DUMMY_PROFILE_6,
-    },
-    userId: 'me',
+    },    
 };
 
 
