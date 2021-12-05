@@ -697,18 +697,18 @@ function recalcRating(projects, profiles, profileId) {
 
 const initialState = {
     projects: {
-        sunnyDay: DUMMY_PROJECT_1,
-        love: DUMMY_PROJECT_2,
-        hate: DUMMY_PROJECT_3,
+        //sunnyDay: DUMMY_PROJECT_1,
+        //love: DUMMY_PROJECT_2,
+        //hate: DUMMY_PROJECT_3,
     },
     profiles: {
-        me: DUMMY_PROFILE_0,
-        helena: DUMMY_PROFILE_1,
-        bob: DUMMY_PROFILE_2,
-        michael: DUMMY_PROFILE_3,
-        dobby: DUMMY_PROFILE_4,
-        anna: DUMMY_PROFILE_5,
-        herald: DUMMY_PROFILE_6,
+        // me: DUMMY_PROFILE_0,
+        // helena: DUMMY_PROFILE_1,
+        // bob: DUMMY_PROFILE_2,
+        // michael: DUMMY_PROFILE_3,
+        // dobby: DUMMY_PROFILE_4,
+        // anna: DUMMY_PROFILE_5,
+        // herald: DUMMY_PROFILE_6,
     },    
 };
 

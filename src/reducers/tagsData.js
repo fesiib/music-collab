@@ -7,9 +7,9 @@ export const addNewTagLocal = (payload) => ({
 
 const initialState = {
     data: [
-        {value: 'rock', label: 'Rock'},
-        {value: 'pop', label: 'Pop'},
-        {value: 'guitar', label: 'Guitar'},
+        // {value: 'rock', label: 'Rock'},
+        // {value: 'pop', label: 'Pop'},
+        // {value: 'guitar', label: 'Guitar'},
     ],
 };
 
