@@ -20,9 +20,6 @@ const Header = () => {
     userName = authentication.userName;
 
     const dispatch = useDispatch();
-    console.log(authentication);
-    console.log({ userId, userName });
-    // const userName = profiles[userId].metaInfo.name;
 
     const onLogin = () => {
         const loginThunk = loginUser();

@@ -13,6 +13,7 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_storageBucket,
     messagingSenderId: process.env.REACT_APP_messagingSenderId,
     appId: process.env.REACT_APP_appId,
+    databaseURL: "https://music-collab-9ec47-default-rtdb.asia-southeast1.firebasedatabase.app",
     //measurementId: process.env.REACT_APP_measurementId,
 };
 

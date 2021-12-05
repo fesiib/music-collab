@@ -1,20 +1,13 @@
 import { firebaseApp, database } from "./firebase";
 
 export async function fetchDatabase(callback) {
-    console.log("here");
-    const rootRef = database.ref();
-    const projectsRef = database.ref('/database/projects');
-    const profilesRef = database.ref('/database/profiles');
-    console.log(rootRef);
-    
-    rootRef.get().then((res) => {
-        console.log(res);
-    }).catch((error) => {
-        console.log(error);
-    })
+    const projectsRef = database.ref('database/projects');
+    const profilesRef = database.ref('database/profiles');
 
     projectsRef.on('child_added', (snapshot) => {
         const data = snapshot.val();
+        const key = snapshot.key
+        console.log(key)
         console.log(data);
         if (data === null) {
             return;
@@ -22,23 +15,19 @@ export async function fetchDatabase(callback) {
     });
     projectsRef.on('child_changed', (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
         if (data === null) {
             return;
         }
     })
 
     profilesRef.on('child_added', (snapshot) => {
-        console.log(snapshot);
         const data = snapshot.val();
-        console.log(data)
         if (data === null) {
             return;
         }
     });
     profilesRef.on('child_changed', (snapshot) => {
         const data = snapshot.val();
-        console.log(data);
         if (data === null) {
             return;
         }
