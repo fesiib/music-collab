@@ -1,3 +1,7 @@
+import randomString from '../services/randomString'
+
+const UPDATE_DATABASE = 'UPDATE_DATABASE'
+
 const CREATE_PROFILE = 'CREATE_PROFILE'
 
 const SET_USER = 'SET_USER'
@@ -503,6 +507,11 @@ const DUMMY_PROJECT_3 = {
       }
     }
 
+export const updateDatabase = (payload) => ({
+    type: UPDATE_DATABASE,
+    payload
+})
+
 export const createProfile = (payload) => ({
     type: CREATE_PROFILE,
     payload
@@ -714,6 +723,13 @@ const database = (state = initialState, action) => {
     }
 
   switch (action.type) {
+    case UPDATE_DATABASE: {
+        const newDatabase = action.payload;
+        return {
+            ...state,
+            ...newDatabase
+        };
+    }
     case CREATE_PROFILE: {
         const userId = action.payload.userId
         const name = action.payload.name

@@ -1,14 +1,29 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import Logo from './logo.svg'
 import MusicPlayer from './MusicPlayer'
 import logout from './logout.svg'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux';
+import { updateDatabase } from '../../reducers/database';
+import { fetchDatabase } from '../../services/firebase_database';
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  
   const { profiles, userId } = useSelector(state => state.database);
 
   const userName = profiles[userId].metaInfo.name;
+
+  
+  useEffect(() => {
+    const callback = (profiles, projects) => {
+      dispatch(updateDatabase({profiles, projects}));
+    }
+    fetchDatabase(callback);
+  }, []);
+  
 
   return (
     <div className="w-full h-28 flex flex-row items-center bg-white px-8 box-border ">
