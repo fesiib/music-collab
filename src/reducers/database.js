@@ -1,4 +1,4 @@
-import randomString from '../services/randomString'
+const CREATE_PROFILE = 'CREATE_PROFILE'
 
 const SET_USER = 'SET_USER'
 
@@ -503,6 +503,11 @@ const DUMMY_PROJECT_3 = {
       }
     }
 
+export const createProfile = (payload) => ({
+    type: CREATE_PROFILE,
+    payload
+})
+
 export const setUser = (payload) => ({
     type: SET_USER,
     payload
@@ -709,13 +714,37 @@ const database = (state = initialState, action) => {
     }
 
   switch (action.type) {
+    case CREATE_PROFILE: {
+        const userId = action.payload.userId
+        const name = action.payload.name
+        const profileImage = action.payload.profileImage
+        if (state.profiles.hasOwnProperty(userId)) {
+            return state;
+        }
+        return {
+            ...state,
+            profiles: {
+                ...state.profiles,
+                userId: {
+                    metaInfo: {
+                        name: name,
+                        communityRating: 0,
+                        profileImage: profileImage,
+                    },
+                    projectIds: [],
+                    versionIds: [],
+                    commentIds: []
+                }
+            }
+        }
+    }
     /*
         userId,
     */
     case SET_USER: {
         return {
             ...state,
-            userId: action.payload.userId
+            userId: action.payload.userId,
         }
     }
 
