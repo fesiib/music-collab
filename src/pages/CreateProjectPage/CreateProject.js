@@ -13,6 +13,7 @@ import GetDuration from "../../components/GetDuration";
 import InstrumentSelector from "../../components/InstrumentSelector";
 import Loading from "../../components/Loading";
 import { addNewTag } from "../../reducers/tagsData";
+import withLogin from "../../hocs/withLogin";
 
 const CreateProject = () => {
     const history = useHistory();
@@ -323,4 +324,4 @@ const CreateProject = () => {
     );
 };
 
-export default withHeader(CreateProject);
+export default withHeader(withLogin(CreateProject));

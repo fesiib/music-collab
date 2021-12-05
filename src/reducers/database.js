@@ -1,3 +1,5 @@
+import randomString from "../services/randomString"
+
 const CREATE_PROFILE = 'CREATE_PROFILE'
 
 const SET_USER = 'SET_USER'

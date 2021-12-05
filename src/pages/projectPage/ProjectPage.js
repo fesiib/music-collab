@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 
 import getIcon from '../../components/utils/getIcon';
+import withLogin from '../../hocs/withLogin';
 
 const capitalize = (str) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -197,4 +198,4 @@ function AllCollaborators(props) {
   )
 }
 
-export default withHeader(ProjectPage)
+export default withHeader(withLogin(ProjectPage))
