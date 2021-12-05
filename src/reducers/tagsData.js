@@ -1,6 +1,6 @@
 const ADD_NEW_TAG = "ADD_NEW_TAG";
 
-export const addNewTag = (payload) => ({
+export const addNewTagLocal = (payload) => ({
     type: ADD_NEW_TAG,
     payload
 });

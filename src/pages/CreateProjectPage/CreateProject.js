@@ -12,7 +12,7 @@ import { useHistory } from "react-router";
 import GetDuration from "../../components/GetDuration";
 import InstrumentSelector from "../../components/InstrumentSelector";
 import Loading from "../../components/Loading";
-import { addNewTag } from "../../reducers/tagsData";
+import { addNewTag } from "../../services/firebase_database";
 import withLogin from "../../hocs/withLogin";
 
 const CreateProject = () => {

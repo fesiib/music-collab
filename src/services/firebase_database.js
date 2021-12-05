@@ -1,6 +1,7 @@
 import { firebaseApp, database } from "./firebase";
 import { updateProfile, updateProject } from "../reducers/database";
 import randomString from "./randomString";
+import { addNewTagLocal } from "../reducers/tagsData";
 
 const safe = (opt1, opt2) => {
     if (opt1 === undefined)
@@ -18,7 +19,29 @@ const dictToList = (dict) => {
     });
 }
 
+export function addNewTag(payload) {
+    const value = payload.value;
+    const label = payload.label;
+    const tagRef = database.ref('/tagsData/' + value);
+    return async function asyncAddNewTag() {
+        tagRef.transaction((originalLabel) => {
+            if (originalLabel === null) {
+                return label;
+            }
+            return originalLabel;
+        });
+    };
+}
+
 export function fetchDatabase(dispatch) {
+    const tagsData = database.ref('/tagsData');
+    tagsData.on('child_added', (snapshot) => {
+        const value = snapshot.key;
+        const label = snapshot.val();
+        console.log(value, label);
+        dispatch(addNewTagLocal({value, label}));
+    });
+
     const projectsRef = database.ref('database/projects');
     const profilesRef = database.ref('database/profiles');
 

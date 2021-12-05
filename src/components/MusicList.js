@@ -209,7 +209,7 @@ function Table(props) {
                                         if (cell.column.id === 'tags') {
                                             return (
                                                 <td {...cell.getCellProps({
-                                                    className: "p-2"
+                                                    className: "p-2 overflow-hidden"
                                                 })}>
                                                     <TagList tags={cell.value} limit={2}/>
                                                 </td>
