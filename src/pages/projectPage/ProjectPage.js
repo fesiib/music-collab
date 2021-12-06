@@ -134,7 +134,7 @@ const ProjectPage = ({
   }
   let data = buildData(root, g, profiles, project.versions, timestampId);
   return (
-    <div className="w-full flex flex-col items-center p-6" data-cy="container">
+    <div className="w-full flex flex-col items-center p-6 relative" data-cy="container">
       <div
         data-cy="content"
         className="w-4/5 h-full rounded-xl bg-white shadow-lg flex flex-col p-4 pt-8"
