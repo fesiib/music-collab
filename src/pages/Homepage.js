@@ -13,6 +13,7 @@ import { setTabIndex } from '../reducers/homepage/tabInfo';
 import RightPanel from '../components/RightPanel';
 import { useHistory } from 'react-router';
 import VersionModal from './projectPage/VersionModal';
+import withLogin from '../hocs/withLogin';
 
 const SELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-white bg-indigo-500 cursor-pointer border-t-2 border-l-2 border-r-2 border-black box-border";
 const DESELECTED_TAB_CLASSNAME = "rounded-sm w-1/6 text-black bg-white cursor-pointer border-t-2 border-l-2 border-r-2  border-black hover:bg-indigo-500 hover:text-white box-border";
@@ -162,4 +163,4 @@ function Homepage(props) {
     );
 }
 
-export default withHeader(Homepage);
+export default withHeader(withLogin(Homepage));

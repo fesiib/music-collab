@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select';
 import { setTags } from '../reducers/homepage/tabInfo';
 
 const DEF_PROPS = {
@@ -62,20 +63,27 @@ function SearchBar(props) {
     const { searchTags } = useSelector(state => state.tabInfo);
     const { data } = useSelector(state => state.tagsData);
 
+    const options = Object.keys(data).map((val) => {
+        return {
+            value: val, 
+            label: data[val],
+        };
+    });
+
     const searchBarChangeHandler = (tags) => {
         dispatch(setTags({tags}));
     }
 
     return (
         <div className='p-10'>
-            <CreatableSelect
+            <Select
                 isMulti
-                options={data}
+                options={options}
                 value={searchTags}
                 placeholder={props.placeholder}
                 styles={customStyles}
                 onChange={searchBarChangeHandler}
-                noOptionsMessage="No available tags..."
+                noOptionsMessage={(() =>"No tags...")}
             />
         </div>
     );

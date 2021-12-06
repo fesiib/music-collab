@@ -5,6 +5,7 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { createStateSyncMiddleware, initStateWithPrevTab } from 'redux-state-sync';
+import thunkMiddleware from 'redux-thunk';
 
 const persistConfig = {
     key: 'root',
@@ -22,7 +23,7 @@ export default function configureStore() {
         enhancedReducer,
         undefined,
         composeWithDevTools(
-            applyMiddleware(createStateSyncMiddleware(reduxStateSyncConfig))
+            applyMiddleware(thunkMiddleware, createStateSyncMiddleware(reduxStateSyncConfig))
         ),
     );
     initStateWithPrevTab(store);

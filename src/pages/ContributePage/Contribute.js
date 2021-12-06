@@ -7,7 +7,7 @@ import OneTrack from "../../components/OneTrack";
 import GetDuration from "../../components/GetDuration";
 import { uploadFile, getFileURL } from "../../services/storage";
 import GenericButton from "../../components/GenericButton";
-import { addVersion } from "../../reducers/database";
+import { addVersion } from "../../services/firebase_database";
 import InstrumentSelector from "../../components/InstrumentSelector";
 import Loading from "../../components/Loading";
 import { getAllTracks } from "../../hocs/withHeader/MusicPlayer";
@@ -25,7 +25,7 @@ const Contribute = ({ project, version, projectId, versionId }) => {
     const [isSubmitPressed, setIsSubmitPressed] = useState(false);
 
     const fileInputRef = useRef();
-    const { userId } = useSelector((state) => state.database);
+    const { userId } = useSelector((state) => state.authentication);
 
     const allTracks = getAllTracks(project, versionId);
 

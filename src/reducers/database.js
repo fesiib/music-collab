@@ -1,6 +1,9 @@
 import randomString from '../services/randomString'
 
-const SET_USER = 'SET_USER'
+const UPDATE_PROJECT = 'UPDATE_PROJECT'
+const UPDATE_PROFILE = 'UPDATE_PROFILE'
+
+const CREATE_PROFILE = 'CREATE_PROFILE'
 
 const ADD_PROFILE = 'ADD_PROFILE'
 const REMOVE_PROFILE = 'REMOVE_PROFILE'
@@ -500,11 +503,21 @@ const DUMMY_PROJECT_3 = {
             comments: {
             }
         }
-      }
     }
+}
 
-export const setUser = (payload) => ({
-    type: SET_USER,
+export const updateProfile = (payload) => ({
+    type: UPDATE_PROFILE,
+    payload
+})
+
+export const updateProject = (payload) => ({
+    type: UPDATE_PROJECT,
+    payload
+})
+
+export const createProfile = (payload) => ({
+    type: CREATE_PROFILE,
     payload
 })
 
@@ -684,20 +697,19 @@ function recalcRating(projects, profiles, profileId) {
 
 const initialState = {
     projects: {
-        sunnyDay: DUMMY_PROJECT_1,
-        love: DUMMY_PROJECT_2,
-        hate: DUMMY_PROJECT_3,
+        //sunnyDay: DUMMY_PROJECT_1,
+        //love: DUMMY_PROJECT_2,
+        //hate: DUMMY_PROJECT_3,
     },
     profiles: {
-        me: DUMMY_PROFILE_0,
-        helena: DUMMY_PROFILE_1,
-        bob: DUMMY_PROFILE_2,
-        michael: DUMMY_PROFILE_3,
-        dobby: DUMMY_PROFILE_4,
-        anna: DUMMY_PROFILE_5,
-        herald: DUMMY_PROFILE_6,
-    },
-    userId: 'me',
+        // me: DUMMY_PROFILE_0,
+        // helena: DUMMY_PROFILE_1,
+        // bob: DUMMY_PROFILE_2,
+        // michael: DUMMY_PROFILE_3,
+        // dobby: DUMMY_PROFILE_4,
+        // anna: DUMMY_PROFILE_5,
+        // herald: DUMMY_PROFILE_6,
+    },    
 };
 
 
@@ -709,16 +721,52 @@ const database = (state = initialState, action) => {
     }
 
   switch (action.type) {
-    /*
-        userId,
-    */
-    case SET_USER: {
+    case UPDATE_PROJECT: {
+        const projectId = action.payload.projectId;
+        const data = action.payload.data;
         return {
             ...state,
-            userId: action.payload.userId
+            projects: {
+                ...state.projects,
+                [projectId]: data,
+            }
+        };
+    }
+    case UPDATE_PROFILE: {
+    const userId = action.payload.userId;
+        const data = action.payload.data;
+        return {
+            ...state,
+            profiles: {
+                ...state.profiles,
+                [userId]: data,
+            }
+        };
+    }
+    case CREATE_PROFILE: {
+        const userId = action.payload.userId
+        const name = action.payload.name
+        const profileImage = action.payload.profileImage
+        if (state.profiles.hasOwnProperty(userId)) {
+            return state;
+        }
+        return {
+            ...state,
+            profiles: {
+                ...state.profiles,
+                [userId]: {
+                    metaInfo: {
+                        name: name,
+                        communityRating: 0,
+                        profileImage: profileImage,
+                    },
+                    projectIds: [],
+                    versionIds: [],
+                    commentIds: []
+                }
+            }
         }
     }
-
     /* payload format
         ownerId,
         trackTitle,
@@ -895,11 +943,20 @@ const database = (state = initialState, action) => {
       newProjects[projectId].versions[versionId].metaInfo.lastModified = new Date(comment.creationTime.getTime());
 
       let newProfiles = { ...state.profiles };
-      newProfiles[authorId].commentIds.push({
-        projectId,
-        versionId,
-        commentId
-      });
+      if (!(authorId in newProfiles)) {
+        newProfiles[authorId] = {}
+        newProfiles[authorId].commentIds = []
+      }
+      newProfiles[authorId].commentIds = 
+      [ 
+        ...newProfiles[authorId].commentIds,
+        {
+            projectId,
+            versionId,
+            commentId
+          }
+      ]
+    //   .push();
 
       return {
         ...state,

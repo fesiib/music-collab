@@ -8,7 +8,7 @@ import ProfilePic from '../media/profile-svgrepo-com.svg';
 import UpDownVote from '../icons/up-down-vote.js'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { changeVoteComment } from '../reducers/database';
+import { changeVoteComment } from '../services/firebase_database';
 
 
 
@@ -19,12 +19,13 @@ const GenericComment = ({comment, reply, showReply, setShowReply, versionId, pro
     commentId,
     votes,
 */ 
+
+    console.log(comment);
     const dispatch = useDispatch();
     const id = comment.id;
     const authorId = comment.authorId;
-
     const contend = comment.commentMessage;
-    const timeStamp = comment.timeStamp;
+    const timeStamp = comment.creationTime;
     const votes = comment.votes;
     const time_dif = time_ago (timeStamp);
     
@@ -109,8 +110,15 @@ const GenericComment = ({comment, reply, showReply, setShowReply, versionId, pro
     }
 
     const {projects, profiles} = useSelector(state => state.database);
-    const userName =  profiles[authorId]["metaInfo"]["name"];
-    const profilePic =  profiles[authorId]["metaInfo"]["profileImage"];
+    let userName = ''  
+    if (authorId in profiles && 'metaInfo' in profiles[authorId]) {    
+        userName = profiles[authorId]["metaInfo"]["name"] || '';
+    }
+    let profilePic = ''
+    //  profiles[authorId]["metaInfo"]["profileImage"];
+    if (authorId in profiles && 'metaInfo' in profiles[authorId]) {    
+        profilePic = profiles[authorId]["metaInfo"]["profileImage"] || '';
+    }
 
     const upvoteColor = voted === 1 ? 'text-indigo-700' : 'text-indigo-400'
     const downvoteColor = voted === -1 ? 'text-indigo-700' : 'text-indigo-400'

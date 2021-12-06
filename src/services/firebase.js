@@ -3,6 +3,8 @@ import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/database";
+
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_firebaseKey,
@@ -11,12 +13,15 @@ const firebaseConfig = {
     storageBucket: process.env.REACT_APP_storageBucket,
     messagingSenderId: process.env.REACT_APP_messagingSenderId,
     appId: process.env.REACT_APP_appId,
+    databaseURL: "https://music-collab-9ec47-default-rtdb.asia-southeast1.firebasedatabase.app",
     //measurementId: process.env.REACT_APP_measurementId,
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-const db = firebaseApp.firestore();
+const database = firebaseApp.database();
+
+const firestore = firebaseApp.firestore();
 
 const analytics = firebaseApp.analytics();
 
@@ -25,13 +30,13 @@ const storage = firebaseApp.storage();
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 
-export const signInWithGoogle = () => {
-  auth.signInWithPopup(googleProvider).then((res) => {
-    // user object
-    console.log(res.user)
-  }).catch((error) => {
-    console.log(error.message)
-  })
+export const signInWithGoogle = async () => {
+  try {
+    const res = await auth.signInWithPopup(googleProvider);    
+    return res.user
+  } catch (error) {
+    return null
+  }  
 }
 export const logOut = () => {
   auth.signOut().then(()=> {
@@ -41,4 +46,4 @@ export const logOut = () => {
   })
 }
 
-export {db, storage, auth, analytics, firebaseApp, firebase as default};
+export {database, firestore, storage, auth, analytics, firebaseApp, firebase as default};

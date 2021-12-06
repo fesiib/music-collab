@@ -189,7 +189,7 @@ function Table(props) {
                                 <tr
                                     {...row.getRowProps({
                                         className:
-                                            "max-h-14 " + additionalRowClassName,
+                                            "max-h flex items-center" + additionalRowClassName,
                                         onClick: () => rowClick(row),
                                     })}
                                 >
@@ -209,7 +209,7 @@ function Table(props) {
                                         if (cell.column.id === 'tags') {
                                             return (
                                                 <td {...cell.getCellProps({
-                                                    className: "p-2"
+                                                    className: "p-2 overflow-hidden"
                                                 })}>
                                                     <TagList tags={cell.value} limit={2}/>
                                                 </td>
@@ -634,9 +634,10 @@ function MusicList(props) {
         return headers;
     }, []);
 
-    const { projects, profiles, userId } = useSelector(
+    const { projects, profiles } = useSelector(
         (state) => state.database
     );
+    const { userId } = useSelector(state => state.authentication);
     const { searchTags } = useSelector((state) => state.tabInfo);
 
     const adjustedSearchTags = props.search ? searchTags : [];

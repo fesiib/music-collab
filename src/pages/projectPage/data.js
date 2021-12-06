@@ -1,19 +1,18 @@
-function buildData(root, g, versions, timestampId) {
-    
+function buildData(root, g, profiles, versions, timestampId) {
     let res = {
         name: root,
         attributes: {
             votes: versions[root].metaInfo.votes,
             creationTime: versions[root].metaInfo.creationTime,
             number: timestampId[versions[root].metaInfo.creationTime],
-            author: versions[root].metaInfo.authorId,
+            author: profiles[versions[root].metaInfo.authorId].metaInfo.name,
             type: versions[root].tracks[0].type,
         },
         children: []
     }
     if(g[root]) {
         g[root].forEach(function(child, index) {
-            res.children.push(buildData(child, g, versions, timestampId));
+            res.children.push(buildData(child, g, profiles, versions, timestampId));
         });    
     }
     return res;
