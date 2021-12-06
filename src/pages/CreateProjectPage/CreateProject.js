@@ -15,6 +15,10 @@ import Loading from "../../components/Loading";
 import { addNewTag } from "../../services/firebase_database";
 import withLogin from "../../hocs/withLogin";
 
+
+const MAXIMUM_TAG_LENGTH = 16;
+
+
 const CreateProject = () => {
     const history = useHistory();
     const dispatch = useDispatch();
@@ -25,6 +29,7 @@ const CreateProject = () => {
     const [trackNames, setTrackNames] = useState([]);
     const [instrument, setInstrument] = useState("guitar");
     const [isSubmitPressed, setIsSubmitPressed] = useState(false);
+    const [shouldHighlightTags, setShouldHighlightTags] = useState(false);
     const [trackLoading, setTrackLoading] = useState(false);
 
     const [imageLink, setImageLink] = useState("");
@@ -44,7 +49,7 @@ const CreateProject = () => {
         setTrackLoading(false);
     };
 
-    const removeTrackFromList = () => {        
+    const removeTrackFromList = () => {
         setTrackNames([]);
     };
 
@@ -64,13 +69,13 @@ const CreateProject = () => {
         setImageLoading(false);
     };
 
-    const handleImageUpload = (event) => {        
+    const handleImageUpload = (event) => {
         const file = imageUploadRef.current.files[0];
         console.log({
             "uploaded file": file,
         });
         setImageLoading(true);
-        uploadFile(file, updateImageLink);        
+        uploadFile(file, updateImageLink);
     };
 
     const updateTrackLink = (index, newLink, track) => {
@@ -117,12 +122,23 @@ const CreateProject = () => {
         for (let tag of tags) {
             if (tag?.__isNew__) {
                 console.log(tag);
-                dispatch(
-                    addNewTag({value: tag.value, label: tag.label})
-                );
+                dispatch(addNewTag({ value: tag.value, label: tag.label }));
             }
         }
         history.push("/");
+    };
+
+    const handleTagsChange = (tagsList) => {
+        console.log("tagsList", tagsList);
+        const filteredTags = tagsList.filter(
+            (tag) => tag.value && tag.value.length < MAXIMUM_TAG_LENGTH
+        );
+        if (tagsList.length !== filteredTags.length) {
+            setShouldHighlightTags(true);
+        } else {
+            setShouldHighlightTags(false);
+        }
+        setTags(filteredTags);
     };
 
     console.log({
@@ -160,14 +176,27 @@ const CreateProject = () => {
                         fillOutText="Please fill out the project name"
                     />
                     <h3> Tag List </h3>
-                    <StolenSearchBar
-                        placeholder="Search for Music, Authors, and Tags."
-                        value={tags}
-                        setValue={setTags}
-                        isRequired
-                        fillOutText="Please select at least one tag"
-                        isSubmitPressed={isSubmitPressed}
-                    />
+                    <div
+                        className={`
+                            w-full
+                        ${
+                            shouldHighlightTags && "rounded-lg border-2 border-red-400"
+                        }`}
+                    >
+                        <StolenSearchBar
+                            placeholder="Search for Music, Authors, and Tags."
+                            value={tags}
+                            setValue={handleTagsChange}
+                            isRequired
+                            fillOutText="Please select at least one tag"
+                            isSubmitPressed={isSubmitPressed}
+                        />
+                    </div>
+                    {shouldHighlightTags && (
+                        <p className="text-red-500">
+                            Tag names were too long. Please input shorter tags.
+                        </p>
+                    )}
                     <InputField
                         value={description}
                         setValue={setDescription}
@@ -268,27 +297,24 @@ const CreateProject = () => {
                         <div className="w-full flex flex-row">
                             <div data-cy="imageUploadButton">
                                 {!imageLink ? (
-                                    <GenericButton                                    
-                                    title={"Upload"}
-                                    className="w-max"
-                                    onClick={() => {
-                                        if (imageUploadRef.current)
-                                            imageUploadRef.current.click();
-                                    }}
-                                />
-
+                                    <GenericButton
+                                        title={"Upload"}
+                                        className="w-max"
+                                        onClick={() => {
+                                            if (imageUploadRef.current)
+                                                imageUploadRef.current.click();
+                                        }}
+                                    />
                                 ) : (
-
-                                    <GenericButton                                    
+                                    <GenericButton
                                         title={"Delete"}
                                         className="w-max bg-red-500"
                                         onClick={() => {
-                                            setImageLink('')
+                                            setImageLink("");
                                         }}
                                     />
-                                    )
-                                }
-                                <input                                
+                                )}
+                                <input
                                     onChange={handleImageUpload}
                                     multiple={false}
                                     ref={imageUploadRef}

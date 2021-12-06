@@ -189,7 +189,7 @@ function Table(props) {
                                 <tr
                                     {...row.getRowProps({
                                         className:
-                                            "max-h-14 " + additionalRowClassName,
+                                            "max-h flex items-center" + additionalRowClassName,
                                         onClick: () => rowClick(row),
                                     })}
                                 >

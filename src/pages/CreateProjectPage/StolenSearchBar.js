@@ -72,7 +72,7 @@ function StolenSearchBar({
         placeholder={placeholder}
         styles={customStyles}
         value={value}
-        onChange={(value) => setValue(value)}
+        onChange={setValue}
       />
      {shouldHighlight && <p className="text-red-500">{fillOutText}</p>}
     </div>
