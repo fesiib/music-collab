@@ -62,13 +62,20 @@ function StolenSearchBar({
 
   const { data } = useSelector(state => state.tagsData);
 
-  console.log(placeholder, shouldHighlight)
+  const options = Object.keys(data).map((val) => {
+    return {
+        value: val, 
+        label: data[val],
+    };
+  });
+
+  console.log(options);
   return (
     <div className="w-full">
       <CreatableSelect
         className={`${requiredStyling}`}
         isMulti
-        options={data}
+        options={options}
         placeholder={placeholder}
         styles={customStyles}
         value={value}

@@ -63,6 +63,13 @@ function SearchBar(props) {
     const { searchTags } = useSelector(state => state.tabInfo);
     const { data } = useSelector(state => state.tagsData);
 
+    const options = Object.keys(data).map((val) => {
+        return {
+            value: val, 
+            label: data[val],
+        };
+    });
+
     const searchBarChangeHandler = (tags) => {
         dispatch(setTags({tags}));
     }
@@ -71,12 +78,12 @@ function SearchBar(props) {
         <div className='p-10'>
             <Select
                 isMulti
-                options={data}
+                options={options}
                 value={searchTags}
                 placeholder={props.placeholder}
                 styles={customStyles}
                 onChange={searchBarChangeHandler}
-                noOptionsMessage={(() =>"Cannot find the tag...")}
+                noOptionsMessage={(() =>"No tags...")}
             />
         </div>
     );
