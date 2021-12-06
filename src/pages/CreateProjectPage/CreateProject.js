@@ -131,7 +131,7 @@ const CreateProject = () => {
     const handleTagsChange = (tagsList) => {
         console.log("tagsList", tagsList);
         const filteredTags = tagsList.filter(
-            (tag) => tag.value && tag.value.length < MAXIMUM_TAG_LENGTH
+            (tag) => tag.value && tag.value.length <= MAXIMUM_TAG_LENGTH
         );
         if (tagsList.length !== filteredTags.length) {
             setShouldHighlightTags(true);
