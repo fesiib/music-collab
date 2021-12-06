@@ -6,11 +6,11 @@ export const addNewTagLocal = (payload) => ({
 });
 
 const initialState = {
-    data: [
+    data: {
         // {value: 'rock', label: 'Rock'},
         // {value: 'pop', label: 'Pop'},
         // {value: 'guitar', label: 'Guitar'},
-    ],
+    },
 };
 
 
@@ -19,10 +19,12 @@ const tagsData = (state = initialState, action) => {
         case ADD_NEW_TAG: {
             const value = action.payload.value;
             const label = action.payload.label;
-            const newData = new Set([...state.data, {value, label}]);
             return {
                 ...state,
-                data: Array.from(newData),
+                data: {
+                    ...state.data,
+                    [value]: label,
+                },
             }
         }
         default:

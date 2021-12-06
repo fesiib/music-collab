@@ -13,7 +13,6 @@ const dictToList = (dict) => {
     if (dict === undefined || dict === null || typeof dict != 'object') {
         return [];
     }
-    console.log(dict);
     return Object.keys(dict).map((key) => {
         return dict[key];
     });
