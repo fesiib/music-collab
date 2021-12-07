@@ -18,6 +18,7 @@ import MusicList, {
 import TagList from "./TagList";
 import { useHistory } from "react-router";
 import SingleCollaborator from "./SingleCollaborator";
+import { Link } from "react-router-dom";
 
 //const DEFAULT_BACKGROUND = 'https://www.rollingstone.com/wp-content/uploads/2018/09/beatles-white-album-.jpg';
 
@@ -117,26 +118,33 @@ function RightPanel(props) {
             <div className="bg-white">
                 <div className="flex flex-row justify-between">
                     <h3 className="text-left p-4"> About Project </h3>
-                    <GenericButton
-                        title={"Go to Project"}
-                        className="m-3 mr-5"
-                        onClick={redirectToProjectPage}
-                    />
+                    <Link to={`/project/${projectId}/`}>
+                        <GenericButton
+                            title={"Go to Project"}
+                            className="m-3 mr-5"
+                            // onClick={redirectToProjectPage}
+                        />
+                    </Link>
                 </div>
 
                 <div className="flex flex-row p-5">
-                    <img src={backgroundImage}
-                        className="max-h-28 max-w-28 transform hover:scale-125 hover:border-4 cursor-pointer"
-                        onClick={redirectToProjectPage}
-                    />
+                    <Link to={`/project/${projectId}/`}>
+                        <img src={backgroundImage}
+                            className="max-h-28 max-w-28 transform hover:scale-125 hover:border-4 cursor-pointer"
+                            // onClick={redirectToProjectPage}
+                            alt="cover"
+                        />
+                    </Link>
                     <div className="pl-5 pb-5 text-left">
-                        <p
-                            className="text-2xl underline hover:text-gray-600 cursor-pointer"
-                            onClick={redirectToProjectPage}
-                        >
-                            {" "}
-                            {trackTitle}{" "}
-                        </p>
+                        <Link to={`/project/${projectId}/`}>
+                            <p
+                                className="text-2xl underline hover:text-gray-600 cursor-pointer"
+                                // onClick={redirectToProjectPage}
+                            >
+                                {" "}
+                                {trackTitle}{" "}
+                            </p>
+                        </Link>
                         <p className="text-xl text-gray-600"> {ownerName} </p>
                     </div>
                     
