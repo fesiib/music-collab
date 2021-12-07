@@ -8,7 +8,7 @@ import VersionPage from '../../pages/VersionPage'
 
 const DimmedBackground = ({ children }) => {
   return (
-    <div className="bg-gray-200 bg-opacity-80 h-full w-full z-20 top-1/2 left-1/2 absolute transform -translate-x-1/2 -translate-y-1/2">
+    <div className="bg-gray-200 bg-opacity-80 h-full w-full z-20 top-1/2 left-1/2 fixed transform -translate-x-1/2 -translate-y-1/2">
       {children}
     </div>
   )
@@ -26,7 +26,7 @@ const Container = ({ children }) => {
   return (
     <div
       className="h-5/6 flex flex-col align-center rounded-lg shadow-md bg-white"
-      style={{ maxHeight: '720px', width: '1020px' }}
+      style={{ maxHeight: '640px', width: '1020px' }}
     >
       {children}
     </div>

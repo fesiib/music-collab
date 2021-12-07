@@ -5,7 +5,7 @@ const withHeader = (Page) => {
   return (props) => {
     return (
       <div className="w-full flex flex-col">
-        <div className="w-full fixed z-10">
+        <div className="w-full fixed z-30">
           <Header />
         </div>
         <div className="mt-32">
