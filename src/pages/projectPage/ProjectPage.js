@@ -143,27 +143,29 @@ const ProjectPage = ({
         className="max-h-60 max-w-60 transform cursor-pointer ml-10"
                         
         />
-        <div className="ml-4 mt-2 flex flex-col ">
+        <div className="ml-6 mt-2 flex flex-col ">
         <h1>{project.metaInfo.trackTitle}</h1>
-        <h2>{profiles[project.metaInfo.ownerId].metaInfo.name}</h2>
-        <h3 className="">{project.metaInfo.description}</h3>
+        <h2 className="self-end">by {profiles[project.metaInfo.ownerId].metaInfo.name}</h2>
+        <h3 className="mt-2 font-bold text-gray-600"> {project.metaInfo.description}</h3>
         <Taglist tags={tags}/>
-        <h3>Versions: {Object.keys(project.versions).length} </h3>
+        <h3> <b> Versions: </b> {Object.keys(project.versions).length} </h3>
         <h3 >
-            Last Modified:&nbsp;
+            <b>Last Modified:&nbsp; </b>
             <ReactTimeAgo
                 date={lastModified}
                 timeStyle="twitter-minute"
                 locale="en-US"
             />
+            {" ago"}
         </h3>
         <h3 >
-            Created:&nbsp;
+            <b>Created:&nbsp; </b>
             <ReactTimeAgo
                 date={creationTime}
                 timeStyle="twitter-minute"
                 locale="en-US"
             />
+            {" ago"}
         </h3>
         {/* <h3>Collabotors: {collaborators.length-1}</h3> */}
 

@@ -119,7 +119,7 @@ function RightPanel(props) {
                     <h3 className="text-left p-4"> About Project </h3>
                     <GenericButton
                         title={"Go to Project"}
-                        className="m-3"
+                        className="m-3 mr-5"
                         onClick={redirectToProjectPage}
                     />
                 </div>
